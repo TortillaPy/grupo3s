@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import FichaProducto from '@components/paginas/FichaProducto.astro';
+import { productos } from '@data/site';
+import type { Producto } from '@data/site';
+
+/** Una página estática por producto: dieciocho URLs indexables. */
+export const getStaticPaths = (() =>
+  productos.map((producto) => ({
+    params: { slug: producto.slug },
+    props: { producto },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  readonly producto: Producto;
+}
+
+const { producto } = Astro.props;
+---
+
+<FichaProducto producto={producto} />

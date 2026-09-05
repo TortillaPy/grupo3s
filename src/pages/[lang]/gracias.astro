@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import Gracias from '@components/paginas/Gracias.astro';
+import { localesSecundarios } from '@data/site';
+import type { Locale } from '@data/site';
+
+/**
+ * Una ruta por idioma publicado que no sea el por defecto. Español vive
+ * en la raíz sin prefijo; portugués e inglés bajo /pt y /en.
+ */
+export const getStaticPaths = (() =>
+  localesSecundarios.map((locale) => ({
+    params: { lang: locale },
+    props: { locale },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  readonly locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Gracias locale={locale} />

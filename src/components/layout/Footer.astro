@@ -1,0 +1,124 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+import { config, obtenerContenido, ATRIBUTOS_ENLACE_EXTERNO, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+import { resolverImagen } from '../../lib/imagenes';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { footer } = obtenerContenido(locale);
+
+const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
+
+/** Año calculado en cada build: no hay que tocarlo nunca a mano. */
+const anio = new Date().getFullYear();
+
+/** Las redes sin URL cargada todavía no se muestran. */
+const redes = config.contacto.redes.filter((red) => red.url !== '');
+---
+
+<footer class="border-t border-gris-claro bg-hueso py-12 sm:py-16">
+  <div class="contenedor">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-5">
+        <Image
+          src={logo}
+          alt={`${config.site.razonSocial}`}
+          widths={[140, 280]}
+          sizes="88px"
+          loading="lazy"
+          format="webp"
+          quality={90}
+          class="h-13 w-auto"
+        />
+        <p class="mt-4 max-w-sm text-[0.92rem] text-grafito/85">
+          {footer.descripcion}
+        </p>
+
+        {
+          redes.length > 0 && (
+            <ul class="mt-5 flex gap-2">
+              {redes.map((red) => (
+                <li>
+                  <a
+                    href={red.url}
+                    {...ATRIBUTOS_ENLACE_EXTERNO}
+                    aria-label={`${config.site.nombre} en ${red.nombre}`}
+                    class="inline-flex size-10 items-center justify-center rounded-xs border border-gris-claro text-grafito transition-colors hover:border-verde-oscuro hover:text-verde-oscuro"
+                  >
+                    <Icon name={`lucide:${red.icono}`} class="size-5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      <div class="lg:col-span-4">
+        <h2 class="font-display text-sm font-bold tracking-[0.1em] text-negro uppercase">
+          {footer.tituloContacto}
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2.5 text-[0.92rem] text-grafito">
+          <li class="flex items-start gap-2">
+            <Icon name="lucide:map-pin" class="mt-0.5 size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <span>
+              {config.contacto.direccion.calle}<br />
+              {config.contacto.direccion.ciudad}, {config.contacto.direccion.pais}
+            </span>
+          </li>
+          {
+            config.contacto.telefonos.map((telefono) => (
+              <li class="flex items-center gap-2">
+                <Icon name="lucide:phone" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+                <a href={`tel:+${telefono.e164}`} class="tabular-nums hover:text-verde-oscuro">
+                  {telefono.visible}
+                </a>
+              </li>
+            ))
+          }
+          <li class="flex items-center gap-2">
+            <Icon name="lucide:mail" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <a href={`mailto:${config.contacto.email}`} class="[overflow-wrap:anywhere] hover:text-verde-oscuro">
+              {config.contacto.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <nav class="lg:col-span-3" aria-labelledby="footer-enlaces">
+        <h2
+          id="footer-enlaces"
+          class="font-display text-sm font-bold tracking-[0.1em] text-negro uppercase"
+        >
+          {footer.tituloEnlaces}
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2.5 text-[0.92rem]">
+          {
+            footer.enlaces.map((enlace) => (
+              <li>
+                <a href={rutaLocal(enlace.href, locale)} class="text-grafito hover:text-verde-oscuro">
+                  {enlace.texto}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div
+      class="mt-10 flex flex-col gap-3 border-t border-gris-claro pt-6 text-sm text-grafito/80 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {anio} {config.site.razonSocial} {footer.derechos}</p>
+      <a href={rutaLocal('/politica-privacidad', locale)} class="hover:text-verde-oscuro">
+        {footer.privacidad}
+      </a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,37 @@
+---
+import Button from './Button.astro';
+import { buildWhatsAppUrl, config } from '@data/site';
+import type { ContextoWhatsApp, Locale } from '@data/site';
+
+interface Props {
+  /** Desde qué parte de la página se hace clic: define el mensaje prellenado. */
+  readonly contexto: ContextoWhatsApp;
+  readonly locale?: Locale;
+  readonly variante?: 'primario' | 'secundario' | 'claro';
+  readonly tamano?: 'normal' | 'grande';
+  readonly ariaLabel?: string;
+  readonly class?: string;
+}
+
+const {
+  contexto,
+  locale = config.localePorDefecto,
+  variante = 'primario',
+  tamano = 'normal',
+  ariaLabel,
+  class: claseExtra,
+} = Astro.props;
+
+const href = buildWhatsAppUrl(contexto, locale);
+---
+
+<Button
+  href={href}
+  externo
+  variante={variante}
+  tamano={tamano}
+  ariaLabel={ariaLabel}
+  class={claseExtra}
+>
+  <slot />
+</Button>

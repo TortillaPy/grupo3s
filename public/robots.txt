@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# La confirmación post-formulario no aporta nada a la búsqueda.
+Disallow: /gracias
+
+Sitemap: https://3sgrupoindustrial.com.py/sitemap-index.xml

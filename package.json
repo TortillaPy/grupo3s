@@ -1,0 +1,29 @@
+{
+  "name": "3s-landing",
+  "version": "0.1.0",
+  "description": "Landing y catálogo de 3S Grupo Industrial S.R.L.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/chivo": "^5.3.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@iconify-json/lucide": "^1.2.129",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.1",
+    "astro-icon": "^1.2.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

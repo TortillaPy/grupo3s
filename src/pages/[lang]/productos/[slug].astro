@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+import FichaProducto from '@components/paginas/FichaProducto.astro';
+import { localesSecundarios, productos } from '@data/site';
+import type { Locale, Producto } from '@data/site';
+
+/** Idioma × producto: una ficha estática por combinación. */
+export const getStaticPaths = (() =>
+  localesSecundarios.flatMap((locale) =>
+    productos.map((producto) => ({
+      params: { lang: locale, slug: producto.slug },
+      props: { locale, producto },
+    })),
+  )) satisfies GetStaticPaths;
+
+interface Props {
+  readonly locale: Locale;
+  readonly producto: Producto;
+}
+
+const { locale, producto } = Astro.props;
+---
+
+<FichaProducto producto={producto} locale={locale} />

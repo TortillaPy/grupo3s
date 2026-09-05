@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { faq } = obtenerContenido(locale);
+---
+
+<Section id="faq" titulo={faq.titulo} bajada={faq.bajada} fondo="blanco">
+  <!--
+    Acordeón sobre <details>/<summary>: el navegador ya expone el estado
+    abierto/cerrado a los lectores de pantalla y lo opera con Enter y con
+    la barra espaciadora. No hace falta una sola línea de JavaScript, y
+    con JS desactivado sigue funcionando igual.
+  -->
+  <div class="max-w-3xl border-t border-gris-claro">
+    {
+      faq.items.map((item) => (
+        <details class="group border-b border-gris-claro" data-revelar>
+          <summary
+            class="flex cursor-pointer list-none items-start justify-between gap-4 py-5 text-left font-display text-[1.02rem] font-bold text-negro transition-colors hover:text-verde-profundo [&::-webkit-details-marker]:hidden"
+          >
+            {item.pregunta}
+            <Icon
+              name="lucide:chevron-down"
+              class="mt-0.5 size-5 shrink-0 text-verde-oscuro transition-transform duration-200 group-open:rotate-180"
+              aria-hidden="true"
+            />
+          </summary>
+          <p class="max-w-lectura pb-5 text-grafito/90">{item.respuesta}</p>
+        </details>
+      ))
+    }
+  </div>
+</Section>

@@ -1,0 +1,181 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   TOKENS DE MARCA 3S
+   Muestreados del flyer oficial (3S PORTADA.jpeg). En Tailwind 4 los tokens
+   viven acá, no en tailwind.config.js: cada variable declarada en @theme
+   genera automáticamente sus utilidades (bg-verde, text-grafito, font-display…).
+   Cambiar un color de marca = cambiar una línea de este bloque.
+--------------------------------------------------------------------------- */
+@theme {
+  /* — Color ————————————————————————————————————————————————— */
+  /* Verde del isotipo. Solo para fondos, íconos y elementos gráficos:
+     sobre blanco no llega a 4.5:1, así que nunca se usa en texto chico. */
+  --color-verde: #40a942;
+  /* Derivado accesible del anterior. 5.2:1 sobre hueso — este sí va en texto,
+     links, bordes de foco y CTA. */
+  --color-verde-oscuro: #2c7d31;
+  --color-verde-profundo: #1e5a22;
+  --color-verde-suave: #eef5ec;
+
+  /* Cuerpo del logotipo: grafito cálido, no gris neutro. */
+  --color-grafito: #463b43;
+  --color-negro: #0b060c;
+  /* Gris de TEXTO. El gris de la banda del flyer (#8b8b8b) da 3.3:1
+     sobre el fondo hueso: no llega al 4.5:1 que exige AA en texto
+     normal, así que para texto se usa esta versión oscurecida, que
+     conserva el sesgo cálido y da 4.9:1. */
+  --color-gris: #726c6a;
+  /* El gris original de la marca. Solo para fondos y overlays sobre
+     foto, nunca para texto. */
+  --color-gris-marca: #8b8b8b;
+  --color-gris-claro: #dedcd7;
+  --color-hueso: #fafaf8;
+  --color-blanco: #ffffff;
+
+  /* — Tipografía ————————————————————————————————————————————
+     Dos familias, como pide el brief. Chivo (grotesca industrial) para
+     titulares; IBM Plex Sans para cuerpo, tablas y formulario. */
+  --font-display: 'Chivo Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'IBM Plex Sans Variable', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* Escala de titulares. Fluida entre 375px y 1440px, sin saltos ambiguos. */
+  --text-display: clamp(2.25rem, 1.35rem + 3.85vw, 4.25rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.025em;
+  --text-titulo: clamp(1.75rem, 1.35rem + 1.7vw, 2.625rem);
+  --text-titulo--line-height: 1.12;
+  --text-titulo--letter-spacing: -0.018em;
+  --text-subtitulo: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem);
+  --text-subtitulo--line-height: 1.5;
+
+  /* — Medidas ——————————————————————————————————————————————— */
+  /* Ancho de línea de lectura: 60–75 caracteres, como pide el brief. */
+  --container-lectura: 38rem;
+  --container-contenido: 72rem;
+
+  /* — Movimiento ————————————————————————————————————————————— */
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   BASE
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* El header sticky no debe tapar la sección a la que se ancla. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-hueso);
+    color: var(--color-grafito);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-negro);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  /* Foco visible en todo lo operable por teclado. Nunca se elimina. */
+  :focus-visible {
+    outline: 3px solid var(--color-verde-oscuro);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Los números de tablas y especificaciones alinean en columna. */
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   UTILIDADES PROPIAS
+--------------------------------------------------------------------------- */
+@utility contenedor {
+  width: 100%;
+  max-width: var(--container-contenido);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Salto al contenido: visible solo cuando recibe foco por teclado. */
+@utility salto-contenido {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  background-color: var(--color-negro);
+  color: var(--color-blanco);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  transition: transform 150ms var(--ease-salida);
+
+  &:focus {
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   ANIMACIÓN DE ENTRADA
+   El estado de reposo es VISIBLE. El IntersectionObserver agrega
+   `.esta-oculto` solo si el navegador lo soporta y el usuario no pidió
+   menos movimiento: así, sin JS o con JS caído, el contenido igual se lee.
+--------------------------------------------------------------------------- */
+.esta-oculto {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.se-revela {
+  transition:
+    opacity 400ms var(--ease-salida),
+    transform 400ms var(--ease-salida);
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Desactivado por completo, no acortado. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .esta-oculto {
+    opacity: 1;
+    transform: none;
+  }
+}

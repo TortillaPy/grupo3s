@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components';
+import { buildWhatsAppUrl, config, obtenerContenido, ATRIBUTOS_ENLACE_EXTERNO } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { whatsapp } = obtenerContenido(locale);
+const href = buildWhatsAppUrl({ tipo: 'flotante' }, locale);
+---
+
+<!--
+  Aparece recién después del primer scroll: en el primer viewport el hero
+  ya tiene su propio botón de WhatsApp y este solo taparía contenido.
+  `bottom-5 right-5` lo mantiene fuera del área de lectura en 375 px.
+-->
+<a
+  href={href}
+  {...ATRIBUTOS_ENLACE_EXTERNO}
+  id="whatsapp-flotante"
+  aria-label={whatsapp.etiquetaFlotante}
+  class="pointer-events-none fixed right-5 bottom-5 z-40 inline-flex size-14 translate-y-3 items-center justify-center rounded-full bg-verde-oscuro text-white opacity-0 shadow-[0_10px_28px_-8px_rgba(11,6,12,0.55)] transition-all duration-200 hover:bg-verde-profundo sm:size-15"
+  data-whatsapp-flotante
+>
+  <Icon name="lucide:message-circle" class="size-7" aria-hidden="true" />
+</a>
+
+<script>
+  const boton = document.querySelector<HTMLElement>('[data-whatsapp-flotante]');
+
+  if (boton !== null) {
+    const OCULTO = ['pointer-events-none', 'opacity-0', 'translate-y-3'];
+
+    const actualizar = (): void => {
+      const visible = window.scrollY > 320;
+      OCULTO.forEach((clase) => boton.classList.toggle(clase, !visible));
+      // Fuera de pantalla también sale del orden de tabulación.
+      if (visible) {
+        boton.removeAttribute('tabindex');
+        boton.removeAttribute('aria-hidden');
+      } else {
+        boton.setAttribute('tabindex', '-1');
+        boton.setAttribute('aria-hidden', 'true');
+      }
+    };
+
+    actualizar();
+    window.addEventListener('scroll', actualizar, { passive: true });
+  }
+</script>

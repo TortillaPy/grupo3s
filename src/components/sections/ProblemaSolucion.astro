@@ -1,0 +1,68 @@
+---
+import { Icon } from 'astro-icon/components';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { problemaSolucion } = obtenerContenido(locale);
+---
+
+<section id="problema" aria-labelledby="problema-titulo" class="bg-white py-14 sm:py-20 lg:py-24">
+  <div class="contenedor">
+    <h2
+      id="problema-titulo"
+      class="max-w-lectura text-titulo font-bold text-negro"
+      data-revelar
+    >
+      {problemaSolucion.titulo}
+    </h2>
+
+    <!--
+      Dos bloques enfrentados: el de la izquierda es el estado actual y va
+      sobre fondo apagado; el de la derecha es el estado deseado y lleva el
+      único acento verde. El contraste de fondo hace el trabajo que en otro
+      diseño harían dos tarjetas iguales.
+    -->
+    <div class="mt-10 grid gap-px border border-gris-claro bg-gris-claro lg:mt-12 lg:grid-cols-2">
+      <div class="bg-hueso p-6 sm:p-8 lg:p-10" data-revelar>
+        <div class="flex items-center gap-2.5">
+          <Icon
+            name="lucide:alert-circle"
+            class="size-5 shrink-0 text-gris"
+            aria-hidden="true"
+          />
+          <h3 class="text-xs font-semibold tracking-[0.16em] text-gris uppercase">
+            {problemaSolucion.problema.titulo}
+          </h3>
+        </div>
+        <p class="mt-4 max-w-lectura text-grafito/85">
+          {problemaSolucion.problema.texto}
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 shadow-[inset_4px_0_0_var(--color-verde)] sm:p-8 lg:p-10"
+        data-revelar
+        data-revelar-retraso="120"
+      >
+        <div class="flex items-center gap-2.5">
+          <Icon
+            name="lucide:check"
+            class="size-5 shrink-0 text-verde-oscuro"
+            aria-hidden="true"
+          />
+          <h3 class="text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase">
+            {problemaSolucion.solucion.titulo}
+          </h3>
+        </div>
+        <p class="mt-4 max-w-lectura text-grafito">
+          {problemaSolucion.solucion.texto}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

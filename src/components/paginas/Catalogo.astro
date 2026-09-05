@@ -1,0 +1,199 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import ProductoCard from '@components/ui/ProductoCard.astro';
+import BotonWhatsAppFlotante from '@components/ui/BotonWhatsAppFlotante.astro';
+import { config, obtenerContenido, productos, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const contenido = obtenerContenido(locale);
+const { catalogo, categorias } = contenido;
+
+/** Solo las familias que efectivamente tienen productos cargados. */
+const familias = categorias.filter((categoria) =>
+  productos.some((producto) => producto.categoria === categoria.id),
+);
+
+/**
+ * ItemList: le dice a Google que esta página es un listado y en qué
+ * orden están los elementos. Es el marcado correcto para un catálogo
+ * —no `Product`, que va en cada ficha—.
+ */
+const schemaListado = {
+  '@type': 'ItemList',
+  '@id': `${config.site.url}${rutaLocal('/productos', locale)}#listado`,
+  name: catalogo.titulo,
+  numberOfItems: productos.length,
+  itemListElement: productos.map((producto, indice) => ({
+    '@type': 'ListItem',
+    position: indice + 1,
+    name: producto.nombre,
+    url: `${config.site.url}${rutaLocal(`/productos/${producto.slug}`, locale)}`,
+  })),
+};
+
+const schemaMigas = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: contenido.ficha.migaInicio,
+      item: `${config.site.url}${rutaLocal('/', locale)}`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: contenido.ficha.migaCatalogo,
+      item: `${config.site.url}${rutaLocal('/productos', locale)}`,
+    },
+  ],
+};
+---
+
+<Layout
+  titulo={contenido.meta.productos.titulo}
+  descripcion={contenido.meta.productos.descripcion}
+  ruta="/productos"
+  locale={locale}
+  schemas={[schemaListado, schemaMigas]}
+>
+  <Header slot="header" locale={locale} />
+
+  <section class="bg-hueso py-14 sm:py-20" aria-labelledby="catalogo-titulo">
+    <div class="contenedor">
+      <nav aria-label="Ruta de navegación" class="mb-6 text-sm text-grafito/80">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a href={rutaLocal('/', locale)} class="hover:text-verde-oscuro">{contenido.ficha.migaInicio}</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-grafito">{contenido.ficha.migaCatalogo}</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-lectura">
+        <h1 id="catalogo-titulo" class="text-titulo font-bold text-negro">
+          {catalogo.titulo}
+        </h1>
+        <p class="mt-4 text-subtitulo text-grafito/90">{catalogo.bajada}</p>
+      </div>
+
+      <!--
+        Filtro por familia. Sin JavaScript la página muestra los
+        dieciocho productos, que es el estado correcto: el filtro es una
+        comodidad, no un requisito para ver el catálogo.
+      -->
+      <div class="mt-10" data-filtro>
+        <p id="filtro-titulo" class="text-xs font-semibold tracking-[0.14em] text-gris uppercase">
+          {catalogo.filtrarPor}
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2" role="group" aria-labelledby="filtro-titulo">
+          <button
+            type="button"
+            class="rounded-xs border border-gris-claro bg-white px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white"
+            data-filtro-boton
+            data-valor="todos"
+            aria-pressed="true"
+          >
+            {catalogo.todos}
+          </button>
+          {
+            familias.map((familia) => (
+              <button
+                type="button"
+                class="rounded-xs border border-gris-claro bg-white px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white"
+                data-filtro-boton
+                data-valor={familia.id}
+                aria-pressed="false"
+              >
+                {familia.nombre}
+              </button>
+            ))
+          }
+        </div>
+
+        <p
+          class="mt-4 text-sm text-grafito/80"
+          aria-live="polite"
+          data-conteo
+          data-plural={catalogo.conteo}
+          data-singular={catalogo.conteoSingular}
+        >
+          {catalogo.conteo.replace('{n}', String(productos.length))}
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-px border border-gris-claro bg-gris-claro sm:grid-cols-2 lg:grid-cols-3">
+        {
+          productos.map((producto, indice) => (
+            <ProductoCard
+              producto={producto}
+              locale={locale}
+              nivel={2}
+              retraso={(indice % 3) * 80}
+            />
+          ))
+        }
+      </div>
+
+      <p class="mt-6 hidden text-grafito/80" data-sin-resultados>
+        {catalogo.sinResultados}
+      </p>
+    </div>
+  </section>
+
+  <Footer slot="footer" locale={locale} />
+  <BotonWhatsAppFlotante slot="footer" locale={locale} />
+</Layout>
+
+<script>
+  const contenedorFiltro = document.querySelector<HTMLElement>('[data-filtro]');
+  const tarjetas = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-producto]'),
+  );
+  const conteo = document.querySelector<HTMLElement>('[data-conteo]');
+  const sinResultados = document.querySelector<HTMLElement>('[data-sin-resultados]');
+
+  if (contenedorFiltro !== null && tarjetas.length > 0) {
+    const botones = Array.from(
+      contenedorFiltro.querySelectorAll<HTMLButtonElement>('[data-filtro-boton]'),
+    );
+
+    // Las plantillas de conteo viajan como atributos del HTML: así el
+    // copy sigue viviendo en content.es.ts y este script no lo repite.
+    const plural = conteo?.dataset.plural ?? '{n} productos';
+    const singular = conteo?.dataset.singular ?? '1 producto';
+
+    const aplicar = (valor: string): void => {
+      let visibles = 0;
+
+      tarjetas.forEach((tarjeta) => {
+        const coincide = valor === 'todos' || tarjeta.dataset.categoria === valor;
+        tarjeta.classList.toggle('hidden', !coincide);
+        if (coincide) visibles += 1;
+      });
+
+      botones.forEach((boton) => {
+        boton.setAttribute('aria-pressed', String(boton.dataset.valor === valor));
+      });
+
+      if (conteo !== null) {
+        conteo.textContent =
+          visibles === 1 ? singular : plural.replace('{n}', String(visibles));
+      }
+
+      sinResultados?.classList.toggle('hidden', visibles > 0);
+    };
+
+    botones.forEach((boton) => {
+      boton.addEventListener('click', () => {
+        aplicar(boton.dataset.valor ?? 'todos');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,106 @@
+---
+import Section from '../ui/Section.astro';
+import { config, obtenerContenido, productos, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const contenido = obtenerContenido(locale);
+const { especificaciones, categorias } = contenido;
+
+/**
+ * La tabla se agrupa por categoría, en el mismo orden en que están
+ * declaradas las categorías en el contenido. Así el lector recorre la
+ * línea por familia de producto y no por orden alfabético.
+ */
+const porCategoria = categorias
+  .map((categoria) => ({
+    categoria,
+    items: productos.filter((producto) => producto.categoria === categoria.id),
+  }))
+  .filter((grupo) => grupo.items.length > 0);
+
+/** La primera especificación de cada producto es siempre su tipo. */
+function tipoDe(slug: string): string {
+  const producto = productos.find((item) => item.slug === slug);
+  return producto?.especificaciones[0]?.valor ?? '';
+}
+---
+
+<Section
+  id="especificaciones"
+  volanta="Catálogo"
+  titulo={especificaciones.titulo}
+  bajada={especificaciones.bajada}
+  fondo="hueso"
+>
+  <!--
+    La tabla es ancha por naturaleza. Va dentro de su propio contenedor
+    con scroll horizontal para que el cuerpo de la página nunca se
+    desplace de lado en móvil.
+  -->
+  <div
+    class="overflow-x-auto border border-gris-claro bg-white"
+    tabindex="0"
+    role="region"
+    aria-labelledby="especificaciones-titulo"
+    data-revelar
+  >
+    <table class="w-full min-w-[46rem] border-collapse text-left text-[0.9rem]">
+      <thead>
+        <tr class="border-b border-gris-claro bg-hueso">
+          <th scope="col" class="px-4 py-3 text-xs font-semibold tracking-[0.1em] text-gris uppercase">
+            {especificaciones.columnas.producto}
+          </th>
+          <th scope="col" class="px-4 py-3 text-xs font-semibold tracking-[0.1em] text-gris uppercase">
+            {especificaciones.columnas.tipo}
+          </th>
+          <th scope="col" class="px-4 py-3 text-xs font-semibold tracking-[0.1em] text-gris uppercase">
+            {especificaciones.columnas.presentaciones}
+          </th>
+          <th scope="col" class="px-4 py-3 text-xs font-semibold tracking-[0.1em] text-gris uppercase">
+            {especificaciones.columnas.registro}
+          </th>
+        </tr>
+      </thead>
+
+      {
+        porCategoria.map((grupo) => (
+          <tbody>
+            <tr>
+              <th
+                scope="colgroup"
+                colspan="4"
+                class="border-y border-gris-claro bg-verde-suave px-4 py-2.5 text-xs font-semibold tracking-[0.12em] text-verde-profundo uppercase"
+              >
+                {grupo.categoria.nombre}
+              </th>
+            </tr>
+            {grupo.items.map((producto) => (
+              <tr class="border-b border-gris-claro/70 last:border-b-0">
+                <th scope="row" class="px-4 py-3 align-top font-display font-bold text-negro">
+                  <a
+                    href={rutaLocal(`/productos/${producto.slug}`, locale)}
+                    class="underline decoration-gris-claro decoration-2 underline-offset-4 hover:decoration-verde-oscuro"
+                  >
+                    {producto.nombre}
+                  </a>
+                </th>
+                <td class="px-4 py-3 align-top text-grafito/85">{tipoDe(producto.slug)}</td>
+                <td class="px-4 py-3 align-top whitespace-nowrap text-grafito tabular-nums">
+                  {producto.presentaciones.map((presentacion) => presentacion.etiqueta).join(' · ')}
+                </td>
+                <td class="px-4 py-3 align-top text-grafito/85">
+                  {producto.registro ?? especificaciones.sinRegistro}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ))
+      }
+    </table>
+  </div>
+</Section>

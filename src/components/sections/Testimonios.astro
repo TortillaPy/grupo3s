@@ -1,0 +1,79 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { testimonios } = obtenerContenido(locale);
+
+/**
+ * ⚠ NO PUBLICAR RESEÑAS INVENTADAS.
+ *
+ * Mientras haya al menos un testimonio con `esPlaceholder: true`, la
+ * sección muestra un aviso visible de que es contenido de ejemplo y NO
+ * emite marcado `Review` ni `AggregateRating` para buscadores. Publicar
+ * reseñas falsas —y más aún marcarlas para Google— es motivo de acción
+ * manual sobre el dominio, además de ser deshonesto con el cliente.
+ *
+ * Al recibir reseñas reales con autorización escrita: reemplazar el
+ * texto en content.es.ts y poner `esPlaceholder: false` en cada una.
+ */
+const hayPlaceholders = testimonios.items.some((item) => item.esPlaceholder);
+---
+
+<Section
+  id="testimonios"
+  volanta="Prueba social"
+  titulo={testimonios.titulo}
+  fondo="hueso"
+>
+  {
+    hayPlaceholders && (
+      <p
+        class="mb-8 flex items-start gap-2.5 border border-dashed border-gris px-4 py-3 text-[0.9rem] text-gris"
+        data-revelar
+      >
+        <Icon name="lucide:alert-circle" class="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+        {testimonios.avisoPlaceholder}
+      </p>
+    )
+  }
+
+  <ul class="grid gap-px border border-gris-claro bg-gris-claro lg:grid-cols-3">
+    {
+      testimonios.items.map((testimonio, indice) => (
+        <li
+          class:list={[
+            'flex flex-col justify-between gap-6 bg-white p-6 sm:p-7',
+            testimonio.esPlaceholder && 'opacity-70',
+          ]}
+          data-revelar
+          data-revelar-retraso={String(indice * 90)}
+        >
+          <blockquote class="text-[0.98rem] text-grafito">
+            <p>“{testimonio.texto}”</p>
+          </blockquote>
+
+          <footer class="border-t border-gris-claro pt-4">
+            <p class="font-display text-[0.95rem] font-bold text-negro">
+              {testimonio.autor}
+            </p>
+            <p class="text-sm text-grafito/80">
+              {testimonio.cargo} · {testimonio.empresa}
+            </p>
+            {testimonio.esPlaceholder && (
+              <p class="mt-2 text-[0.7rem] font-semibold tracking-[0.12em] text-gris uppercase">
+                Placeholder
+              </p>
+            )}
+          </footer>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

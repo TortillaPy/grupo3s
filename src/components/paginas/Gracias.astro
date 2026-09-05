@@ -1,0 +1,70 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import Button from '@components/ui/Button.astro';
+import WhatsAppLink from '@components/ui/WhatsAppLink.astro';
+import { config, obtenerContenido, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const contenido = obtenerContenido(locale);
+const { gracias } = contenido;
+---
+
+<Layout
+  titulo={contenido.meta.gracias.titulo}
+  descripcion={contenido.meta.gracias.descripcion}
+  ruta="/gracias"
+  locale={locale}
+  noIndexar
+>
+  <Header slot="header" locale={locale} />
+
+  <section class="bg-hueso py-20 sm:py-28" aria-labelledby="gracias-titulo">
+    <div class="contenedor">
+      <div class="max-w-2xl">
+        <span
+          class="inline-flex size-14 items-center justify-center rounded-full bg-verde-suave text-verde-profundo"
+        >
+          <Icon name="lucide:check" class="size-8" aria-hidden="true" />
+        </span>
+
+        <h1 id="gracias-titulo" class="mt-6 text-titulo font-bold text-negro">
+          {gracias.titulo}
+        </h1>
+        <p class="mt-4 max-w-lectura text-subtitulo text-grafito/90">
+          {gracias.texto}
+        </p>
+
+        <h2 class="mt-10 text-xs font-semibold tracking-[0.16em] text-gris uppercase">
+          {gracias.mientrasTanto}
+        </h2>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale} tamano="grande">
+            <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+            {gracias.ctaWhatsApp}
+          </WhatsAppLink>
+
+          <Button href={rutaLocal('/productos', locale)} variante="secundario" tamano="grande">
+            {gracias.ctaCatalogo}
+            <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+          </Button>
+
+          <Button href={rutaLocal('/', locale)} variante="secundario" tamano="grande">
+            {gracias.ctaInicio}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" locale={locale} />
+</Layout>

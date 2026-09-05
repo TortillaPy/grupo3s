@@ -1,0 +1,70 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import Hero from '@components/sections/Hero.astro';
+import ProblemaSolucion from '@components/sections/ProblemaSolucion.astro';
+import Beneficios from '@components/sections/Beneficios.astro';
+import Galeria from '@components/sections/Galeria.astro';
+import ComoComprar from '@components/sections/ComoComprar.astro';
+import Especificaciones from '@components/sections/Especificaciones.astro';
+import Precio from '@components/sections/Precio.astro';
+import FormPresupuesto from '@components/sections/FormPresupuesto.astro';
+import Testimonios from '@components/sections/Testimonios.astro';
+import Faq from '@components/sections/Faq.astro';
+import CtaFinal from '@components/sections/CtaFinal.astro';
+import BotonWhatsAppFlotante from '@components/ui/BotonWhatsAppFlotante.astro';
+import { config, obtenerContenido, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const contenido = obtenerContenido(locale);
+
+/**
+ * FAQPage: es el marcado que Google usa para el desplegable de preguntas
+ * en el resultado de búsqueda. Se arma directo del mismo array que
+ * renderiza el acordeón, así nunca puede quedar desincronizado con lo
+ * que el usuario ve en pantalla —que es justamente lo que Google exige—.
+ */
+const schemaFaq = {
+  '@type': 'FAQPage',
+  '@id': `${config.site.url}${rutaLocal('/', locale)}#faq`,
+  mainEntity: contenido.faq.items.map((item) => ({
+    '@type': 'Question',
+    name: item.pregunta,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.respuesta,
+    },
+  })),
+};
+---
+
+<Layout
+  titulo={contenido.meta.inicio.titulo}
+  descripcion={contenido.meta.inicio.descripcion}
+  ruta="/"
+  locale={locale}
+  schemas={[schemaFaq]}
+>
+  <Header slot="header" locale={locale} />
+
+  <Hero locale={locale} />
+  <ProblemaSolucion locale={locale} />
+  <Beneficios locale={locale} />
+  <Galeria locale={locale} />
+  <ComoComprar locale={locale} />
+  <Especificaciones locale={locale} />
+  <Precio locale={locale} />
+  <FormPresupuesto locale={locale} />
+  <Testimonios locale={locale} />
+  <Faq locale={locale} />
+  <CtaFinal locale={locale} />
+
+  <Footer slot="footer" locale={locale} />
+  <BotonWhatsAppFlotante slot="footer" locale={locale} />
+</Layout>

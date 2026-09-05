@@ -1,0 +1,48 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from '../ui/Section.astro';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { beneficios } = obtenerContenido(locale);
+---
+
+<Section
+  id="beneficios"
+  volanta="Por qué 3S"
+  titulo={beneficios.titulo}
+  bajada={beneficios.bajada}
+  fondo="hueso"
+>
+  <!--
+    Grilla de una sola pieza: celdas blancas separadas por una línea de
+    1 px, en vez de seis tarjetas con sombra. Es más sobrio y evita que
+    todo el sitio se lea como una pila de cajas iguales.
+  -->
+  <ul class="grid gap-px border border-gris-claro bg-gris-claro sm:grid-cols-2 lg:grid-cols-3">
+    {
+      beneficios.items.map((beneficio, indice) => (
+        <li
+          class="flex flex-col bg-white p-6 sm:p-7"
+          data-revelar
+          data-revelar-retraso={String((indice % 3) * 90)}
+        >
+          <Icon
+            name={`lucide:${beneficio.icono}`}
+            class="size-7 text-verde-oscuro"
+            aria-hidden="true"
+          />
+          <h3 class="mt-4 font-display text-[1.05rem] font-bold text-negro">
+            {beneficio.titulo}
+          </h3>
+          <p class="mt-2 text-[0.95rem] text-grafito/85">{beneficio.texto}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

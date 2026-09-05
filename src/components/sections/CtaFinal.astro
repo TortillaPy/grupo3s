@@ -1,0 +1,65 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import WhatsAppLink from '../ui/WhatsAppLink.astro';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { ctaFinal } = obtenerContenido(locale);
+
+const telefono = config.contacto.telefonos[0] ?? config.contacto.whatsapp;
+---
+
+<section
+  id="contacto"
+  aria-labelledby="cta-final-titulo"
+  class="relative overflow-hidden bg-negro py-16 sm:py-20 lg:py-24"
+>
+  <!-- Rombo de marca a gran escala: la misma geometría del isotipo. -->
+  <div
+    class="pointer-events-none absolute -right-24 -bottom-40 hidden size-[34rem] rotate-45 bg-verde/12 lg:block"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="contenedor relative">
+    <div class="max-w-2xl" data-revelar>
+      <h2 id="cta-final-titulo" class="text-titulo font-bold text-white">
+        {ctaFinal.titulo}
+      </h2>
+      <p class="mt-4 max-w-lectura text-subtitulo text-white/75">
+        {ctaFinal.texto}
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale} variante="primario" tamano="grande">
+          <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+          {ctaFinal.ctaPrimario}
+        </WhatsAppLink>
+
+        <Button href={`tel:+${telefono.e164}`} variante="claro" tamano="grande">
+          <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
+          {telefono.visible}
+        </Button>
+      </div>
+
+      <p class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/60">
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="lucide:mail" class="size-4" aria-hidden="true" />
+          <a href={`mailto:${config.contacto.email}`} class="text-white/80 hover:text-white">
+            {config.contacto.email}
+          </a>
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="lucide:map-pin" class="size-4" aria-hidden="true" />
+          {config.contacto.direccion.calle}, {config.contacto.direccion.ciudad}
+        </span>
+      </p>
+    </div>
+  </div>
+</section>

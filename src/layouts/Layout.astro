@@ -1,0 +1,208 @@
+---
+import '../styles/fuentes.css';
+import '../styles/global.css';
+
+import { config, obtenerContenido, localesDisponibles, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  /** Título completo de la pestaña. Único por página. */
+  readonly titulo: string;
+  /** Meta description. Única por página, escrita para el contenido real. */
+  readonly descripcion: string;
+  /**
+   * Ruta base de esta página, SIN el prefijo de idioma y empezando con
+   * `/`. El Layout le agrega el prefijo que corresponda para armar la
+   * canónica y las alternativas de hreflang.
+   */
+  readonly ruta: string;
+  readonly locale?: Locale;
+  /** Imagen de Open Graph propia; si no, se usa la del sitio. */
+  readonly imagenOg?: string;
+  /** Nodos JSON-LD que agrega la página, además de los de la marca. */
+  readonly schemas?: readonly Record<string, unknown>[];
+  /** `true` en páginas que no deben indexarse (gracias, 404). */
+  readonly noIndexar?: boolean;
+}
+
+const {
+  titulo,
+  descripcion,
+  ruta,
+  locale = config.localePorDefecto,
+  imagenOg,
+  schemas = [],
+  noIndexar = false,
+} = Astro.props;
+
+const contenido = obtenerContenido(locale);
+
+const canonica = new URL(rutaLocal(ruta, locale), config.site.url).href;
+const urlImagenOg = new URL(
+  imagenOg ?? config.site.imagenOg.src,
+  config.site.url,
+).href;
+
+const codigosHreflang: Readonly<Record<Locale, string>> = {
+  es: 'es-PY',
+  pt: 'pt-BR',
+  en: 'en-US',
+};
+
+/** Datos de la empresa. Se emiten en todas las páginas. */
+const schemaOrganizacion = {
+  '@type': 'Organization',
+  '@id': `${config.site.url}/#organizacion`,
+  name: config.site.nombre,
+  legalName: config.site.razonSocial,
+  url: config.site.url,
+  logo: new URL(config.site.logo, config.site.url).href,
+  foundingDate: String(config.site.fundacion),
+  email: config.contacto.email,
+  telephone: `+${config.contacto.whatsapp.e164}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: config.contacto.direccion.calle,
+    addressLocality: config.contacto.direccion.ciudad,
+    addressRegion: config.contacto.direccion.departamento,
+    addressCountry: config.contacto.direccion.codigoPais,
+  },
+  sameAs: config.contacto.redes
+    .filter((red) => red.url !== '')
+    .map((red) => red.url),
+};
+
+const schemaNegocioLocal = {
+  '@type': 'LocalBusiness',
+  '@id': `${config.site.url}/#negocio`,
+  name: config.site.nombre,
+  image: urlImagenOg,
+  url: config.site.url,
+  telephone: `+${config.contacto.whatsapp.e164}`,
+  email: config.contacto.email,
+  priceRange: '$$',
+  openingHours: config.contacto.horarioSchema,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: config.contacto.direccion.calle,
+    addressLocality: config.contacto.direccion.ciudad,
+    addressRegion: config.contacto.direccion.departamento,
+    addressCountry: config.contacto.direccion.codigoPais,
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: config.contacto.direccion.pais,
+  },
+  parentOrganization: { '@id': `${config.site.url}/#organizacion` },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [schemaOrganizacion, schemaNegocioLocal, ...schemas],
+};
+---
+
+<!doctype html>
+<html lang={contenido.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    {noIndexar && <meta name="robots" content="noindex, follow" />}
+
+    {
+      localesDisponibles.map((disponible) => (
+        <link
+          rel="alternate"
+          hreflang={codigosHreflang[disponible]}
+          href={new URL(rutaLocal(ruta, disponible), config.site.url).href}
+        />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(rutaLocal(ruta, config.localePorDefecto), config.site.url).href}
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={config.site.nombre} />
+    <meta property="og:locale" content={contenido.htmlLang.replace('-', '_')} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={urlImagenOg} />
+    <meta property="og:image:width" content={String(config.site.imagenOg.ancho)} />
+    <meta property="og:image:height" content={String(config.site.imagenOg.alto)} />
+    <meta property="og:image:alt" content={config.site.imagenOg.alt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={urlImagenOg} />
+    <meta name="twitter:image:alt" content={config.site.imagenOg.alt} />
+
+    <meta name="theme-color" content="#40a942" />
+    <link rel="icon" href="/favicon/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon/favicon-512.png" sizes="512x512" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </head>
+
+  <body>
+    <a class="salto-contenido" href="#contenido">
+      {contenido.nav.saltarAlContenido}
+    </a>
+
+    <slot name="header" />
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <slot name="footer" />
+
+    <script>
+      /**
+       * Revelado al entrar en viewport.
+       *
+       * El HTML se sirve VISIBLE. Este script recién entonces oculta lo que
+       * va a animar, así que si el JS no corre —o el usuario pidió menos
+       * movimiento— el contenido igual se lee. Cero dependencia de JS
+       * para leer la página.
+       */
+      const prefiereMenosMovimiento = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+
+      const elementos = document.querySelectorAll<HTMLElement>('[data-revelar]');
+
+      if (!prefiereMenosMovimiento && 'IntersectionObserver' in window) {
+        elementos.forEach((elemento) => elemento.classList.add('esta-oculto'));
+
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            entradas.forEach((entrada) => {
+              if (!entrada.isIntersecting) return;
+              const objetivo = entrada.target as HTMLElement;
+              const retraso = Number(objetivo.dataset.revelarRetraso ?? '0');
+              window.setTimeout(() => {
+                objetivo.classList.remove('esta-oculto');
+                objetivo.classList.add('se-revela');
+              }, retraso);
+              observador.unobserve(objetivo);
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+        );
+
+        elementos.forEach((elemento) => observador.observe(elemento));
+      }
+    </script>
+  </body>
+</html>

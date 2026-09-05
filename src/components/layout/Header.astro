@@ -1,0 +1,191 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+import WhatsAppLink from '../ui/WhatsAppLink.astro';
+import LangSwitch from './LangSwitch.astro';
+import { config, obtenerContenido, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+import { resolverImagen } from '../../lib/imagenes';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { nav } = obtenerContenido(locale);
+
+const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
+---
+
+<header
+  id="cabecera"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,box-shadow] duration-200"
+  data-cabecera
+>
+  <div class="contenedor flex h-18 items-center justify-between gap-4">
+    <a
+      href={rutaLocal('/', locale)}
+      class="flex shrink-0 items-center"
+      aria-label={`${config.site.nombre}, ir al inicio`}
+    >
+      <Image
+        src={logo}
+        alt=""
+        widths={[120, 240]}
+        sizes="76px"
+        loading="eager"
+        format="webp"
+        quality={90}
+        class="h-11 w-auto"
+      />
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <nav class="hidden lg:block" aria-label="Navegación principal">
+      <ul class="flex items-center gap-7">
+        {
+          nav.enlaces.map((enlace) => (
+            <li>
+              <a
+                href={rutaLocal(enlace.href, locale)}
+                class="text-[0.92rem] font-medium text-grafito transition-colors hover:text-verde-oscuro"
+              >
+                {enlace.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <LangSwitch locale={locale} class="hidden md:block" />
+
+      <div class="hidden sm:block">
+        <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale}>
+          {nav.cta}
+        </WhatsAppLink>
+      </div>
+
+      <button
+        type="button"
+        id="alternar-menu"
+        class="inline-flex size-11 items-center justify-center rounded-xs border-2 border-negro/15 text-negro transition-colors hover:border-negro/40 lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label={nav.abrirMenu}
+        data-abrir={nav.abrirMenu}
+        data-cerrar={nav.cerrarMenu}
+      >
+        <Icon name="lucide:menu" class="size-6" data-icono-menu aria-hidden="true" />
+        <Icon name="lucide:x" class="hidden size-6" data-icono-cerrar aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú móvil -->
+  <div
+    id="menu-movil"
+    class="hidden border-t border-gris-claro bg-white lg:hidden"
+    data-menu-movil
+  >
+    <nav class="contenedor py-4" aria-label="Navegación principal en móvil">
+      <ul class="flex flex-col">
+        {
+          nav.enlaces.map((enlace) => (
+            <li class="border-b border-gris-claro last:border-b-0">
+              <a
+                href={rutaLocal(enlace.href, locale)}
+                class="block py-3.5 font-medium text-grafito transition-colors hover:text-verde-oscuro"
+                data-enlace-movil
+              >
+                {enlace.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <LangSwitch locale={locale} class="mt-4 md:hidden" />
+
+      <div class="mt-4 sm:hidden">
+        <WhatsAppLink
+          contexto={{ tipo: 'general' }}
+          locale={locale}
+          tamano="grande"
+          class="w-full"
+        >
+          <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+          {nav.cta}
+        </WhatsAppLink>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Reserva del alto del header: sin esto el hero arranca debajo y salta. -->
+<div class="h-18" aria-hidden="true"></div>
+
+<script>
+  const cabecera = document.querySelector<HTMLElement>('[data-cabecera]');
+  const boton = document.querySelector<HTMLButtonElement>('#alternar-menu');
+  const menu = document.querySelector<HTMLElement>('[data-menu-movil]');
+  const iconoMenu = document.querySelector<HTMLElement>('[data-icono-menu]');
+  const iconoCerrar = document.querySelector<HTMLElement>('[data-icono-cerrar]');
+
+  /* ── Fondo translúcido con blur al scrollear ──────────────────────── */
+  if (cabecera !== null) {
+    const CLASES_SCROLL = [
+      'bg-hueso/85',
+      'backdrop-blur-md',
+      'border-gris-claro',
+      'shadow-[0_1px_16px_-8px_rgba(11,6,12,0.45)]',
+    ];
+
+    const actualizarCabecera = (): void => {
+      const activa = window.scrollY > 8;
+      CLASES_SCROLL.forEach((clase) => cabecera.classList.toggle(clase, activa));
+      cabecera.classList.toggle('border-transparent', !activa);
+    };
+
+    actualizarCabecera();
+    window.addEventListener('scroll', actualizarCabecera, { passive: true });
+  }
+
+  /* ── Menú hamburguesa ─────────────────────────────────────────────── */
+  if (boton !== null && menu !== null) {
+    const abrirEtiqueta = boton.dataset.abrir ?? 'Abrir el menú';
+    const cerrarEtiqueta = boton.dataset.cerrar ?? 'Cerrar el menú';
+
+    const alternar = (abierto: boolean): void => {
+      boton.setAttribute('aria-expanded', String(abierto));
+      boton.setAttribute('aria-label', abierto ? cerrarEtiqueta : abrirEtiqueta);
+      menu.classList.toggle('hidden', !abierto);
+      iconoMenu?.classList.toggle('hidden', abierto);
+      iconoCerrar?.classList.toggle('hidden', !abierto);
+    };
+
+    boton.addEventListener('click', () => {
+      alternar(boton.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Al elegir un destino, el menú se cierra solo.
+    menu.querySelectorAll('[data-enlace-movil]').forEach((enlace) => {
+      enlace.addEventListener('click', () => alternar(false));
+    });
+
+    // Escape cierra y devuelve el foco al botón.
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key !== 'Escape') return;
+      if (boton.getAttribute('aria-expanded') !== 'true') return;
+      alternar(false);
+      boton.focus();
+    });
+
+    // Volver a escritorio con el menú abierto lo deja en un estado raro.
+    const consultaEscritorio = window.matchMedia('(min-width: 1024px)');
+    consultaEscritorio.addEventListener('change', (evento) => {
+      if (evento.matches) alternar(false);
+    });
+  }
+</script>

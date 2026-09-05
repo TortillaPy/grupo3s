@@ -1,0 +1,425 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import { config, obtenerContenido, productos, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+  /** Producto preseleccionado, para usarlo desde una ficha. */
+  readonly productoInicial?: string;
+}
+
+const { locale = config.localePorDefecto, productoInicial } = Astro.props;
+const contenido = obtenerContenido(locale);
+const { presupuesto, categorias } = contenido;
+
+/** El select se agrupa por familia, en el orden del catálogo. */
+const familias = categorias
+  .map((categoria) => ({
+    categoria,
+    items: productos.filter((producto) => producto.categoria === categoria.id),
+  }))
+  .filter((grupo) => grupo.items.length > 0);
+
+const endpoint = config.formulario.endpoints[config.formulario.proveedor];
+
+/**
+ * El aviso de privacidad lleva un enlace en el medio, así que hay que
+ * partir el texto en dos alrededor del marcador {enlace} en vez de
+ * inyectar HTML desde los datos.
+ */
+const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enlace}');
+---
+
+<section
+  id="formulario"
+  aria-labelledby="formulario-titulo"
+  class="bg-hueso py-14 sm:py-20 lg:py-24"
+>
+  <div class="contenedor">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <div class="lg:col-span-5" data-revelar>
+        <p class="text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase">
+          {contenido.nav.cta}
+        </p>
+        <h2 id="formulario-titulo" class="mt-3 text-titulo font-bold text-negro">
+          {presupuesto.titulo}
+        </h2>
+        <p class="mt-4 max-w-lectura text-subtitulo text-grafito/90">
+          {presupuesto.bajada}
+        </p>
+
+        <ul class="mt-8 flex flex-col gap-3 text-[0.95rem] text-grafito">
+          <li class="flex items-center gap-2.5">
+            <Icon name="lucide:phone" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <a href={`tel:+${config.contacto.telefonos[0]?.e164 ?? ''}`} class="tabular-nums hover:text-verde-oscuro">
+              {config.contacto.telefonos[0]?.visible}
+            </a>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <Icon name="lucide:mail" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <a href={`mailto:${config.contacto.email}`} class="[overflow-wrap:anywhere] hover:text-verde-oscuro">
+              {config.contacto.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-7" data-revelar data-revelar-retraso="100">
+        <!--
+          Envío por fetch a un servicio externo: el sitio no tiene
+          backend propio. El proveedor y su endpoint salen de
+          config.formulario, así que cambiar de Web3Forms a Formspree
+          es cambiar una constante.
+        -->
+        <form
+          id="form-presupuesto"
+          class="border border-gris-claro bg-white p-5 sm:p-7"
+          method="post"
+          action={endpoint}
+          novalidate
+          data-endpoint={endpoint}
+          data-proveedor={config.formulario.proveedor}
+          data-access-key={config.formulario.accessKey}
+          data-redirigir={config.formulario.redirigirA}
+          data-error-envio={presupuesto.errores.envio}
+          data-error-config={presupuesto.errores.sinConfigurar}
+          data-honeypot={config.formulario.honeypot}
+        >
+          <div class="flex flex-col gap-5">
+            <div>
+              <label for="nombre" class="block text-sm font-semibold text-negro">
+                {presupuesto.campos.nombre}
+              </label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                required
+                autocomplete="name"
+                aria-describedby="nombre-error"
+                data-error-vacio={presupuesto.errores.nombre}
+                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+              />
+              <p id="nombre-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="email" class="block text-sm font-semibold text-negro">
+                  {presupuesto.campos.email}
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  inputmode="email"
+                  aria-describedby="email-error"
+                  data-error-vacio={presupuesto.errores.email}
+                  data-error-formato={presupuesto.errores.emailFormato}
+                  class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+                />
+                <p id="email-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
+              </div>
+
+              <div>
+                <label for="telefono" class="block text-sm font-semibold text-negro">
+                  {presupuesto.campos.telefono}{' '}
+                  <span class="font-normal text-gris">({presupuesto.campos.telefonoOpcional})</span>
+                </label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="producto" class="block text-sm font-semibold text-negro">
+                {presupuesto.campos.producto}
+              </label>
+              <select
+                id="producto"
+                name="producto"
+                required
+                aria-describedby="producto-error"
+                data-error-vacio={presupuesto.errores.producto}
+                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+              >
+                <option value="">{presupuesto.campos.productoPlaceholder}</option>
+                {
+                  familias.map((grupo) => (
+                    <optgroup label={grupo.categoria.nombre}>
+                      {grupo.items.map((producto) => (
+                        <option
+                          value={producto.nombre}
+                          selected={producto.nombre === productoInicial}
+                        >
+                          {producto.nombre}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))
+                }
+                <option value={presupuesto.opcionGeneral}>{presupuesto.opcionGeneral}</option>
+              </select>
+              <p id="producto-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
+            </div>
+
+            <div>
+              <label for="mensaje" class="block text-sm font-semibold text-negro">
+                {presupuesto.campos.mensaje}
+              </label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="4"
+                required
+                aria-describedby="mensaje-error"
+                data-error-vacio={presupuesto.errores.mensaje}
+                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+              ></textarea>
+              <p id="mensaje-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
+            </div>
+
+            <!--
+              Trampa antispam: los bots completan todos los campos que
+              encuentran en el HTML. Este está fuera de la vista y fuera
+              del orden de tabulación, así que una persona no lo toca
+              nunca. Si viene con algo, el envío se descarta.
+            -->
+            <div class="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+              <label for={config.formulario.honeypot}>No completar este campo</label>
+              <input
+                type="text"
+                id={config.formulario.honeypot}
+                name={config.formulario.honeypot}
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Estado de error del envío -->
+            <p
+              class="hidden items-start gap-2.5 border border-red-700/40 bg-red-50 px-4 py-3 text-sm text-red-800"
+              role="alert"
+              data-estado-error
+            >
+              <Icon name="lucide:alert-circle" class="mt-0.5 size-5 shrink-0" aria-hidden="true" />
+              <span data-estado-error-texto></span>
+            </p>
+
+            <div>
+              <button
+                type="submit"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-xs bg-verde-oscuro px-6 py-3.5 font-semibold text-white transition-colors hover:bg-verde-profundo disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8"
+                data-enviar
+                data-texto-normal={presupuesto.enviar}
+                data-texto-enviando={presupuesto.enviando}
+                data-texto-reintentar={presupuesto.reintentar}
+              >
+                <Icon
+                  name="lucide:loader-circle"
+                  class="hidden size-5 animate-spin"
+                  data-spinner
+                  aria-hidden="true"
+                />
+                <span data-texto-boton>{presupuesto.enviar}</span>
+              </button>
+
+              <p class="mt-4 max-w-lectura text-[0.82rem] text-gris">
+                {avisoAntes}<a
+                  href={rutaLocal('/politica-privacidad', locale)}
+                  class="underline underline-offset-2 hover:text-verde-oscuro"
+                  >{presupuesto.privacidadEnlace}</a
+                >{avisoDespues}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const formulario = document.querySelector<HTMLFormElement>('#form-presupuesto');
+
+  if (formulario !== null) {
+    const boton = formulario.querySelector<HTMLButtonElement>('[data-enviar]');
+    const spinner = formulario.querySelector<HTMLElement>('[data-spinner]');
+    const textoBoton = formulario.querySelector<HTMLElement>('[data-texto-boton]');
+    const cajaError = formulario.querySelector<HTMLElement>('[data-estado-error]');
+    const textoError = formulario.querySelector<HTMLElement>('[data-estado-error-texto]');
+
+    const endpoint = formulario.dataset.endpoint ?? '';
+    const proveedor = formulario.dataset.proveedor ?? 'web3forms';
+    const accessKey = formulario.dataset.accessKey ?? '';
+    const redirigirA = formulario.dataset.redirigir ?? '/gracias';
+    const mensajeErrorEnvio = formulario.dataset.errorEnvio ?? '';
+    const mensajeSinConfigurar = formulario.dataset.errorConfig ?? '';
+    const campoTrampa = formulario.dataset.honeypot ?? 'sitio_web';
+
+    /** Campo → párrafo de error asociado. */
+    const campos: readonly string[] = ['nombre', 'email', 'producto', 'mensaje'];
+
+    const marcarError = (id: string, mensaje: string): void => {
+      const campo = formulario.querySelector<HTMLElement>(`#${id}`);
+      const parrafo = formulario.querySelector<HTMLElement>(`#${id}-error`);
+      campo?.setAttribute('aria-invalid', 'true');
+      if (parrafo !== null) {
+        parrafo.textContent = mensaje;
+        parrafo.classList.remove('hidden');
+      }
+    };
+
+    const limpiarError = (id: string): void => {
+      const campo = formulario.querySelector<HTMLElement>(`#${id}`);
+      const parrafo = formulario.querySelector<HTMLElement>(`#${id}-error`);
+      campo?.removeAttribute('aria-invalid');
+      if (parrafo !== null) {
+        parrafo.textContent = '';
+        parrafo.classList.add('hidden');
+      }
+    };
+
+    /** Validación en cliente. Devuelve el id del primer campo con error. */
+    const validar = (): string | null => {
+      let primero: string | null = null;
+
+      campos.forEach((id) => {
+        const campo = formulario.querySelector<
+          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >(`#${id}`);
+        if (campo === null) return;
+
+        limpiarError(id);
+        const valor = campo.value.trim();
+
+        if (valor === '') {
+          marcarError(id, campo.dataset.errorVacio ?? '');
+          primero ??= id;
+          return;
+        }
+
+        // Comprobación de forma, no de existencia: quién tiene el correo
+        // mal escrito se entera al no recibir respuesta, pero al menos
+        // atajamos el error de tipeo evidente.
+        if (id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valor)) {
+          marcarError(id, campo.dataset.errorFormato ?? '');
+          primero ??= id;
+        }
+      });
+
+      return primero;
+    };
+
+    const mostrarError = (mensaje: string): void => {
+      if (textoError !== null) textoError.textContent = mensaje;
+      cajaError?.classList.remove('hidden');
+      cajaError?.classList.add('flex');
+    };
+
+    const ocultarError = (): void => {
+      cajaError?.classList.add('hidden');
+      cajaError?.classList.remove('flex');
+    };
+
+    /** Estados visibles: normal, enviando, error. El éxito redirige. */
+    const setEnviando = (enviando: boolean): void => {
+      if (boton === null) return;
+      boton.disabled = enviando;
+      formulario.setAttribute('aria-busy', String(enviando));
+      spinner?.classList.toggle('hidden', !enviando);
+      if (textoBoton !== null) {
+        textoBoton.textContent = enviando
+          ? (boton.dataset.textoEnviando ?? '')
+          : (boton.dataset.textoNormal ?? '');
+      }
+    };
+
+    const setReintentar = (): void => {
+      if (boton === null || textoBoton === null) return;
+      textoBoton.textContent = boton.dataset.textoReintentar ?? '';
+    };
+
+    // El error de un campo se limpia en cuanto la persona lo corrige.
+    campos.forEach((id) => {
+      formulario
+        .querySelector(`#${id}`)
+        ?.addEventListener('input', () => limpiarError(id));
+    });
+
+    formulario.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      ocultarError();
+
+      const conError = validar();
+      if (conError !== null) {
+        formulario.querySelector<HTMLElement>(`#${conError}`)?.focus();
+        return;
+      }
+
+      if (accessKey === '') {
+        mostrarError(mensajeSinConfigurar);
+        return;
+      }
+
+      const datos = new FormData(formulario);
+
+      // Trampa antispam: si el campo oculto viene con algo, es un bot.
+      // No se envía nada y se le muestra el mismo camino de siempre.
+      const trampa = datos.get(campoTrampa);
+      if (typeof trampa === 'string' && trampa.trim() !== '') {
+        window.location.assign(redirigirA);
+        return;
+      }
+
+      setEnviando(true);
+
+      const cuerpo: Record<string, string> = {
+        subject: `Solicitud de presupuesto — ${String(datos.get('producto') ?? '')}`,
+        from_name: '3S Grupo Industrial · Sitio web',
+        nombre: String(datos.get('nombre') ?? ''),
+        email: String(datos.get('email') ?? ''),
+        telefono: String(datos.get('telefono') ?? ''),
+        producto: String(datos.get('producto') ?? ''),
+        mensaje: String(datos.get('mensaje') ?? ''),
+      };
+
+      // Web3Forms espera `access_key`; Formspree no la usa.
+      if (proveedor === 'web3forms') cuerpo.access_key = accessKey;
+
+      try {
+        const respuesta = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(cuerpo),
+        });
+
+        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+
+        // Éxito: se redirige. Elegimos redirección y no confirmación
+        // en línea para tener una URL propia que medir y compartir.
+        window.location.assign(redirigirA);
+      } catch {
+        // Nada se limpia: lo que la persona escribió sigue en el
+        // formulario y puede reintentar sin volver a tipearlo.
+        setEnviando(false);
+        setReintentar();
+        mostrarError(mensajeErrorEnvio);
+        cajaError?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    });
+  }
+</script>

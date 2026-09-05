@@ -1,0 +1,72 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import WhatsAppLink from '../ui/WhatsAppLink.astro';
+import { config, obtenerContenido } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
+---
+
+<Section
+  id="como-comprar"
+  volanta="Cómo trabajamos"
+  titulo={comoComprar.titulo}
+  bajada={comoComprar.bajada}
+  fondo="blanco"
+>
+  <!--
+    Acá la numeración no es decorativa: los pasos ocurren en este orden y
+    el número le dice al lector dónde está del proceso.
+  -->
+  <ol class="grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+    {
+      comoComprar.pasos.map((paso, indice) => (
+        <li
+          class="border-t-2 border-verde pt-5"
+          data-revelar
+          data-revelar-retraso={String(indice * 110)}
+        >
+          <span class="block text-sm font-semibold tabular-nums text-verde-oscuro">
+            {String(indice + 1).padStart(2, '0')}
+          </span>
+          <h3 class="mt-2 font-display text-[1.15rem] font-bold text-negro">
+            {paso.titulo}
+          </h3>
+          <p class="mt-2 text-[0.95rem] text-grafito/85">{paso.texto}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div
+    class="mt-12 flex flex-col gap-4 border border-gris-claro bg-hueso p-6 sm:mt-14 sm:flex-row sm:items-center sm:justify-between sm:p-8"
+    data-revelar
+  >
+    <div>
+      <p class="font-display text-[1.15rem] font-bold text-negro">
+        {presupuesto.titulo}
+      </p>
+      <p class="mt-1 max-w-lectura text-[0.95rem] text-grafito/85">
+        {presupuesto.bajada}
+      </p>
+    </div>
+    <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
+      <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale}>
+        <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+        {hero.ctaPrimario}
+      </WhatsAppLink>
+      <Button href={`tel:+${config.contacto.telefonos[0]?.e164 ?? config.contacto.whatsapp.e164}`} variante="secundario">
+        <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
+        {config.contacto.telefonos[0]?.visible ?? config.contacto.whatsapp.visible}
+      </Button>
+    </div>
+  </div>
+</Section>

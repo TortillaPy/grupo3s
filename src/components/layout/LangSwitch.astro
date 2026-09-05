@@ -1,0 +1,68 @@
+---
+import { config, localesDisponibles, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+  readonly class?: string;
+}
+
+const { locale = config.localePorDefecto, class: claseExtra = '' } = Astro.props;
+
+/** Cómo se nombra cada idioma: siempre en su propio idioma. */
+const NOMBRES: Readonly<Record<Locale, { corto: string; largo: string }>> = {
+  es: { corto: 'ES', largo: 'Español' },
+  pt: { corto: 'PT', largo: 'Português' },
+  en: { corto: 'EN', largo: 'English' },
+};
+
+/**
+ * Ruta actual sin el prefijo de idioma, para poder reconstruirla en
+ * cualquier otro. Así el cambio de idioma deja al visitante en la misma
+ * página, no en la portada.
+ */
+function rutaBase(pathname: string): string {
+  const limpia = pathname.replace(/\/+$/, '') || '/';
+  for (const disponible of localesDisponibles) {
+    if (disponible === config.localePorDefecto) continue;
+    if (limpia === `/${disponible}`) return '/';
+    if (limpia.startsWith(`/${disponible}/`)) {
+      return limpia.slice(disponible.length + 1);
+    }
+  }
+  return limpia;
+}
+
+const base = rutaBase(Astro.url.pathname);
+---
+
+{
+  localesDisponibles.length > 1 && (
+    <nav aria-label="Idioma / Language" class={claseExtra}>
+      <ul class="flex items-center gap-1">
+        {localesDisponibles.map((disponible) => {
+          const activo = disponible === locale;
+          return (
+            <li>
+              <a
+                href={rutaLocal(base, disponible)}
+                hreflang={disponible}
+                lang={disponible}
+                aria-current={activo ? 'true' : undefined}
+                class:list={[
+                  'inline-flex min-w-9 items-center justify-center rounded-xs px-1.5 py-1.5 text-[0.78rem] font-semibold transition-colors',
+                  activo
+                    ? 'bg-negro/8 text-negro'
+                    : 'text-grafito/80 hover:bg-negro/5 hover:text-negro',
+                ]}
+              >
+                <span aria-hidden="true">{NOMBRES[disponible].corto}</span>
+                <span class="sr-only">{NOMBRES[disponible].largo}</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  )
+}

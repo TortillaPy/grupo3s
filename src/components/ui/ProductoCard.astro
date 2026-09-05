@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+import { obtenerContenido, config, rutaLocal } from '@data/site';
+import type { Locale, Producto } from '@data/site';
+import { resolverImagen } from '../../lib/imagenes';
+
+interface Props {
+  readonly producto: Producto;
+  readonly locale?: Locale;
+  /** Retraso del fade-in de entrada, en milisegundos. */
+  readonly retraso?: number;
+  /**
+   * Nivel del encabezado de la tarjeta. En el catálogo, donde las
+   * tarjetas cuelgan directo del h1 de la página, va 2; dentro de una
+   * sección que ya tiene su h2 —"De la misma familia"— va 3. Saltar de
+   * h1 a h3 es un error de jerarquía que los lectores de pantalla
+   * anuncian mal.
+   */
+  readonly nivel?: 2 | 3;
+}
+
+const {
+  producto,
+  locale = config.localePorDefecto,
+  retraso = 0,
+  nivel = 3,
+} = Astro.props;
+
+const Encabezado = `h${nivel}` as 'h2' | 'h3';
+
+const contenido = obtenerContenido(locale);
+const copy = contenido.productos[producto.slug];
+const categoria = contenido.categorias.find(
+  (item) => item.id === producto.categoria,
+);
+const modulo = resolverImagen(producto.imagen.src);
+---
+
+<article
+  class="group relative flex h-full flex-col bg-white p-5 transition-colors hover:bg-verde-suave/40 sm:p-6"
+  data-producto
+  data-categoria={producto.categoria}
+  data-revelar
+  data-revelar-retraso={String(retraso)}
+>
+  <Image
+    src={modulo}
+    alt={producto.imagen.alt}
+    widths={[200, 400]}
+    sizes="176px"
+    loading="lazy"
+    format="webp"
+    quality={80}
+    class="h-36 w-full self-center object-contain"
+  />
+
+  <p class="mt-5 text-xs font-semibold tracking-[0.12em] text-verde-oscuro uppercase">
+    {categoria?.nombre}
+  </p>
+
+  <Encabezado class="mt-1.5 font-display text-[1.15rem] font-bold text-negro">
+    <!--
+      El enlace envuelve solo el nombre, pero se estira sobre toda la
+      tarjeta con ::after. Así el área clicable es la tarjeta entera y
+      el lector de pantalla igual anuncia un único enlace con el nombre
+      del producto, no "leer más" repetido dieciocho veces.
+    -->
+    <a
+      href={rutaLocal(`/productos/${producto.slug}`, locale)}
+      class="after:absolute after:inset-0 after:content-['']"
+    >
+      {producto.nombre}
+    </a>
+  </Encabezado>
+
+  {
+    copy !== undefined && (
+      <p class="mt-2 text-[0.92rem] text-grafito/85">{copy.resumen}</p>
+    )
+  }
+
+  <p class="mt-4 text-[0.85rem] tabular-nums text-grafito/80">
+    {producto.presentaciones.map((presentacion) => presentacion.etiqueta).join(' · ')}
+  </p>
+
+  <p
+    class="mt-4 inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-verde-oscuro"
+    aria-hidden="true"
+  >
+    {contenido.catalogo.verFicha}
+    <Icon
+      name="lucide:arrow-right"
+      class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+    />
+  </p>
+</article>

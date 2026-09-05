@@ -1,0 +1,87 @@
+---
+/**
+ * Envoltorio semántico de sección.
+ *
+ * Cada sección de la landing es un <section> con su propio encabezado y
+ * el `aria-labelledby` apuntando a él, que es lo que hace que un lector
+ * de pantalla pueda saltar de sección en sección y saber en cuál está.
+ */
+interface Props {
+  /** Ancla de la sección. También arma el id del encabezado. */
+  readonly id: string;
+  readonly titulo: string;
+  readonly bajada?: string;
+  /** Texto corto sobre el título. Va en versalitas. */
+  readonly volanta?: string;
+  readonly fondo?: 'hueso' | 'blanco' | 'negro';
+  /** Centra el encabezado. Por defecto va alineado a la izquierda. */
+  readonly centrado?: boolean;
+  readonly class?: string;
+}
+
+const {
+  id,
+  titulo,
+  bajada,
+  volanta,
+  fondo = 'hueso',
+  centrado = false,
+  class: claseExtra = '',
+} = Astro.props;
+
+const porFondo: Record<'hueso' | 'blanco' | 'negro', string> = {
+  hueso: 'bg-hueso text-grafito',
+  blanco: 'bg-white text-grafito',
+  negro: 'bg-negro text-white',
+};
+
+const idTitulo = `${id}-titulo`;
+---
+
+<section
+  id={id}
+  aria-labelledby={idTitulo}
+  class={`${porFondo[fondo]} py-14 sm:py-20 lg:py-24 ${claseExtra}`}
+>
+  <div class="contenedor">
+    <div class={centrado ? 'mx-auto max-w-lectura text-center' : 'max-w-lectura'} data-revelar>
+      {
+        volanta !== undefined && (
+          <p
+            class:list={[
+              'mb-3 text-xs font-semibold tracking-[0.16em] uppercase',
+              fondo === 'negro' ? 'text-verde' : 'text-verde-oscuro',
+            ]}
+          >
+            {volanta}
+          </p>
+        )
+      }
+      <h2
+        id={idTitulo}
+        class:list={[
+          'text-titulo font-bold',
+          fondo === 'negro' ? 'text-white' : 'text-negro',
+        ]}
+      >
+        {titulo}
+      </h2>
+      {
+        bajada !== undefined && (
+          <p
+            class:list={[
+              'mt-4 text-subtitulo',
+              fondo === 'negro' ? 'text-white/75' : 'text-grafito/90',
+            ]}
+          >
+            {bajada}
+          </p>
+        )
+      }
+    </div>
+
+    <div class="mt-10 sm:mt-12">
+      <slot />
+    </div>
+  </div>
+</section>

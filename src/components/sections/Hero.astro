@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+import Button from '../ui/Button.astro';
+import WhatsAppLink from '../ui/WhatsAppLink.astro';
+import { config, obtenerContenido, rutaLocal } from '@data/site';
+import type { Locale } from '@data/site';
+import { resolverImagen } from '../../lib/imagenes';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { hero } = obtenerContenido(locale);
+
+const imagenHero = resolverImagen(hero.imagen.src);
+---
+
+<section class="relative overflow-hidden bg-hueso" aria-labelledby="hero-titulo">
+  <!-- Banda diagonal: retoma la geometría del rombo del isotipo 3S. -->
+  <div
+    class="pointer-events-none absolute -top-40 -right-32 hidden h-[38rem] w-[38rem] rotate-45 bg-verde/8 lg:block"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="contenedor relative py-14 sm:py-20 lg:py-24">
+    <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+      <div class="lg:col-span-6" data-revelar>
+        <p
+          class="mb-5 inline-block border-l-3 border-verde pl-3 text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase"
+        >
+          {config.site.razonSocial}
+        </p>
+
+        <h1 id="hero-titulo" class="text-display font-black text-negro">
+          {hero.titular}
+        </h1>
+
+        <p class="mt-6 max-w-lectura text-subtitulo text-grafito">
+          {hero.subtitulo}
+        </p>
+
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <WhatsAppLink contexto={{ tipo: 'hero' }} locale={locale} tamano="grande">
+            <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+            {hero.ctaPrimario}
+          </WhatsAppLink>
+
+          <Button href={rutaLocal('/productos', locale)} variante="secundario" tamano="grande">
+            {hero.ctaSecundario}
+            <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+          </Button>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6" data-revelar data-revelar-retraso="120">
+        <!--
+          fetchpriority="high" y loading="eager": es la imagen más grande
+          del primer viewport, así que se carga primero y no compite con
+          nada. width y alto van explícitos: cero desplazamiento de layout.
+        -->
+        <Image
+          src={imagenHero}
+          alt={hero.imagen.alt}
+          widths={[400, 800, 1200]}
+          sizes="(min-width: 1024px) 34rem, 100vw"
+          loading="eager"
+          fetchpriority="high"
+          format="webp"
+          quality={80}
+          class="w-full rounded-xs border border-gris-claro object-cover shadow-[0_18px_48px_-24px_rgba(11,6,12,0.35)]"
+        />
+      </div>
+    </div>
+
+    <!-- Señales de confianza -->
+    <ul
+      class="mt-12 grid gap-px border border-gris-claro bg-gris-claro sm:mt-16 sm:grid-cols-3"
+      data-revelar
+      data-revelar-retraso="220"
+    >
+      {
+        hero.senales.map((senal) => (
+          <li class="flex gap-3.5 bg-white p-5 sm:p-6">
+            <Icon
+              name={`lucide:${senal.icono}`}
+              class="mt-0.5 size-6 shrink-0 text-verde-oscuro"
+              aria-hidden="true"
+            />
+            <div>
+              <p class="font-display text-[0.95rem] font-bold text-negro">{senal.titulo}</p>
+              <p class="mt-1 text-sm text-grafito/85">{senal.detalle}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
