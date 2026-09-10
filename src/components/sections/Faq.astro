@@ -85,7 +85,7 @@ const { faq, hero, presupuesto } = contenido;
 
           <a
             href={`tel:+${config.contacto.telefonos[0]?.e164 ?? config.contacto.whatsapp.e164}`}
-            class="inline-flex items-center justify-center gap-2 rounded-chip border border-negro/15 bg-white px-5 py-3 text-[0.95rem] font-semibold text-negro shadow-nivel-1 transition-colors hover:border-negro/30 hover:bg-hueso"
+            class="inline-flex items-center justify-center gap-2 rounded-chip border border-negro/15 bg-blanco px-5 py-3 text-[0.95rem] font-semibold text-negro shadow-nivel-1 transition-colors hover:border-negro/30 hover:bg-hueso"
           >
             <Icon name="lucide:phone" class="size-4" aria-hidden="true" />
             {config.contacto.telefonos[0]?.visible ?? config.contacto.whatsapp.visible}

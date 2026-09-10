@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 
-import WhatsAppLink from '../ui/WhatsAppLink.astro';
+import Button from '../ui/Button.astro';
+import AlternadorTema from '../ui/AlternadorTema.astro';
 import LangSwitch from './LangSwitch.astro';
 import { config, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
@@ -55,9 +56,11 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     >
       {/*
         Las dos versiones se emiten siempre y se alternan por CSS con
-        una clase en el <header>. Hacerlo así —en vez de cambiar el src
-        por JS— evita que el logotipo parpadee al scrollear y mantiene
-        el alto reservado: cero desplazamiento de layout.
+        una clase en el <header> (y, en modo oscuro, con la clase
+        `dark` de <html>). Hacerlo así —en vez de cambiar el src por
+        JS— evita que el logotipo parpadee al scrollear o al cambiar
+        de tema, y mantiene el alto reservado: cero desplazamiento de
+        layout.
       */}
       <Image
         src={logoClaro}
@@ -70,21 +73,17 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
         class:list={['h-11 w-auto', sobreOscuro && 'hidden']}
         data-logo-claro
       />
-      {
-        sobreOscuro && (
-          <Image
-            src={logoOscuro}
-            alt=""
-            widths={[120, 240]}
-            sizes="76px"
-            loading="eager"
-            format="webp"
-            quality={90}
-            class="h-11 w-auto"
-            data-logo-oscuro
-          />
-        )
-      }
+      <Image
+        src={logoOscuro}
+        alt=""
+        widths={[120, 240]}
+        sizes="76px"
+        loading="eager"
+        format="webp"
+        quality={90}
+        class:list={['h-11 w-auto', !sobreOscuro && 'hidden']}
+        data-logo-oscuro
+      />
     </a>
 
     <!-- Navegación de escritorio -->
@@ -112,11 +111,19 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
 
     <div class="flex items-center gap-2">
       <LangSwitch locale={locale} class="hidden md:block" />
+      <AlternadorTema
+        etiquetaOscuro={nav.activarModoOscuro}
+        etiquetaClaro={nav.activarModoClaro}
+        class="hidden sm:inline-flex"
+      />
 
       <div class="hidden sm:block">
-        <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale}>
+        {/* Lleva al formulario de "Solicitá tu presupuesto" en la
+            portada, no a WhatsApp: es la vía preferida para pedidos
+            con detalle (producto, volumen, dirección de entrega). */}
+        <Button href={rutaLocal('/#presupuesto', locale)}>
           {nav.cta}
-        </WhatsAppLink>
+        </Button>
       </div>
 
       <button
@@ -138,7 +145,7 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
   <!-- Menú móvil -->
   <div
     id="menu-movil"
-    class="hidden border-t border-gris-claro bg-white text-grafito shadow-nivel-2 lg:hidden"
+    class="hidden border-t border-gris-claro bg-blanco text-grafito shadow-nivel-2 lg:hidden"
     data-menu-movil
   >
     <nav class="contenedor py-4" aria-label="Navegación principal en móvil">
@@ -158,17 +165,19 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
         }
       </ul>
       <LangSwitch locale={locale} class="mt-4 md:hidden" />
+      <AlternadorTema
+        etiquetaOscuro={nav.activarModoOscuro}
+        etiquetaClaro={nav.activarModoClaro}
+        class="mt-4 inline-flex sm:hidden"
+      />
 
       <div class="mt-4 sm:hidden">
-        <WhatsAppLink
-          contexto={{ tipo: 'general' }}
-          locale={locale}
-          tamano="grande"
-          class="w-full"
-        >
-          <Icon name="simple-icons:whatsapp" class="size-5" aria-hidden="true" />
+        {/* Lleva al formulario de "Solicitá tu presupuesto" en la
+            portada, no a WhatsApp: es la vía preferida para pedidos
+            con detalle (producto, volumen, dirección de entrega). */}
+        <Button href={rutaLocal('/#presupuesto', locale)} tamano="grande" class="w-full">
           {nav.cta}
-        </WhatsAppLink>
+        </Button>
       </div>
     </nav>
   </div>
@@ -290,10 +299,16 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     border-color: color-mix(in oklab, var(--color-negro) 40%, transparent);
   }
 
-  /* ── Estado “sobre el hero oscuro”, antes de scrollear ───────────── */
+  /*
+    ── Estado “sobre el hero oscuro”, antes de scrollear ─────────────
+    El hero es carbón fijo en los dos temas (ver Hero.astro), así que
+    acá se usa blanco literal y no el token --color-blanco: ese token
+    se oscurece en modo oscuro para servir de fondo de tarjeta, y un
+    "blanco" oscuro dejaría el texto invisible sobre el hero.
+  */
 
   .cabecera-sobre-oscuro:not(.cabecera-solida) {
-    color: var(--color-blanco);
+    color: #ffffff;
   }
 
   /* El verde oscuro no se lee sobre carbón; ahí el hover va al verde
@@ -303,21 +318,39 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
   }
 
   .cabecera-sobre-oscuro:not(.cabecera-solida) .boton-menu {
-    border-color: color-mix(in oklab, var(--color-blanco) 30%, transparent);
+    border-color: color-mix(in oklab, #ffffff 30%, transparent);
   }
 
   .cabecera-sobre-oscuro:not(.cabecera-solida) .boton-menu:hover {
-    border-color: color-mix(in oklab, var(--color-blanco) 60%, transparent);
-    background-color: color-mix(in oklab, var(--color-blanco) 10%, transparent);
+    border-color: color-mix(in oklab, #ffffff 60%, transparent);
+    background-color: color-mix(in oklab, #ffffff 10%, transparent);
   }
 
-  /* Al volverse sólido el header, el logotipo claro reemplaza al
-     blanco. Se alternan por display para que no haya reflow. */
-  .cabecera-sobre-oscuro.cabecera-solida [data-logo-oscuro] {
+  /*
+    Al volverse sólido el header, el logotipo claro reemplaza al
+    blanco. Se alternan por display para que no haya reflow. Solo en
+    modo claro: ahí el header sólido es hueso claro. En modo oscuro
+    `bg-hueso/92` es oscuro incluso "sólido", así que el logotipo
+    blanco queda fijo sin importar el scroll (regla siguiente).
+  */
+  :global(html:not(.dark)) .cabecera-sobre-oscuro.cabecera-solida [data-logo-oscuro] {
     display: none;
   }
 
-  .cabecera-sobre-oscuro.cabecera-solida [data-logo-claro] {
+  :global(html:not(.dark)) .cabecera-sobre-oscuro.cabecera-solida [data-logo-claro] {
+    display: block;
+  }
+
+  /*
+    Modo oscuro: la página entera es oscura, así que el header nunca
+    vuelve a ser una superficie clara. El logotipo blanco queda fijo
+    sin importar si la página arranca sobre el hero o no.
+  */
+  :global(.dark) [data-logo-claro] {
+    display: none;
+  }
+
+  :global(.dark) [data-logo-oscuro] {
     display: block;
   }
 </style>

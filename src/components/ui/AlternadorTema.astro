@@ -1,0 +1,87 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  /** aria-label cuando el sitio está en claro: la acción es pasar a oscuro. */
+  readonly etiquetaOscuro: string;
+  /** aria-label cuando el sitio está en oscuro: la acción es pasar a claro. */
+  readonly etiquetaClaro: string;
+  readonly class?: string;
+}
+
+const { etiquetaOscuro, etiquetaClaro, class: claseExtra = '' } = Astro.props;
+---
+
+{/*
+  El estado real (qué clase tiene <html>) lo decide el script inline del
+  Layout antes del primer paint, para evitar el flash. Este botón solo
+  refleja y alterna ese estado; por eso arranca con el ícono de sol
+  visible y lo corrige el propio script de acá abajo en cuanto conoce
+  el tema real, sin esperar un ciclo de reflow visible.
+*/}
+<button
+  type="button"
+  class:list={[
+    'alternar-tema inline-flex size-11 items-center justify-center rounded-chip border transition-colors',
+    claseExtra,
+  ]}
+  aria-label={etiquetaOscuro}
+  data-alternar-tema
+  data-etiqueta-oscuro={etiquetaOscuro}
+  data-etiqueta-claro={etiquetaClaro}
+>
+  <Icon name="lucide:sun" class="size-5" data-icono-sol aria-hidden="true" />
+  <Icon name="lucide:moon" class="hidden size-5" data-icono-luna aria-hidden="true" />
+</button>
+
+<script>
+  const ALMACENAMIENTO = 'tema';
+
+  function estaOscuro(): boolean {
+    return document.documentElement.classList.contains('dark');
+  }
+
+  /* Color de la barra del navegador (Android/iOS): verde de marca en
+     claro, el fondo de página oscuro en oscuro. */
+  function actualizarThemeColor(oscuro: boolean): void {
+    document
+      .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+      ?.setAttribute('content', oscuro ? '#120e0d' : '#40a942');
+  }
+
+  /*
+    Cada botón (header de escritorio + menú móvil) refleja su propio
+    estado visual, pero el cambio de tema es uno solo: afecta a
+    <html> y por lo tanto a todos los botones a la vez.
+  */
+  function actualizarBoton(boton: HTMLButtonElement): void {
+    const oscuro = estaOscuro();
+    const sol = boton.querySelector<HTMLElement>('[data-icono-sol]');
+    const luna = boton.querySelector<HTMLElement>('[data-icono-luna]');
+    sol?.classList.toggle('hidden', oscuro);
+    luna?.classList.toggle('hidden', !oscuro);
+    boton.setAttribute(
+      'aria-label',
+      oscuro ? (boton.dataset.etiquetaClaro ?? '') : (boton.dataset.etiquetaOscuro ?? ''),
+    );
+  }
+
+  const botones = document.querySelectorAll<HTMLButtonElement>('[data-alternar-tema]');
+
+  botones.forEach((boton) => {
+    actualizarBoton(boton);
+
+    boton.addEventListener('click', () => {
+      const nuevoOscuro = !estaOscuro();
+      document.documentElement.classList.toggle('dark', nuevoOscuro);
+      try {
+        localStorage.setItem(ALMACENAMIENTO, nuevoOscuro ? 'oscuro' : 'claro');
+      } catch {
+        // Storage bloqueado (privado, cuota): el tema no se recuerda,
+        // pero el toggle en esta visita sigue funcionando.
+      }
+      actualizarThemeColor(nuevoOscuro);
+      botones.forEach(actualizarBoton);
+    });
+  });
+</script>

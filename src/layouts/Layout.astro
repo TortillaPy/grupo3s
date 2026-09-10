@@ -108,6 +108,29 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    {/*
+      Decide el tema ANTES del primer paint, para no mostrar un
+      parpadeo claro→oscuro. Bloqueante y sin type="module" a
+      propósito: un script diferido corre después de pintar. Si no
+      hay preferencia guardada, sigue al sistema operativo; si el
+      usuario ya eligió con el botón del header, esa elección manda.
+    */}
+    <script is:inline>
+      (function () {
+        try {
+          var guardado = localStorage.getItem('tema');
+          var oscuro =
+            guardado === 'oscuro' ||
+            (guardado === null &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', oscuro);
+        } catch (error) {
+          // Storage bloqueado: arranca en claro, el sistema operativo
+          // no se puede leer tampoco de forma confiable acá.
+        }
+      })();
+    </script>
+
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonica} />
@@ -146,6 +169,14 @@ const jsonLd = {
     <meta name="twitter:image:alt" content={config.site.imagenOg.alt} />
 
     <meta name="theme-color" content="#40a942" />
+    <script is:inline>
+      (function () {
+        if (document.documentElement.classList.contains('dark')) {
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#120e0d');
+        }
+      })();
+    </script>
     <link rel="icon" href="/favicon/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/favicon/favicon-512.png" sizes="512x512" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />

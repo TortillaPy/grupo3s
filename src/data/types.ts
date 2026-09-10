@@ -248,6 +248,8 @@ export interface Contenido {
     readonly abrirMenu: string;
     readonly cerrarMenu: string;
     readonly saltarAlContenido: string;
+    readonly activarModoOscuro: string;
+    readonly activarModoClaro: string;
   };
 
   readonly hero: {

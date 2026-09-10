@@ -186,7 +186,7 @@ const schemaMigas = {
               para un lector de pantalla, repetirlo es ruido.
             -->
             <div
-              class="flex items-center justify-center rounded-b-card border border-t-0 border-gris-claro/70 bg-white px-5 py-4 shadow-nivel-1"
+              class="flex items-center justify-center rounded-b-card border border-t-0 border-gris-claro/70 bg-blanco px-5 py-4 shadow-nivel-1"
             >
               <Image
                 src={imagenMarca}
@@ -222,13 +222,13 @@ const schemaMigas = {
 
             <ul class="mt-6 flex flex-wrap gap-2">
               {producto.usoProfesional && (
-                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
+                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-blanco px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
                   <Icon name="lucide:shield-check" class="size-4 text-verde-oscuro" aria-hidden="true" />
                   {ficha.usoProfesional}
                 </li>
               )}
               {producto.registro !== undefined && (
-                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
+                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-blanco px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
                   <Icon name="lucide:file-text" class="size-4 text-verde-oscuro" aria-hidden="true" />
                   {producto.registro}
                 </li>
@@ -297,7 +297,7 @@ const schemaMigas = {
                   <a
                     href={producto.fichaTecnica}
                     {...ATRIBUTOS_ENLACE_EXTERNO}
-                    class="inline-flex items-center justify-center gap-2 rounded-chip border border-negro/15 bg-white px-6 py-3.5 font-semibold text-negro shadow-nivel-1 transition-colors hover:border-negro/30 hover:bg-hueso sm:px-7 sm:py-4"
+                    class="inline-flex items-center justify-center gap-2 rounded-chip border border-negro/15 bg-blanco px-6 py-3.5 font-semibold text-negro shadow-nivel-1 transition-colors hover:border-negro/30 hover:bg-hueso sm:px-7 sm:py-4"
                   >
                     <Icon name="lucide:file-text" class="size-4" aria-hidden="true" />
                     {ficha.descargarFicha}
@@ -311,7 +311,7 @@ const schemaMigas = {
     </section>
 
     <!-- Qué hace, cómo se aplica, dónde se usa -->
-    <section class="bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="accion-titulo">
+    <section class="bg-blanco py-16 sm:py-20 lg:py-24" aria-labelledby="accion-titulo">
       <div class="contenedor">
         <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div class="lg:col-span-7">

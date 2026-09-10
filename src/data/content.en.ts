@@ -61,6 +61,8 @@ export const contenidoEn: Contenido = {
     abrirMenu: 'Open the navigation menu',
     cerrarMenu: 'Close the navigation menu',
     saltarAlContenido: 'Skip to main content',
+    activarModoOscuro: 'Switch to dark mode',
+    activarModoClaro: 'Switch to light mode',
   },
 
   hero: {

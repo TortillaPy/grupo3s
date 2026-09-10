@@ -44,13 +44,16 @@ const porTamano: Record<Tamano, string> = {
 const porVariante: Record<Variante, string> = {
   // Verde profundo: 7.4:1 con texto blanco. El verde del isotipo no alcanza.
   // La sombra teñida de verde le da peso de botón principal sin subirle
-  // la saturación al color.
+  // la saturación al color. El "dark:bg-" fija el verde de modo claro:
+  // en modo oscuro el token --color-verde-oscuro se aclara para servir
+  // de texto/borde, y ese verde claro no da 4.5:1 con texto blanco.
   primario:
     'bg-verde-oscuro text-white shadow-[0_1px_2px_-1px_rgb(30_90_34/0.4),0_10px_24px_-10px_rgb(30_90_34/0.55)] ' +
-    'hover:bg-verde-profundo hover:shadow-[0_2px_4px_-2px_rgb(30_90_34/0.45),0_16px_32px_-12px_rgb(30_90_34/0.65)]',
+    'hover:bg-verde-profundo hover:shadow-[0_2px_4px_-2px_rgb(30_90_34/0.45),0_16px_32px_-12px_rgb(30_90_34/0.65)] ' +
+    'dark:bg-[#2c7d31] dark:hover:bg-[#1e5a22]',
   secundario:
-    'border border-negro/15 bg-white text-negro shadow-nivel-1 hover:border-negro/30 hover:bg-hueso',
-  claro: 'bg-white text-negro shadow-nivel-1 hover:bg-hueso',
+    'border border-negro/15 bg-blanco text-negro shadow-nivel-1 hover:border-negro/30 hover:bg-hueso',
+  claro: 'bg-blanco text-negro shadow-nivel-1 hover:bg-hueso',
   // Para los paneles oscuros: contorno claro sobre carbón, sin relleno.
   fantasma:
     'border border-white/25 bg-white/5 text-white backdrop-blur-sm hover:border-white/50 hover:bg-white/12',

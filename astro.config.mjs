@@ -56,6 +56,8 @@ export default defineConfig({
           'check',
           'alert-circle',
           'loader-circle',
+          'sun',
+          'moon',
         ],
         'simple-icons': ['whatsapp'],
       },

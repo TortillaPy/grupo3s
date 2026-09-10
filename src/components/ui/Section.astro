@@ -31,8 +31,11 @@ const {
 
 const porFondo: Record<'hueso' | 'blanco' | 'negro', string> = {
   hueso: 'bg-hueso text-grafito',
-  blanco: 'bg-white text-grafito',
-  negro: 'bg-negro text-white',
+  blanco: 'bg-blanco text-grafito',
+  // El panel oscuro no cambia con el tema: el "dark:bg-" fija el negro
+  // de modo claro en vez de dejar que --color-negro se aclare (ese
+  // token se aclara en modo oscuro para servir de texto de titulares).
+  negro: 'bg-negro text-white dark:bg-[#0b060c]',
 };
 
 const idTitulo = `${id}-titulo`;

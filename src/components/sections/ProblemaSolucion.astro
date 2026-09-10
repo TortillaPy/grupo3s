@@ -11,7 +11,7 @@ const { locale = config.localePorDefecto } = Astro.props;
 const { problemaSolucion } = obtenerContenido(locale);
 ---
 
-<section id="problema" aria-labelledby="problema-titulo" class="bg-white py-16 sm:py-24 lg:py-28">
+<section id="problema" aria-labelledby="problema-titulo" class="bg-blanco py-16 sm:py-24 lg:py-28">
   <div class="contenedor">
     <h2
       id="problema-titulo"
@@ -55,7 +55,7 @@ const { problemaSolucion } = obtenerContenido(locale);
         de pantalla. En móvil apunta hacia abajo, que es como se apilan.
       -->
       <div
-        class="pointer-events-none absolute top-1/2 left-1/2 z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gris-claro bg-white text-verde-oscuro shadow-nivel-1 lg:flex"
+        class="pointer-events-none absolute top-1/2 left-1/2 z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gris-claro bg-blanco text-verde-oscuro shadow-nivel-1 lg:flex"
         aria-hidden="true"
       >
         <Icon name="lucide:arrow-right" class="size-5" />

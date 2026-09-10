@@ -61,6 +61,8 @@ export const contenidoPt: Contenido = {
     abrirMenu: 'Abrir o menu de navegação',
     cerrarMenu: 'Fechar o menu de navegação',
     saltarAlContenido: 'Ir para o conteúdo principal',
+    activarModoOscuro: 'Ativar modo escuro',
+    activarModoClaro: 'Ativar modo claro',
   },
 
   hero: {

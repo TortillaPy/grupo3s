@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+/* Modo oscuro por clase: `.dark` en <html>, puesta por el script inline
+   del Layout antes del primer paint (evita el flash) y alternada por
+   AlternadorTema. `&:where(...)` no suma especificidad, así que los
+   tokens de abajo siguen ganando por orden de cascada, no por peso. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ---------------------------------------------------------------------------
    TOKENS DE MARCA 3S
    Muestreados del flyer oficial (3S PORTADA.jpeg). En Tailwind 4 los tokens
@@ -83,6 +89,61 @@
 }
 
 /* ---------------------------------------------------------------------------
+   TOKENS — MODO OSCURO
+   Reasigna los mismos nombres de variable, así que cada utilidad de
+   marca (bg-hueso, text-grafito, text-verde-oscuro…) se oscurece sola,
+   sin tocar un solo componente. `carbon`, `carbon-medio`, `carbon-borde`,
+   `verde` y `gris-marca` no se tocan: ya son la familia oscura que usan
+   los paneles de contraste (hero, CTA final, pie) en modo claro, y
+   siguen sirviendo igual sobre una página que ahora también es oscura.
+
+   Dos tokens quedan "partidos" a propósito: `--color-negro` y
+   `--color-verde-oscuro`/`--color-verde-profundo` se usan tanto como
+   TEXTO sobre la página (necesita aclararse acá) como FONDO de botones
+   sólidos con texto blanco encima (necesita quedarse oscuro: un verde
+   claro con texto blanco no da 4.5:1). Es matemáticamente imposible que
+   un mismo color cumpla los dos roles a la vez, así que este bloque
+   aclara el token para el rol de texto, y los ~15 usos como fondo de
+   botón fijan su color original con `dark:bg-[...]` en el componente.
+--------------------------------------------------------------------------- */
+.dark {
+  /* Fondo de página. Más oscuro que --color-carbon a propósito: así los
+     paneles de contraste (que siguen en carbon) se distinguen del resto
+     de la página en vez de fundirse con ella. */
+  --color-hueso: #120e0d;
+  /* Tarjetas y superficies "blancas": un escalón más claro que la
+     página, como carbon-medio hace con carbon. Da la misma jerarquía de
+     elevación que blanco-sobre-hueso en modo claro. */
+  --color-blanco: #221c1b;
+
+  /* Texto de cuerpo. 14.6:1 sobre el fondo de página. */
+  --color-grafito: #e5e0dc;
+  /* Titulares y texto "negro". 18:1 sobre el fondo de página. Los ~5
+     usos de --color-negro como fondo de panel (Section fondo="negro",
+     el lightbox de Galería, CtaFinal) fijan el valor original de modo
+     claro con dark:bg-[#0b060c]. */
+  --color-negro: #faf8f6;
+  /* Texto secundario. 7.4:1 sobre el fondo de página. */
+  --color-gris: #a89f9c;
+  /* Bordes y separadores. Tan sutiles como border-gris-claro en modo
+     claro (ahí tampoco llega a 3:1): visibles, no un recuadro duro. */
+  --color-gris-claro: #5c5049;
+
+  /* Texto, borde e ícono con la marca del enlace/CTA. 7.7:1 sobre el
+     fondo de página. Los ~9 usos como fondo sólido de botón
+     (bg-verde-oscuro, bg-verde-profundo) fijan el valor de modo claro
+     con dark:bg-[...] — ver arriba. */
+  --color-verde-oscuro: #52b955;
+  /* Texto sobre verde-suave (tabla de especificaciones, ícono del FAQ,
+     insignias): 6.5:1 sobre el verde-suave oscuro de abajo. */
+  --color-verde-profundo: #57bb5c;
+  /* Fondo tintado sutil para insignias y la fila de encabezado de la
+     tabla de especificaciones. Antes era un verde casi blanco; acá es
+     el mismo tinte pero sobre carbón. */
+  --color-verde-suave: #16261a;
+}
+
+/* ---------------------------------------------------------------------------
    BASE
 --------------------------------------------------------------------------- */
 @layer base {
@@ -91,6 +152,14 @@
     /* El header sticky no debe tapar la sección a la que se ancla. */
     scroll-padding-top: 5.5rem;
     -webkit-text-size-adjust: 100%;
+    /* Controles nativos (scrollbar, checkbox, select) del navegador
+       en el tono que corresponde: sin esto se quedan claros encima
+       de una página oscura. */
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 
   body {

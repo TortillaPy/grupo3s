@@ -91,18 +91,23 @@ const base = rutaBase(Astro.url.pathname);
     color: var(--color-negro);
   }
 
-  /* Sobre el panel oscuro del hero, mientras el header sigue flotando. */
+  /*
+    Sobre el panel oscuro del hero, mientras el header sigue flotando.
+    Blanco literal y no --color-blanco: el hero es carbón fijo en los
+    dos temas, pero ese token se oscurece en modo oscuro para servir de
+    fondo de tarjeta.
+  */
   :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma {
-    color: color-mix(in oklab, var(--color-blanco) 70%, transparent);
+    color: color-mix(in oklab, #ffffff 70%, transparent);
   }
 
   :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma:hover {
-    background-color: color-mix(in oklab, var(--color-blanco) 12%, transparent);
-    color: var(--color-blanco);
+    background-color: color-mix(in oklab, #ffffff 12%, transparent);
+    color: #ffffff;
   }
 
   :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma-activo {
-    background-color: color-mix(in oklab, var(--color-blanco) 16%, transparent);
-    color: var(--color-blanco);
+    background-color: color-mix(in oklab, #ffffff 16%, transparent);
+    color: #ffffff;
   }
 </style>
