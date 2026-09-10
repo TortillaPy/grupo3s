@@ -1,153 +1,159 @@
-# Landing 3S Grupo Industrial
+# 3S Grupo Industrial — Landing Page
 
-Sitio estático (Astro 7 + Tailwind 4) para **3S Grupo Industrial S.R.L.** —
-productos químicos y biológicos para tratamiento de aguas residuales
-industriales e higiene sanitaria.
+🇪🇸 [Leer en español](README.es.md)
 
-Sin backend, sin base de datos, sin funciones serverless. El resultado de
-`npm run build` es una carpeta `dist/` que se sube tal cual a Cloudflare
-Pages, Netlify, Vercel o GitHub Pages.
+Static site (Astro 7 + Tailwind 4) for **3S Grupo Industrial S.R.L.** —
+chemical and biological products for industrial wastewater treatment and
+sanitary hygiene.
 
-> **Terminado: las siete fases.** 67 páginas en tres idiomas, los dos
-> caminos de conversión funcionando y Lighthouse mobile en 100 en las
-> cuatro categorías. Lo que queda por hacer del lado del cliente está
-> en `plan.md`.
+No backend, no database, no serverless functions. `npm run build`
+produces a `dist/` folder you upload as-is to Cloudflare Pages, Netlify,
+Vercel, or GitHub Pages.
 
-## Correr el proyecto
+> **Done: all seven phases.** 67 pages in three languages, both
+> conversion paths working, and Lighthouse mobile at 100 across all four
+> categories. What's left on the client side is tracked in `plan.md`.
+
+Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the
+project's setup, conventions, and PR process.
+
+## Running the project
 
 ```bash
 npm install
-cp .env.example .env     # completá PUBLIC_WEB3FORMS_KEY
-npm run dev              # http://localhost:4321
+cp .env.example .env     # fill in PUBLIC_WEB3FORMS_KEY
+npm run dev               # http://localhost:4321
 ```
 
-| Comando | Qué hace |
+| Command | What it does |
 | --- | --- |
-| `npm run dev` | Servidor de desarrollo con recarga en caliente |
-| `npm run build` | Chequeo de tipos + build estático en `dist/` |
-| `npm run preview` | Sirve `dist/` como lo haría el hosting |
-| `npm run check` | Solo el chequeo de tipos |
+| `npm run dev` | Dev server with hot reload |
+| `npm run build` | Type-check + static build into `dist/` |
+| `npm run preview` | Serves `dist/` the way the host will |
+| `npm run check` | Type-check only |
 
-## Dónde se cambia cada cosa
+## Where to change things
 
-Todo el contenido editable vive en `src/data/`. Ningún componente tiene
-texto escrito adentro del markup.
+All editable content lives in `src/data/`. No component has text
+hardcoded in its markup.
 
-| Quiero cambiar… | Archivo | Campo |
+| I want to change… | File | Field |
 | --- | --- | --- |
-| **El número de WhatsApp** | `src/data/config.ts` | `contacto.whatsapp` |
-| **Teléfonos, correo, dirección** | `src/data/config.ts` | `contacto` |
-| **Redes sociales** | `src/data/config.ts` | `contacto.redes` (las que tienen `url: ''` no se muestran) |
-| **Mostrar u ocultar precios** | `src/data/config.ts` | `precios.isVisible` |
-| **Los precios** | `src/data/products.ts` | `presentaciones[].precio` |
-| **Productos, presentaciones, especificaciones** | `src/data/products.ts` | — |
-| **Cualquier texto en español** | `src/data/content.es.ts` | — |
-| **Las imágenes** | `src/assets/images/` | pisá el archivo conservando el nombre |
-| **Los colores de marca** | `src/styles/global.css` | bloque `@theme` |
+| **The WhatsApp number** | `src/data/config.ts` | `contacto.whatsapp` |
+| **Phones, email, address** | `src/data/config.ts` | `contacto` |
+| **Social links** | `src/data/config.ts` | `contacto.redes` (entries with `url: ''` are hidden) |
+| **Showing/hiding prices** | `src/data/config.ts` | `precios.isVisible` |
+| **The prices** | `src/data/products.ts` | `presentaciones[].precio` |
+| **Products, package sizes, specs** | `src/data/products.ts` | — |
+| **Any Spanish copy** | `src/data/content.es.ts` | — |
+| **Images** | `src/assets/images/` | overwrite the file, keep the name |
+| **Brand colors** | `src/styles/global.css` | the `@theme` block |
 
-### El interruptor de precios
+### The price toggle
 
-`config.precios.isVisible` controla **dos cosas a la vez**: si se
-renderiza el componente de precio, y si el JSON-LD emite el nodo
-`offers`. Están atados a propósito. Google exige `price` y
-`priceCurrency` reales dentro de `offers`, y publicar un precio inventado
-para conseguir el fragmento enriquecido es motivo de acción manual sobre
-el dominio. Cuando cargues precios reales en `products.ts`, poné el
-booleano en `true` y las dos cosas se prenden juntas.
+`config.precios.isVisible` controls **two things at once**: whether the
+price component renders, and whether the JSON-LD emits an `offers`
+node. They're tied together on purpose. Google requires real `price`
+and `priceCurrency` values inside `offers`, and publishing a made-up
+price to get the rich-result snippet is grounds for a manual action on
+the domain. Once real prices are loaded into `products.ts`, flip the
+boolean to `true` and both turn on together.
 
-### Las imágenes
+### Images
 
-Van en `src/assets/images/` (no en `public/`) para que Astro las procese:
-genera WebP en varios tamaños, calcula `width` y `height` y emite el
-`srcset`. Eso es lo que evita el desplazamiento de layout.
+They live in `src/assets/images/` (not `public/`) so Astro can process
+them: it generates WebP at several sizes, computes `width`/`height`,
+and emits the `srcset`. That's what prevents layout shift.
 
-Son las del catálogo institucional, recortadas. Hay tres juegos de 18,
-uno por producto, nombrados por el `slug` del producto:
+These are the institutional catalog photos, cropped. There are three
+sets of 18, one per product, named by the product's `slug`:
 
-| Carpeta | Qué contiene |
+| Folder | What it holds |
 | --- | --- |
-| `productos/` | Envases recortados sobre fondo blanco |
-| `marcas/` | Banner con el nombre y el descriptor de cada producto |
-| `aplicaciones/` | Foto de uso real en planta |
-| `marca/` | Logotipo de 3S |
-| `public/og/` | Imagen de previsualización 1200 × 630 para WhatsApp y redes |
+| `productos/` | Packaging cut out on a white background |
+| `marcas/` | Banner with the product's name and descriptor |
+| `aplicaciones/` | Real-use photo on site |
+| `marca/` | 3S logo |
+| `public/og/` | 1200 × 630 preview image for WhatsApp and social |
 
-Para reemplazar una foto: pisá el archivo **conservando el nombre**. Si
-cambiás el nombre, actualizá el campo `src` correspondiente en
-`products.ts` o en `content.es.ts`.
+To replace a photo: overwrite the file **keeping the same name**. If
+you rename it, update the matching `src` field in `products.ts` or
+`content.es.ts`.
 
-A los archivos originales se les hicieron dos correcciones que conviene
-repetir si se cargan fotos nuevas del mismo origen:
+The original files got two corrections worth repeating if you load new
+photos from the same source:
 
-- Las de `aplicaciones/` traían un marco blanco de unos píxeles heredado
-  del recorte del catálogo. Dentro de un marco oscuro ese borde se veía
-  como una línea clara pegada al canto, así que se recortó.
-- Las de `productos/` y `marcas/` venían sobre un rectángulo blanco
-  opaco. Se les quitó el fondo —solo el fondo: las etiquetas y los
-  bidones blancos siguen intactos— para que apoyen sobre el plinto en
-  vez de mostrar una caja blanca adentro de la tarjeta.
+- The `aplicaciones/` ones carried a few pixels of white frame left
+  over from the catalog crop. Against a dark panel that border read as
+  a light line stuck to the edge, so it was trimmed off.
+- The `productos/` and `marcas/` ones sat on an opaque white rectangle.
+  The background was removed — only the background: labels and white
+  jugs stay intact — so they rest on the plinth instead of showing a
+  white box inside the card.
 
-Lo que todavía conviene reemplazar por fotos propias de mejor calidad:
-las seis de la galería y la del hero. Ninguna supera los 500 px de
-ancho, y eso ya se nota en un lugar concreto: **la imagen grande de la
-galería**, que ocupa el doble de ancho que las demás y es la única que
-el navegador tiene que agrandar. Esa es la primera foto que conviene
-reemplazar, en 1200 × 900 o más. Cualquier foto nueva de planta o
-laboratorio en 1600 × 1200 mejora bastante el resultado general.
+What's still worth replacing with better original photography: the six
+gallery shots and the hero image. None exceeds 500px wide, and it
+already shows in one specific spot: **the large gallery image**, which
+is twice as wide as the others and the only one the browser has to
+upscale. That's the first photo worth replacing, at 1200 × 900 or
+larger. Any new plant or lab photo at 1600 × 1200 noticeably improves
+the overall result.
 
-## Contenido confirmado
+## Confirmed content
 
-Los plazos, condiciones comerciales y textos del FAQ quedaron
-confirmados por el cliente el 4 de septiembre de 2026 y se publican tal
-como están escritos en `content.es.ts`.
+Lead times, commercial terms, and FAQ copy were confirmed by the client
+on September 4, 2026, and are published exactly as written in
+`content.es.ts`.
 
-Queda un punto abierto, desarrollado en `plan.md`: **el alcance real del
-asesoramiento técnico**. Hasta definirlo, el sitio promete solo lo que
-es seguro —recomendación de producto, presentación y dilución— y no
-menciona visitas a planta ni acompañamiento de arranque.
+One open item remains, detailed in `plan.md`: **the real scope of
+technical advisory services**. Until that's defined, the site only
+promises what's safe — product, package size, and dilution
+recommendations — and doesn't mention plant visits or startup support.
 
-## Estructura
+## Structure
 
 ```
 src/
-  components/layout/     Header\n  components/ui/         Button, WhatsAppLink, Section, BotonWhatsAppFlotante
-  components/sections/   una sección de la landing por archivo
-  data/                  todo el contenido editable (ver tabla de arriba)
-  layouts/Layout.astro   <head>, meta, canónica, hreflang, JSON-LD
-  lib/imagenes.ts        resuelve las rutas de products.ts a módulos de imagen
-  styles/                tokens de marca y fuentes self-hosted
-public/                  robots.txt, favicon, imagen de Open Graph
+  components/layout/     Header, Footer, LangSwitch
+  components/ui/         Button, WhatsAppLink, Section, BotonWhatsAppFlotante, AlternadorTema
+  components/sections/   one landing section per file
+  data/                  all editable content (see table above)
+  layouts/Layout.astro   <head>, meta, canonical, hreflang, JSON-LD
+  lib/imagenes.ts        resolves products.ts image paths to image modules
+  styles/                brand tokens and self-hosted fonts
+public/                  robots.txt, favicon, Open Graph image
 ```
 
-## Idiomas
+## Languages
 
-Español rioplatense (`es-PY`) en la raíz, portugués de Brasil (`pt-BR`)
-bajo `/pt` e inglés de Estados Unidos (`en-US`) bajo `/en`. El selector
-está en el header y **mantiene la página**: si estás en la ficha del
-Decuat y cambiás a inglés, vas a `/en/productos/decuat`, no a la
-portada.
+Rioplatense Spanish (`es-PY`) at the root, Brazilian Portuguese
+(`pt-BR`) under `/pt`, and US English (`en-US`) under `/en`. The
+switcher lives in the header and **keeps the page**: if you're on the
+Decuat product page and switch to English, you land on
+`/en/productos/decuat`, not the homepage.
 
-Cada idioma es un archivo en `src/data/`: `content.es.ts`,
-`content.pt.ts`, `content.en.ts`. Los tres tienen exactamente la misma
-forma porque el tipo `Contenido` lo obliga: si falta una clave, el build
-falla antes de publicar nada.
+Each language is a file in `src/data/`: `content.es.ts`,
+`content.pt.ts`, `content.en.ts`. All three have exactly the same
+shape because the `Contenido` type enforces it: if a key is missing,
+the build fails before anything ships.
 
-**Para agregar o quitar un idioma** alcanza con tocar el objeto
-`registro` en `src/data/content.ts`. El selector, el `hreflang`, el
-sitemap y las rutas con prefijo leen de ahí: aparecen y desaparecen
-solos.
+**To add or remove a language**, it's enough to edit the `registro`
+object in `src/data/content.ts`. The switcher, the `hreflang` tags, the
+sitemap, and the prefixed routes all read from there: they appear and
+disappear on their own.
 
-Los nombres de los productos no se traducen —son marca— y los `slug`
-son los mismos en los tres idiomas, así que `/productos/decuat`,
-`/pt/productos/decuat` y `/en/productos/decuat` son la misma ficha en
-tres idiomas y así lo declaran entre sí con `hreflang` recíproco, tanto
-en el `<head>` como en el sitemap.
+Product names aren't translated — they're brand names — and the
+`slug`s are the same across all three languages, so
+`/productos/decuat`, `/pt/productos/decuat`, and
+`/en/productos/decuat` are the same product page in three languages,
+and they declare that to each other with reciprocal `hreflang`, both in
+the `<head>` and in the sitemap.
 
-## Resultados de la auditoría
+## Audit results
 
-Lighthouse mobile, medido sobre `npm run preview`:
+Lighthouse mobile, measured against `npm run preview`:
 
-| Página | Perf. | Accesibilidad | Buenas prácticas | SEO |
+| Page | Perf. | Accessibility | Best practices | SEO |
 | --- | --- | --- | --- | --- |
 | `/` | 99 | 100 | 100 | 100 |
 | `/productos` | 99 | 100 | 100 | 100 |
@@ -155,218 +161,226 @@ Lighthouse mobile, medido sobre `npm run preview`:
 | `/pt` | 98 | 100 | 100 | 100 |
 | `/en/productos` | 100 | 100 | 100 | 100 |
 
-Desplazamiento acumulado de layout: **0** en todas. Bloqueo del hilo
-principal: **0 ms**. Todo el JavaScript va inlineado en el HTML y suma
-muy por debajo de los 30 KB comprimidos del objetivo.
+Cumulative layout shift: **0** everywhere. Main-thread blocking:
+**0 ms**. All JavaScript ships inlined in the HTML and stays well under
+the 30 KB compressed target.
 
-Sobre el 98–99 en performance: es la máquina, no el sitio. La versión
-anterior al rediseño visual, construida y medida en el mismo equipo y
-en la misma corrida, da exactamente los mismos números. Lo que mueve el
-puntaje es el *first contentful paint* simulado, que en un equipo más
-rápido vuelve a 100. El rediseño no agregó ni una petición ni un
-kilobyte de JavaScript.
+On the 98–99 in performance: that's the machine, not the site. The
+version before the visual redesign, built and measured on the same
+machine in the same run, gives the exact same numbers. What moves the
+score is the simulated *first contentful paint*, which comes back to
+100 on a faster machine. The redesign didn't add a single request or
+kilobyte of JavaScript.
 
-En escritorio da **100 en las cuatro categorías** en todas las páginas
-medidas.
+Desktop scores **100 across all four categories** on every page
+measured.
 
-Dos correcciones de accesibilidad salieron de esta auditoría y quedaron
-documentadas en el código:
+Two accessibility fixes came out of this audit and are documented in
+the code:
 
-- El gris de la banda del flyer (`#8b8b8b`) da 3,3:1 sobre el fondo
-  hueso y no llega al 4,5:1 que exige AA en texto normal. El token
-  `--color-gris` es ahora una versión oscurecida que conserva el sesgo
-  cálido y da 4,9:1; el gris original quedó como `--color-gris-marca`,
-  solo para fondos y overlays sobre foto.
-- En el catálogo, las tarjetas de producto colgaban del `h1` con un
-  `h3`, saltando el `h2`. La tarjeta ahora recibe el nivel por prop:
-  2 en el catálogo, 3 dentro de la sección "De la misma familia" de una
-  ficha, que ya tiene su propio `h2`.
+- The gray from the flyer's band (`#8b8b8b`) gives 3.3:1 against the
+  bone background, short of the 4.5:1 AA requires for normal text. The
+  `--color-gris` token is now a darkened version that keeps the warm
+  bias and gives 4.9:1; the original gray stayed as
+  `--color-gris-marca`, used only for backgrounds and photo overlays.
+- In the catalog, product cards hung off the `h1` with an `h3`,
+  skipping the `h2`. The card now receives its heading level as a
+  prop: 2 in the catalog, 3 inside a product page's "Same family"
+  section, which already has its own `h2`.
 
-## Despliegue
+## Deployment
 
-El resultado de `npm run build` es la carpeta `dist/`: HTML, CSS,
-imágenes y nada más. No hay servidor que mantener ni base de datos que
-respaldar.
+The result of `npm run build` is the `dist/` folder: HTML, CSS,
+images, and nothing else. No server to maintain, no database to back
+up.
 
-### Cloudflare Pages (recomendado)
+### Cloudflare Pages (recommended)
 
-Ancho de banda ilimitado en el plan gratuito y presencia en Sudamérica,
-que es lo que se nota desde Paraguay.
+Unlimited bandwidth on the free plan and a South American presence,
+which is noticeable from Paraguay.
 
-1. Subí el proyecto a un repositorio de GitHub o GitLab.
-2. En el panel de Cloudflare: **Workers & Pages → Create → Pages →
-   Connect to Git**, y elegí el repositorio.
-3. Configuración de build:
+1. Push the project to a GitHub or GitLab repository.
+2. In the Cloudflare dashboard: **Workers & Pages → Create → Pages →
+   Connect to Git**, and pick the repository.
+3. Build configuration:
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Build output directory: `dist`
-4. En **Settings → Environment variables**, agregá
-   `PUBLIC_WEB3FORMS_KEY` con tu access key, para Production y para
-   Preview. **Sin esto el formulario no envía.**
-5. Guardá y desplegá. Cada `git push` a la rama principal republica solo.
+4. Under **Settings → Environment variables**, add
+   `PUBLIC_WEB3FORMS_KEY` with your access key, for both Production and
+   Preview. **The form won't submit without this.**
+5. Save and deploy. Every `git push` to the main branch republishes on
+   its own.
 
-Para conectar el dominio: **Custom domains → Set up a custom domain**,
-escribí `3sgrupoindustrial.com.py`, y cargá en NIC.py los servidores de
-nombres que Cloudflare te indique.
+To connect the domain: **Custom domains → Set up a custom domain**,
+enter `3sgrupoindustrial.com.py`, and load the nameservers Cloudflare
+gives you into NIC.py.
 
 ### Netlify
 
-Misma idea, con un tope de 100 GB de tráfico al mes en el plan gratuito.
+Same idea, with a 100 GB/month traffic cap on the free plan.
 
-1. **Add new site → Import an existing project**, elegí el repositorio.
+1. **Add new site → Import an existing project**, pick the repository.
 2. Build command `npm run build`, publish directory `dist`.
-3. **Site configuration → Environment variables**: agregá
+3. **Site configuration → Environment variables**: add
    `PUBLIC_WEB3FORMS_KEY`.
-4. **Domain management → Add a domain** para conectar el dominio.
+4. **Domain management → Add a domain** to connect the domain.
 
-### Sin repositorio, subiendo la carpeta
+### Without a repository, uploading the folder
 
-Si preferís no usar Git: corré `npm run build` en tu máquina y arrastrá
-la carpeta `dist` a Cloudflare Pages (**Upload assets**) o a Netlify
-Drop. Ojo con esto: la variable de entorno se aplica **en el build**,
-así que el `.env` local tiene que tener la access key antes de correr
+If you'd rather not use Git: run `npm run build` on your machine and
+drag the `dist` folder into Cloudflare Pages (**Upload assets**) or
+Netlify Drop. One catch: the environment variable applies **at build
+time**, so your local `.env` needs the access key before you run
 `npm run build`.
 
-### El dominio
+### The domain
 
-`3sgrupoindustrial.com.py` se registra en **NIC.py**, que es el único
-registrante del `.py`: no hay competencia de precio ni alternativa.
-Conviene reservarlo antes de publicar, no después.
+`3sgrupoindustrial.com.py` is registered through **NIC.py**, the sole
+registrar for `.py`: no price competition, no alternative. Worth
+reserving before launch, not after.
 
-### Después de publicar
+### After publishing
 
-1. Dar de alta el sitio en **Google Search Console** y enviar
+1. Register the site with **Google Search Console** and submit
    `https://3sgrupoindustrial.com.py/sitemap-index.xml`.
-2. Pasar la portada y una ficha de producto por la **prueba de
-   resultados enriquecidos** de Google, para confirmar que el marcado
-   `FAQPage` y `Product` se lee bien.
-3. Reclamar la ficha de **Google Business Profile** con la dirección de
-   Pilar 1717, que es lo que conecta el marcado `LocalBusiness` con
+2. Run the homepage and a product page through Google's **Rich Results
+   Test** to confirm the `FAQPage` and `Product` markup reads
+   correctly.
+3. Claim the **Google Business Profile** listing with the Pilar 1717
+   address, which is what connects the `LocalBusiness` markup to
    Google Maps.
 
-## Sistema visual
+## Visual system
 
-Todo lo que define el aspecto del sitio vive en `src/styles/global.css`,
-en dos bloques: los tokens dentro de `@theme` y las utilidades de
-superficie debajo. Cambiar cualquiera de estas líneas cambia el sitio
-entero de forma consistente; no hay valores sueltos repartidos por los
-componentes.
+Everything that defines the site's look lives in
+`src/styles/global.css`, in two blocks: the tokens inside `@theme` and
+the surface utilities below it. Changing any of these lines changes
+the entire site consistently; there are no loose values scattered
+across components.
 
-**Color.** A la paleta del flyer se le sumó una familia oscura para los
-paneles de contraste —el hero, el CTA final—: `--color-carbon` y sus dos
-derivados. No es negro puro, es el grafito de marca llevado a
-profundidad, así el panel se lee como parte del sistema y no como un
-bloque genérico. El verde del isotipo (`--color-verde`) recién sobre
-carbón funciona como color de marca; sobre fondo claro sigue reservado
-para íconos y fondos, nunca para texto chico.
+**Color.** The flyer's palette gained a dark family for the contrast
+panels — the hero, the final CTA — `--color-carbon` and its two
+derivatives. It isn't pure black; it's the brand's graphite pushed into
+depth, so the panel reads as part of the system rather than a generic
+block. The isotype green (`--color-verde`) only works as a brand color
+against carbon; on a light background it stays reserved for icons and
+fills, never small text.
 
-**Radios.** Dos y nada más: `rounded-card` (0,625 rem) para superficies
-y `rounded-chip` (0,375 rem) para botones, campos y etiquetas. La marca
-es industrial, así que nada de cápsulas ni bordes muy redondeados.
+Dark mode reassigns the same token names under a `.dark` class (see
+`AlternadorTema.astro` for the toggle), so every utility built on these
+tokens adapts on its own — no component-by-component overrides needed.
 
-**Elevación.** Tres niveles —`shadow-nivel-1` en reposo, `nivel-2` en
-hover, `nivel-3` para lo que flota—, todos teñidos con el grafito de
-marca: una sombra gris neutra sobre fondo hueso se ve sucia.
+**Radii.** Two, and only two: `rounded-card` (0.625rem) for surfaces
+and `rounded-chip` (0.375rem) for buttons, fields, and tags. The brand
+is industrial, so no pills and no heavily rounded corners.
 
-**Superficies.** Cuatro utilidades cubren todo el sitio:
+**Elevation.** Three levels — `shadow-nivel-1` at rest, `nivel-2` on
+hover, `nivel-3` for floating elements — all tinted with the brand's
+graphite: a neutral gray shadow on a bone background looks dirty.
 
-| Utilidad | Para qué |
+**Surfaces.** Four utilities cover the whole site:
+
+| Utility | What it's for |
 | --- | --- |
-| `tarjeta` | Superficie blanca con borde tenue y elevación mínima |
-| `tarjeta-viva` | La anterior, con levantada de 3 px al pasar el puntero |
-| `plinto` + `plinto-sombra` | Base para los envases recortados: degradado suave y elipse de sombra debajo, para que el producto apoye en vez de flotar |
-| `volanta` | El rótulo corto en versalitas con guion que abre cada sección |
+| `tarjeta` | White surface with a faint border and minimal elevation |
+| `tarjeta-viva` | Same, with a 3px lift on hover |
+| `plinto` + `plinto-sombra` | Base for cutout packaging shots: a soft gradient and a shadow ellipse underneath, so the product rests instead of floating |
+| `volanta` | The short uppercase label with a dash that opens each section |
 
-**Movimiento.** Todo lo animado se apaga por completo bajo
-`prefers-reduced-motion`, incluidas las levantadas de tarjeta y los
-zooms de imagen: no se acortan, se desactivan.
+**Motion.** Everything animated turns off completely under
+`prefers-reduced-motion`, including card lifts and image zooms: they
+don't get shorter, they get disabled.
 
-### El logotipo
+### The logo
 
-El archivo del catálogo venía en RGB sobre un rectángulo blanco opaco:
-sobre el panel oscuro del hero se veía el recuadro y no la marca. Hay
-dos versiones derivadas, ambas con el fondo recortado:
+The catalog file came in RGB on an opaque white rectangle: against the
+hero's dark panel you'd see the box, not the brand. There are two
+derived versions, both with the background removed:
 
-- `logo-3s-transparente.png` — tinta original, para fondo claro.
-- `logo-3s-blanco.png` — la misma pieza con la tinta en blanco y la hoja
-  en el verde del isotipo, para los paneles oscuros.
+- `logo-3s-transparente.png` — original ink, for light backgrounds.
+- `logo-3s-blanco.png` — the same mark with white ink and the leaf in
+  the isotype green, for dark panels.
 
-El header las alterna por CSS según si está flotando sobre el hero o ya
-se volvió sólido. **Cuando llegue el logotipo vectorial del cliente, se
-reemplazan esos dos archivos y no hay que tocar nada más.**
+The header and footer switch between them by CSS depending on whether
+the header is floating over the hero or has gone solid, and depending
+on the site's color theme. **Once the client's vector logo arrives,
+swap those two files and nothing else needs to change.**
 
-## Fuentes
+## Fonts
 
-Self-hosted, sin una sola llamada a Google Fonts. **Chivo Variable** para
-titulares y **IBM Plex Sans Variable** para cuerpo, cargadas desde
-`node_modules` y emitidas por Astro con hash. Solo se declara el
-subconjunto `latin`, que cubre español y portugués completos: dos
-archivos `.woff2` en el build en lugar de nueve.
+Self-hosted, not a single call to Google Fonts. **Chivo Variable** for
+headings and **IBM Plex Sans Variable** for body copy, loaded from
+`node_modules` and emitted by Astro with a hash. Only the `latin`
+subset is declared, which fully covers Spanish and Portuguese: two
+`.woff2` files in the build instead of nine.
 
-## Páginas
+## Pages
 
-Cada ruta existe en los tres idiomas: español en la raíz sin prefijo,
-portugués bajo `/pt` e inglés bajo `/en`.
+Every route exists in all three languages: Spanish at the root with no
+prefix, Portuguese under `/pt`, English under `/en`.
 
-| Ruta | Qué es |
+| Route | What it is |
 | --- | --- |
-| `/` | La landing completa, doce secciones |
-| `/productos` | Catálogo de los 18, con filtro por familia |
-| `/productos/[slug]` | Una ficha por producto: 18 URLs indexables |
-| `/gracias` | Confirmación después de enviar el formulario, fuera del índice |
-| `/politica-privacidad` | Política de privacidad, editable en `content.es.ts → privacidad` |
-| `/404` | Página de error, fuera del índice de Google |
+| `/` | The full landing page, twelve sections |
+| `/productos` | Catalog of all 18, filterable by family |
+| `/productos/[slug]` | One page per product: 18 indexable URLs |
+| `/gracias` | Confirmation after submitting the form, excluded from the index |
+| `/politica-privacidad` | Privacy policy, editable at `content.es.ts → privacidad` |
+| `/404` | Error page, excluded from Google's index |
 
-Las fichas se generan solas con `getStaticPaths` a partir de
-`products.ts`: agregar un producto ahí crea su página, su entrada en el
-catálogo, su fila en la tabla de la portada y su URL en el sitemap. El
-`slug` es la URL, así que **no conviene cambiarlo después de publicar**:
-rompe el enlace y borra el posicionamiento acumulado.
+Product pages are generated automatically with `getStaticPaths` from
+`products.ts`: adding a product there creates its page, its catalog
+entry, its row in the homepage table, and its sitemap URL. The `slug`
+is the URL, so **it's best not to change it after launch**: that
+breaks the link and drops any ranking it built up.
 
-## Faltan (ver `plan.md`)
+## Missing (see `plan.md`)
 
-- Fase 6: auditoría Lighthouse y despliegue
-- Fase 7: portugués de Brasil e inglés de EE. UU.
+- Phase 6: Lighthouse audit and deployment
+- Phase 7: Brazilian Portuguese and US English
 
-## El formulario
+## The form
 
-Vive en `src/components/sections/FormPresupuesto.astro` y aparece en la
-portada y en cada ficha de producto —ahí con el producto ya
-preseleccionado en el select—.
+Lives in `src/components/sections/FormPresupuesto.astro` and appears
+on the homepage and on every product page — there, with the product
+already preselected in the dropdown.
 
-**Para que envíe hay que configurar la access key.** Entrá a
-https://web3forms.com, poné el correo donde querés recibir las
-solicitudes, confirmá el mail que te llega, copiá la key y pegala en
-`.env` como `PUBLIC_WEB3FORMS_KEY`. Al desplegar, cargá esa misma
-variable en el panel de Cloudflare Pages o Netlify: sin ella el
-formulario muestra un aviso y no envía.
+**For it to submit, you need to configure the access key.** Go to
+https://web3forms.com, enter the email where you want to receive
+requests, confirm the email you get, copy the key, and paste it into
+`.env` as `PUBLIC_WEB3FORMS_KEY`. When deploying, load that same
+variable in the Cloudflare Pages or Netlify dashboard: without it the
+form shows a notice and doesn't submit.
 
-**Para cambiar de proveedor**, poné `proveedor: 'formspree'` en
-`config.formulario` y completá su endpoint en `endpoints.formspree`. El
-componente no cambia.
+**To switch providers**, set `proveedor: 'formspree'` in
+`config.formulario` and fill in its endpoint under
+`endpoints.formspree`. The component itself doesn't change.
 
-Tiene cuatro estados visibles: normal, enviando (botón deshabilitado,
-spinner y `aria-busy`), éxito (redirige a `/gracias`) y error (caja con
-`role="alert"`, el botón pasa a "Reintentar el envío" y **nada de lo que
-la persona escribió se pierde**). La validación corre en el cliente
-antes de enviar, marca los campos con `aria-invalid`, muestra el mensaje
-debajo de cada uno y lleva el foco al primero que falla.
+It has four visible states: normal, submitting (disabled button,
+spinner, and `aria-busy`), success (redirects to `/gracias`), and
+error (a box with `role="alert"`, the button switches to "Retry
+submission," and **nothing the person typed gets lost**). Validation
+runs client-side before submitting, flags fields with `aria-invalid`,
+shows the message under each one, and moves focus to the first failing
+field.
 
-El campo trampa antispam es `sitio_web`, definido en
-`config.formulario.honeypot`: está fuera de la vista y fuera del orden
-de tabulación, así que una persona no lo toca nunca. Si viene completo,
-el envío se descarta sin llegar a la red.
+The antispam honeypot field is `sitio_web`, defined at
+`config.formulario.honeypot`: it sits outside the visible area and
+outside tab order, so a person never touches it. If it comes back
+filled in, the submission is discarded before it ever reaches the
+network.
 
-## Marcado para buscadores
+## Search engine markup
 
-Todas las páginas emiten `Organization` y `LocalBusiness`. La portada
-suma `FAQPage`, armado a partir del mismo array que renderiza el
-acordeón: no puede quedar desincronizado con lo que el usuario ve, que
-es justamente lo que Google exige. El catálogo emite `ItemList` y
-`BreadcrumbList`; cada ficha emite `Product` con sus especificaciones
-como `additionalProperty`, más su propio `BreadcrumbList`.
+Every page emits `Organization` and `LocalBusiness`. The homepage adds
+`FAQPage`, built from the same array that renders the accordion: it
+can't drift out of sync with what the user sees, which is exactly what
+Google requires. The catalog emits `ItemList` and `BreadcrumbList`;
+each product page emits `Product` with its specs as
+`additionalProperty`, plus its own `BreadcrumbList`.
 
-No se emite `Product` con `offers` mientras los precios estén ocultos.
-Google pide `price` y `priceCurrency` reales dentro de `offers`, y
-publicar un precio inventado para conseguir el fragmento enriquecido es
-motivo de acción manual sobre el dominio.
+`Product` doesn't emit `offers` while prices stay hidden. Google
+requires real `price` and `priceCurrency` values inside `offers`, and
+publishing a made-up price to get the rich-result snippet is grounds
+for a manual action on the domain.
