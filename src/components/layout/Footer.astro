@@ -13,9 +13,14 @@ interface Props {
 const { locale = config.localePorDefecto } = Astro.props;
 const { footer } = obtenerContenido(locale);
 
-/* Versión con el fondo recortado: el archivo original del catálogo
-   traía un rectángulo blanco que se recortaba contra el hueso. */
-const logo = resolverImagen('/src/assets/images/marca/logo-3s-transparente.png');
+/*
+  Dos versiones, como en el header: el pie es bg-hueso, que en modo
+  oscuro se vuelve oscuro, así que el logotipo de tinta oscura
+  (`logoClaro`) necesita su contraparte en blanco (`logoOscuro`) para
+  seguir siendo visible.
+*/
+const logoClaro = resolverImagen('/src/assets/images/marca/logo-3s-transparente.png');
+const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png');
 
 /** Año calculado en cada build: no hay que tocarlo nunca a mano. */
 const anio = new Date().getFullYear();
@@ -29,14 +34,24 @@ const redes = config.contacto.redes.filter((red) => red.url !== '');
     <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
       <div class="lg:col-span-5">
         <Image
-          src={logo}
+          src={logoClaro}
           alt={`${config.site.razonSocial}`}
           widths={[140, 280]}
           sizes="88px"
           loading="lazy"
           format="webp"
           quality={90}
-          class="h-13 w-auto"
+          class="h-13 w-auto dark:hidden"
+        />
+        <Image
+          src={logoOscuro}
+          alt={`${config.site.razonSocial}`}
+          widths={[140, 280]}
+          sizes="88px"
+          loading="lazy"
+          format="webp"
+          quality={90}
+          class="hidden h-13 w-auto dark:block"
         />
         <p class="mt-4 max-w-sm text-[0.92rem] text-grafito/85">
           {footer.descripcion}
