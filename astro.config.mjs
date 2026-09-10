@@ -53,11 +53,11 @@ export default defineConfig({
           'phone',
           'mail',
           'map-pin',
-          'message-circle',
           'check',
           'alert-circle',
           'loader-circle',
         ],
+        'simple-icons': ['whatsapp'],
       },
     }),
     // El sitemap declara las alternativas de idioma de cada URL, que es

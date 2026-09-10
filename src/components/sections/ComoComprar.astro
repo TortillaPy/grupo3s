@@ -77,7 +77,7 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
     </div>
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
       <WhatsAppLink contexto={{ tipo: 'general' }} locale={locale}>
-        <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+        <Icon name="simple-icons:whatsapp" class="size-5" aria-hidden="true" />
         {hero.ctaPrimario}
       </WhatsAppLink>
       <Button href={`tel:+${config.contacto.telefonos[0]?.e164 ?? config.contacto.whatsapp.e164}`} variante="secundario">
