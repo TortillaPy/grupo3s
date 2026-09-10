@@ -8,8 +8,17 @@ interface Props {
 }
 
 const { locale = config.localePorDefecto } = Astro.props;
-const { whatsapp } = obtenerContenido(locale);
+const { whatsapp, hero } = obtenerContenido(locale);
 const href = buildWhatsAppUrl({ tipo: 'flotante' }, locale);
+
+/*
+  Dos textos distintos y a propósito. `etiquetaFlotante` es el
+  aria-label: largo y explícito, porque quien lo escucha no tiene el
+  contexto visual. La etiqueta que se despliega al pasar el puntero
+  reusa el CTA del hero, que es corto y ya está traducido en los tres
+  idiomas.
+*/
+const etiquetaVisible = hero.ctaPrimario;
 ---
 
 <!--
@@ -22,10 +31,24 @@ const href = buildWhatsAppUrl({ tipo: 'flotante' }, locale);
   {...ATRIBUTOS_ENLACE_EXTERNO}
   id="whatsapp-flotante"
   aria-label={whatsapp.etiquetaFlotante}
-  class="pointer-events-none fixed right-5 bottom-5 z-40 inline-flex size-14 translate-y-3 items-center justify-center rounded-full bg-verde-oscuro text-white opacity-0 shadow-[0_10px_28px_-8px_rgba(11,6,12,0.55)] transition-all duration-200 hover:bg-verde-profundo sm:size-15"
+  class="group pointer-events-none fixed right-5 bottom-5 z-40 inline-flex h-14 translate-y-3 items-center justify-center gap-0 overflow-hidden rounded-full bg-verde-oscuro pr-0 pl-0 text-white opacity-0 shadow-[0_10px_28px_-8px_rgba(11,6,12,0.55)] transition-all duration-200 hover:bg-verde-profundo hover:shadow-[0_16px_38px_-10px_rgba(11,6,12,0.6)] sm:h-15"
   data-whatsapp-flotante
 >
-  <Icon name="lucide:message-circle" class="size-7" aria-hidden="true" />
+  <span class="grid size-14 shrink-0 place-items-center sm:size-15" aria-hidden="true">
+    <Icon name="lucide:message-circle" class="size-7" />
+  </span>
+  <!--
+    La etiqueta se despliega al pasar el puntero y también al recibir
+    foco por teclado, así el botón dice qué hace sin ocupar ancho
+    permanente. En móvil no se muestra nunca: ahí el espacio horizontal
+    es justo lo que no sobra.
+  -->
+  <span
+    class="max-w-0 overflow-hidden pr-0 text-[0.95rem] font-semibold whitespace-nowrap opacity-0 transition-all duration-200 group-hover:max-w-56 group-hover:pr-6 group-hover:opacity-100 group-focus-visible:max-w-56 group-focus-visible:pr-6 group-focus-visible:opacity-100 max-sm:hidden"
+    aria-hidden="true"
+  >
+    {etiquetaVisible}
+  </span>
 </a>
 
 <script>

@@ -138,8 +138,16 @@ const schemaMigas = {
   <Header slot="header" locale={locale} />
 
   <article>
-    <!-- Encabezado de la ficha -->
-    <section class="bg-hueso py-10 sm:py-14" aria-labelledby="producto-titulo">
+    <!--
+      ENCABEZADO DE LA FICHA
+      Dos columnas: el envase sobre su plinto a la izquierda con el
+      banner de marca del producto debajo, y a la derecha todo lo que
+      decide una compra —qué es, con qué respaldo, en qué medidas y
+      cómo pedirlo—. El banner de marca antes quedaba huérfano al final
+      de la página; acá cumple la función que tiene en el catálogo
+      impreso, que es identificar el producto.
+    -->
+    <section class="bg-hueso pt-8 pb-16 sm:pt-10 sm:pb-20" aria-labelledby="producto-titulo">
       <div class="contenedor">
         <nav aria-label="Ruta de navegación" class="mb-8 text-sm text-grafito/80">
           <ol class="flex flex-wrap items-center gap-2">
@@ -155,25 +163,54 @@ const schemaMigas = {
 
         <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div class="lg:col-span-5" data-revelar>
-            <Image
-              src={imagenProducto}
-              alt={producto.imagen.alt}
-              widths={[360, 720]}
-              sizes="(min-width: 1024px) 26rem, 90vw"
-              loading="eager"
-              fetchpriority="high"
-              format="webp"
-              quality={85}
-              class="w-full border border-gris-claro bg-white object-contain p-6"
-            />
+            <div
+              class="plinto plinto-sombra grid aspect-4/3 w-full place-items-center rounded-b-none border border-gris-claro/70 p-8 shadow-nivel-1"
+            >
+              <Image
+                src={imagenProducto}
+                alt={producto.imagen.alt}
+                widths={[360, 720]}
+                sizes="(min-width: 1024px) 26rem, 90vw"
+                loading="eager"
+                fetchpriority="high"
+                format="webp"
+                quality={85}
+                class="relative z-10 max-h-full w-auto max-w-full object-contain"
+              />
+            </div>
+
+            <!--
+              Banner de marca del producto, tal como figura en el
+              catálogo impreso. Va pegado al plinto, como el zócalo de
+              una vitrina. `alt=""` porque el nombre ya está en el h1:
+              para un lector de pantalla, repetirlo es ruido.
+            -->
+            <div
+              class="flex items-center justify-center rounded-b-card border border-t-0 border-gris-claro/70 bg-white px-5 py-4 shadow-nivel-1"
+            >
+              <Image
+                src={imagenMarca}
+                alt=""
+                widths={[320, 640]}
+                sizes="18rem"
+                loading="lazy"
+                format="webp"
+                quality={85}
+                class="h-14 w-auto max-w-full object-contain"
+              />
+            </div>
+
+            <p class="mt-3 text-xs text-gris">
+              {ficha.fuente.replace('{n}', String(producto.paginaCatalogo))}
+            </p>
           </div>
 
           <div class="lg:col-span-7" data-revelar data-revelar-retraso="100">
-            <p class="text-xs font-semibold tracking-[0.14em] text-verde-oscuro uppercase">
+            <p class="volanta text-verde-oscuro">
               {categoria?.nombre}
             </p>
 
-            <h1 id="producto-titulo" class="mt-2 text-titulo font-bold text-negro">
+            <h1 id="producto-titulo" class="mt-3 text-titulo font-bold text-negro">
               {producto.nombre}
             </h1>
 
@@ -185,63 +222,88 @@ const schemaMigas = {
 
             <ul class="mt-6 flex flex-wrap gap-2">
               {producto.usoProfesional && (
-                <li class="inline-flex items-center gap-1.5 border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito">
+                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
                   <Icon name="lucide:shield-check" class="size-4 text-verde-oscuro" aria-hidden="true" />
                   {ficha.usoProfesional}
                 </li>
               )}
               {producto.registro !== undefined && (
-                <li class="inline-flex items-center gap-1.5 border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito">
+                <li class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-white px-3 py-1.5 text-sm text-grafito shadow-nivel-1">
                   <Icon name="lucide:file-text" class="size-4 text-verde-oscuro" aria-hidden="true" />
                   {producto.registro}
                 </li>
               )}
             </ul>
 
-            <h2 class="mt-8 text-xs font-semibold tracking-[0.14em] text-gris uppercase">
-              {ficha.presentaciones}
-            </h2>
             <!--
-              Cada presentación abre WhatsApp con el mensaje ya escrito
-              y con la variante incluida: "quiero cotizar X en
-              presentación de 200 L".
+              Bloque de pedido. Va sobre tarjeta blanca y no suelto
+              sobre el fondo: es la única parte de la ficha donde se
+              actúa, y separarla del texto es lo que la hace encontrable
+              sin leer todo.
             -->
-            <ul class="mt-3 flex flex-wrap gap-2">
-              {producto.presentaciones.map((presentacion) => (
-                <li>
+            <div class="tarjeta mt-8 p-5 sm:p-6">
+              <h2 class="text-xs font-semibold tracking-[0.14em] text-gris uppercase">
+                {ficha.presentaciones}
+              </h2>
+
+              <!--
+                Cada presentación abre WhatsApp con el mensaje ya escrito
+                y con la variante incluida: "quiero cotizar X en
+                presentación de 200 L".
+              -->
+              <ul class="mt-3 flex flex-wrap gap-2">
+                {producto.presentaciones.map((presentacion) => (
+                  <li>
+                    <a
+                      href={buildWhatsAppUrl(
+                        {
+                          tipo: 'presupuesto',
+                          producto: producto.nombre,
+                          presentacion: presentacion.etiqueta,
+                        },
+                        locale,
+                      )}
+                      {...ATRIBUTOS_ENLACE_EXTERNO}
+                      class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-hueso px-3.5 py-2 text-sm font-medium tabular-nums text-grafito transition-colors hover:border-verde-oscuro hover:bg-verde-suave hover:text-verde-profundo"
+                      aria-label={`Cotizar ${producto.nombre}, presentación de ${presentacion.etiqueta}`}
+                    >
+                      {presentacion.etiqueta}
+                      <Icon name="lucide:message-circle" class="size-3.5" aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              {!config.precios.isVisible && (
+                <p class="mt-3 text-sm text-gris">{config.precios.leyendaSinPrecio}</p>
+              )}
+
+              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <WhatsAppLink
+                  contexto={{ tipo: 'producto', producto: producto.nombre }}
+                  locale={locale}
+                  tamano="grande"
+                >
+                  <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
+                  {ficha.ctaBoton}
+                </WhatsAppLink>
+
+                <!--
+                  El PDF aparece solo si el producto tiene cargada la
+                  ruta en `products.ts`. Mientras no exista el archivo,
+                  el botón no se renderiza: nada de enlaces rotos.
+                -->
+                {producto.fichaTecnica !== undefined && (
                   <a
-                    href={buildWhatsAppUrl(
-                      {
-                        tipo: 'presupuesto',
-                        producto: producto.nombre,
-                        presentacion: presentacion.etiqueta,
-                      },
-                      locale,
-                    )}
+                    href={producto.fichaTecnica}
                     {...ATRIBUTOS_ENLACE_EXTERNO}
-                    class="inline-flex items-center gap-1.5 rounded-xs border border-gris-claro bg-white px-3.5 py-2 text-sm font-medium tabular-nums text-grafito transition-colors hover:border-verde-oscuro hover:bg-verde-suave hover:text-verde-profundo"
-                    aria-label={`Cotizar ${producto.nombre}, presentación de ${presentacion.etiqueta}`}
+                    class="inline-flex items-center justify-center gap-2 rounded-chip border border-negro/15 bg-white px-6 py-3.5 font-semibold text-negro shadow-nivel-1 transition-colors hover:border-negro/30 hover:bg-hueso sm:px-7 sm:py-4"
                   >
-                    {presentacion.etiqueta}
-                    <Icon name="lucide:message-circle" class="size-3.5" aria-hidden="true" />
+                    <Icon name="lucide:file-text" class="size-4" aria-hidden="true" />
+                    {ficha.descargarFicha}
                   </a>
-                </li>
-              ))}
-            </ul>
-
-            {!config.precios.isVisible && (
-              <p class="mt-3 text-sm text-gris">{config.precios.leyendaSinPrecio}</p>
-            )}
-
-            <div class="mt-8">
-              <WhatsAppLink
-                contexto={{ tipo: 'producto', producto: producto.nombre }}
-                locale={locale}
-                tamano="grande"
-              >
-                <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
-                {ficha.ctaBoton}
-              </WhatsAppLink>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -249,14 +311,27 @@ const schemaMigas = {
     </section>
 
     <!-- Qué hace, cómo se aplica, dónde se usa -->
-    <section class="bg-white py-14 sm:py-18" aria-labelledby="accion-titulo">
+    <section class="bg-white py-16 sm:py-20 lg:py-24" aria-labelledby="accion-titulo">
       <div class="contenedor">
         <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div class="lg:col-span-7">
+            <!--
+              Los tres bloques de texto llevan la misma placa de ícono
+              que los beneficios de la portada: es lo que los vuelve
+              hojeables, que es como se lee una ficha técnica.
+            -->
             <div data-revelar>
-              <h2 id="accion-titulo" class="font-display text-[1.35rem] font-bold text-negro">
-                {ficha.accion}
-              </h2>
+              <div class="flex items-center gap-3">
+                <span
+                  class="inline-flex size-10 shrink-0 items-center justify-center rounded-chip bg-verde-suave text-verde-profundo"
+                  aria-hidden="true"
+                >
+                  <Icon name="lucide:flask-conical" class="size-5" />
+                </span>
+                <h2 id="accion-titulo" class="font-display text-[1.35rem] font-bold text-negro">
+                  {ficha.accion}
+                </h2>
+              </div>
               {copy !== undefined && (
                 <p class="mt-4 max-w-lectura text-grafito/90">{copy.accion}</p>
               )}
@@ -264,24 +339,45 @@ const schemaMigas = {
 
             {copy?.aplicacion !== undefined && (
               <div class="mt-10" data-revelar>
-                <h2 class="font-display text-[1.35rem] font-bold text-negro">
-                  {ficha.aplicacion}
-                </h2>
+                <div class="flex items-center gap-3">
+                  <span
+                    class="inline-flex size-10 shrink-0 items-center justify-center rounded-chip bg-verde-suave text-verde-profundo"
+                    aria-hidden="true"
+                  >
+                    <Icon name="lucide:droplets" class="size-5" />
+                  </span>
+                  <h2 class="font-display text-[1.35rem] font-bold text-negro">
+                    {ficha.aplicacion}
+                  </h2>
+                </div>
                 <p class="mt-4 max-w-lectura text-grafito/90">{copy.aplicacion}</p>
               </div>
             )}
 
             {copy !== undefined && copy.sectores.length > 0 && (
               <div class="mt-10" data-revelar>
-                <h2 class="font-display text-[1.35rem] font-bold text-negro">
-                  {ficha.sectores}
-                </h2>
-                <ul class="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                <div class="flex items-center gap-3">
+                  <span
+                    class="inline-flex size-10 shrink-0 items-center justify-center rounded-chip bg-verde-suave text-verde-profundo"
+                    aria-hidden="true"
+                  >
+                    <Icon name="lucide:leaf" class="size-5" />
+                  </span>
+                  <h2 class="font-display text-[1.35rem] font-bold text-negro">
+                    {ficha.sectores}
+                  </h2>
+                </div>
+                <!--
+                  Los sectores como fichas y no como lista con tildes:
+                  son etiquetas, no pasos, y en bloques se cuentan de un
+                  vistazo.
+                -->
+                <ul class="mt-5 flex flex-wrap gap-2">
                   {copy.sectores.map((sector) => (
-                    <li class="flex items-start gap-2 text-grafito/90">
+                    <li class="inline-flex items-center gap-2 rounded-chip border border-gris-claro bg-hueso px-3.5 py-2 text-[0.92rem] text-grafito">
                       <Icon
                         name="lucide:check"
-                        class="mt-1 size-4 shrink-0 text-verde-oscuro"
+                        class="size-4 shrink-0 text-verde-oscuro"
                         aria-hidden="true"
                       />
                       {sector}
@@ -294,72 +390,96 @@ const schemaMigas = {
 
           <!-- Ficha técnica -->
           <div class="lg:col-span-5">
-            <div class="border border-gris-claro bg-hueso" data-revelar>
-              <h2 class="border-b border-gris-claro px-5 py-4 font-display text-[1.05rem] font-bold text-negro">
+            <!--
+              `sticky` para que la tabla acompañe la lectura de los
+              bloques de la izquierda en pantallas altas: son
+              exactamente los datos que uno quiere tener a la vista
+              mientras lee cómo se aplica el producto.
+            -->
+            <div class="tarjeta overflow-hidden lg:sticky lg:top-24" data-revelar>
+              <h2
+                class="flex items-center gap-2.5 border-b border-gris-claro bg-hueso px-5 py-4 font-display text-[1.05rem] font-bold text-negro"
+              >
+                <Icon name="lucide:gauge" class="size-5 text-verde-oscuro" aria-hidden="true" />
                 {ficha.especificaciones}
               </h2>
-              <dl class="divide-y divide-gris-claro">
+              <!--
+                Etiqueta arriba y valor abajo, no dos columnas: varios
+                valores del catálogo son frases largas —"Desengrasante
+                alcalino clorado de alta concentración"— y partidos en
+                media columna quedaban en cuatro renglones cada uno.
+              -->
+              <dl class="divide-y divide-gris-claro/70">
                 {producto.especificaciones.map((especificacion) => (
-                  <div class="grid grid-cols-2 gap-3 px-5 py-3 text-[0.9rem]">
-                    <dt class="text-grafito/80">{especificacion.clave}</dt>
-                    <dd class="text-grafito">{especificacion.valor}</dd>
+                  <div class="px-5 py-3.5">
+                    <dt class="text-xs font-semibold tracking-[0.1em] text-gris uppercase">
+                      {especificacion.clave}
+                    </dt>
+                    <dd class="mt-1 text-[0.95rem] text-grafito">{especificacion.valor}</dd>
                   </div>
                 ))}
               </dl>
             </div>
-
-            <p class="mt-3 text-xs text-gris">
-              {ficha.fuente.replace('{n}', String(producto.paginaCatalogo))}
-            </p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Foto de uso real -->
-    <section class="bg-hueso py-14 sm:py-18" aria-labelledby="en-uso-titulo">
+    <section class="bg-hueso py-16 sm:py-20 lg:py-24" aria-labelledby="en-uso-titulo">
       <div class="contenedor">
         <h2 id="en-uso-titulo" class="font-display text-[1.35rem] font-bold text-negro" data-revelar>
           {ficha.enUso}
         </h2>
-        <figure class="mt-6 max-w-3xl" data-revelar>
-          <Image
-            src={imagenAplicacion}
-            alt={producto.aplicacion.alt}
-            widths={[400, 800]}
-            sizes="(min-width: 768px) 48rem, 92vw"
-            loading="lazy"
-            format="webp"
-            quality={80}
-            class="w-full border border-gris-claro object-cover"
-          />
-          <figcaption class="mt-3 text-sm text-grafito/80">
+
+        <!--
+          El ancho está topeado a 34rem a propósito. Las fotos de
+          aplicación del catálogo no pasan de 500 px de ancho: mostradas
+          a 48rem el navegador las agrandaba y se veían blandas. A este
+          tamaño quedan nítidas, y el marco las presenta como una placa
+          técnica en lugar de como una foto que quedó chica.
+        -->
+        <figure class="mt-6 max-w-[34rem]" data-revelar>
+          <div class="tarjeta overflow-hidden p-2.5">
+            <Image
+              src={imagenAplicacion}
+              alt={producto.aplicacion.alt}
+              widths={[400, 800]}
+              sizes="(min-width: 640px) 34rem, 92vw"
+              loading="lazy"
+              format="webp"
+              quality={82}
+              class="w-full rounded-[0.35rem] object-cover"
+            />
+          </div>
+          <figcaption class="mt-3 flex items-start gap-2 text-sm text-grafito/80">
+            <span class="mt-2 size-1.5 shrink-0 rounded-full bg-verde" aria-hidden="true"></span>
             {producto.aplicacion.alt}
           </figcaption>
         </figure>
-
-        <Image
-          src={imagenMarca}
-          alt={producto.marca.alt}
-          widths={[320, 640]}
-          sizes="20rem"
-          loading="lazy"
-          format="webp"
-          quality={85}
-          class="mt-8 w-full max-w-xs border border-gris-claro"
-          data-revelar
-        />
       </div>
     </section>
 
-    <!-- Cierre y productos de la misma familia -->
-    <section class="bg-negro py-14 sm:py-18" aria-labelledby="cta-ficha-titulo">
-      <div class="contenedor">
+    <!-- Cierre -->
+    <section
+      class="relative isolate overflow-hidden bg-carbon py-16 sm:py-20 lg:py-24"
+      aria-labelledby="cta-ficha-titulo"
+    >
+      <!-- Mismo tratamiento de fondo que el hero de la portada. -->
+      <div class="trama-carbon pointer-events-none absolute inset-0 opacity-60" aria-hidden="true">
+      </div>
+      <div
+        class="pointer-events-none absolute -top-32 -right-32 aspect-square w-[36rem] rounded-full bg-verde/12 blur-[100px]"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="contenedor relative">
         <div class="max-w-2xl" data-revelar>
           <h2 id="cta-ficha-titulo" class="text-titulo font-bold text-white">
             {ficha.ctaTitulo}
           </h2>
-          <p class="mt-4 max-w-lectura text-subtitulo text-white/75">{ficha.ctaTexto}</p>
+          <p class="mt-4 max-w-lectura text-subtitulo text-white/72">{ficha.ctaTexto}</p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
             <WhatsAppLink
               contexto={{ tipo: 'producto', producto: producto.nombre }}
@@ -371,7 +491,7 @@ const schemaMigas = {
             </WhatsAppLink>
             <a
               href={rutaLocal('/productos', locale)}
-              class="inline-flex items-center justify-center gap-2 rounded-xs border-2 border-white/25 px-6 py-3.5 font-semibold text-white transition-colors hover:border-white/60 hover:bg-white/10 sm:px-7 sm:py-4"
+              class="inline-flex items-center justify-center gap-2 rounded-chip border border-white/25 bg-white/5 px-6 py-3.5 font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/50 hover:bg-white/12 sm:px-7 sm:py-4"
             >
               <Icon name="lucide:chevron-left" class="size-4" aria-hidden="true" />
               {ficha.volver}
@@ -385,7 +505,7 @@ const schemaMigas = {
 
     {
       relacionados.length > 0 && (
-        <section class="bg-hueso py-14 sm:py-18" aria-labelledby="relacionados-titulo">
+        <section class="bg-hueso py-16 sm:py-20 lg:py-24" aria-labelledby="relacionados-titulo">
           <div class="contenedor">
             <h2
               id="relacionados-titulo"
@@ -394,7 +514,7 @@ const schemaMigas = {
             >
               {ficha.relacionados}
             </h2>
-            <div class="mt-6 grid gap-px border border-gris-claro bg-gris-claro sm:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
               {relacionados.map((item, indice) => (
                 <ProductoCard producto={item} locale={locale} retraso={indice * 80} />
               ))}

@@ -76,11 +76,24 @@ Para reemplazar una foto: pisá el archivo **conservando el nombre**. Si
 cambiás el nombre, actualizá el campo `src` correspondiente en
 `products.ts` o en `content.es.ts`.
 
+A los archivos originales se les hicieron dos correcciones que conviene
+repetir si se cargan fotos nuevas del mismo origen:
+
+- Las de `aplicaciones/` traían un marco blanco de unos píxeles heredado
+  del recorte del catálogo. Dentro de un marco oscuro ese borde se veía
+  como una línea clara pegada al canto, así que se recortó.
+- Las de `productos/` y `marcas/` venían sobre un rectángulo blanco
+  opaco. Se les quitó el fondo —solo el fondo: las etiquetas y los
+  bidones blancos siguen intactos— para que apoyen sobre el plinto en
+  vez de mostrar una caja blanca adentro de la tarjeta.
+
 Lo que todavía conviene reemplazar por fotos propias de mejor calidad:
-la del hero (hoy es la foto de aplicación del Policloruro de Aluminio,
-en 400 × 410 px, que se ve bien pero es chica) y las seis de la galería.
-Cualquier foto nueva de planta o laboratorio en 1600 × 1200 mejora
-bastante el resultado.
+las seis de la galería y la del hero. Ninguna supera los 500 px de
+ancho, y eso ya se nota en un lugar concreto: **la imagen grande de la
+galería**, que ocupa el doble de ancho que las demás y es la única que
+el navegador tiene que agrandar. Esa es la primera foto que conviene
+reemplazar, en 1200 × 900 o más. Cualquier foto nueva de planta o
+laboratorio en 1600 × 1200 mejora bastante el resultado general.
 
 ## Contenido confirmado
 
@@ -136,15 +149,25 @@ Lighthouse mobile, medido sobre `npm run preview`:
 
 | Página | Perf. | Accesibilidad | Buenas prácticas | SEO |
 | --- | --- | --- | --- | --- |
-| `/` | 100 | 100 | 100 | 100 |
-| `/productos` | 100 | 100 | 100 | 100 |
-| `/productos/bioperacid` | 100 | 100 | 100 | 100 |
-| `/pt` | 100 | 100 | 100 | 100 |
-| `/en/productos/stronger` | 100 | 100 | 100 | 100 |
+| `/` | 99 | 100 | 100 | 100 |
+| `/productos` | 99 | 100 | 100 | 100 |
+| `/productos/stronger` | 99 | 100 | 100 | 100 |
+| `/pt` | 98 | 100 | 100 | 100 |
+| `/en/productos` | 100 | 100 | 100 | 100 |
 
 Desplazamiento acumulado de layout: **0** en todas. Bloqueo del hilo
 principal: **0 ms**. Todo el JavaScript va inlineado en el HTML y suma
 muy por debajo de los 30 KB comprimidos del objetivo.
+
+Sobre el 98–99 en performance: es la máquina, no el sitio. La versión
+anterior al rediseño visual, construida y medida en el mismo equipo y
+en la misma corrida, da exactamente los mismos números. Lo que mueve el
+puntaje es el *first contentful paint* simulado, que en un equipo más
+rápido vuelve a 100. El rediseño no agregó ni una petición ni un
+kilobyte de JavaScript.
+
+En escritorio da **100 en las cuatro categorías** en todas las páginas
+medidas.
 
 Dos correcciones de accesibilidad salieron de esta auditoría y quedaron
 documentadas en el código:
@@ -220,6 +243,57 @@ Conviene reservarlo antes de publicar, no después.
 3. Reclamar la ficha de **Google Business Profile** con la dirección de
    Pilar 1717, que es lo que conecta el marcado `LocalBusiness` con
    Google Maps.
+
+## Sistema visual
+
+Todo lo que define el aspecto del sitio vive en `src/styles/global.css`,
+en dos bloques: los tokens dentro de `@theme` y las utilidades de
+superficie debajo. Cambiar cualquiera de estas líneas cambia el sitio
+entero de forma consistente; no hay valores sueltos repartidos por los
+componentes.
+
+**Color.** A la paleta del flyer se le sumó una familia oscura para los
+paneles de contraste —el hero, el CTA final—: `--color-carbon` y sus dos
+derivados. No es negro puro, es el grafito de marca llevado a
+profundidad, así el panel se lee como parte del sistema y no como un
+bloque genérico. El verde del isotipo (`--color-verde`) recién sobre
+carbón funciona como color de marca; sobre fondo claro sigue reservado
+para íconos y fondos, nunca para texto chico.
+
+**Radios.** Dos y nada más: `rounded-card` (0,625 rem) para superficies
+y `rounded-chip` (0,375 rem) para botones, campos y etiquetas. La marca
+es industrial, así que nada de cápsulas ni bordes muy redondeados.
+
+**Elevación.** Tres niveles —`shadow-nivel-1` en reposo, `nivel-2` en
+hover, `nivel-3` para lo que flota—, todos teñidos con el grafito de
+marca: una sombra gris neutra sobre fondo hueso se ve sucia.
+
+**Superficies.** Cuatro utilidades cubren todo el sitio:
+
+| Utilidad | Para qué |
+| --- | --- |
+| `tarjeta` | Superficie blanca con borde tenue y elevación mínima |
+| `tarjeta-viva` | La anterior, con levantada de 3 px al pasar el puntero |
+| `plinto` + `plinto-sombra` | Base para los envases recortados: degradado suave y elipse de sombra debajo, para que el producto apoye en vez de flotar |
+| `volanta` | El rótulo corto en versalitas con guion que abre cada sección |
+
+**Movimiento.** Todo lo animado se apaga por completo bajo
+`prefers-reduced-motion`, incluidas las levantadas de tarjeta y los
+zooms de imagen: no se acortan, se desactivan.
+
+### El logotipo
+
+El archivo del catálogo venía en RGB sobre un rectángulo blanco opaco:
+sobre el panel oscuro del hero se veía el recuadro y no la marca. Hay
+dos versiones derivadas, ambas con el fondo recortado:
+
+- `logo-3s-transparente.png` — tinta original, para fondo claro.
+- `logo-3s-blanco.png` — la misma pieza con la tinta en blanco y la hoja
+  en el verde del isotipo, para los paneles oscuros.
+
+El header las alterna por CSS según si está flotando sobre el hero o ya
+se volvió sólido. **Cuando llegue el logotipo vectorial del cliente, se
+reemplazan esos dos archivos y no hay que tocar nada más.**
 
 ## Fuentes
 

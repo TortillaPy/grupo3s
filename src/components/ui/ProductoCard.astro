@@ -39,24 +39,32 @@ const modulo = resolverImagen(producto.imagen.src);
 ---
 
 <article
-  class="group relative flex h-full flex-col bg-white p-5 transition-colors hover:bg-verde-suave/40 sm:p-6"
+  class="tarjeta tarjeta-viva group relative flex h-full flex-col overflow-hidden"
   data-producto
   data-categoria={producto.categoria}
   data-revelar
   data-revelar-retraso={String(retraso)}
 >
-  <Image
-    src={modulo}
-    alt={producto.imagen.alt}
-    widths={[200, 400]}
-    sizes="176px"
-    loading="lazy"
-    format="webp"
-    quality={80}
-    class="h-36 w-full self-center object-contain"
-  />
+  <!--
+    Los envases vienen recortados sobre blanco. Apoyados sobre el
+    plinto —un degradado tenue con una elipse de sombra debajo— dejan
+    de flotar en el vacío y se leen como objetos sobre una superficie.
+  -->
+  <div class="plinto plinto-sombra flex items-center justify-center rounded-none px-5 py-7">
+    <Image
+      src={modulo}
+      alt={producto.imagen.alt}
+      widths={[200, 400]}
+      sizes="176px"
+      loading="lazy"
+      format="webp"
+      quality={80}
+      class="relative z-10 h-36 w-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+    />
+  </div>
 
-  <p class="mt-5 text-xs font-semibold tracking-[0.12em] text-verde-oscuro uppercase">
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+  <p class="text-xs font-semibold tracking-[0.12em] text-verde-oscuro uppercase">
     {categoria?.nombre}
   </p>
 
@@ -81,9 +89,21 @@ const modulo = resolverImagen(producto.imagen.src);
     )
   }
 
-  <p class="mt-4 text-[0.85rem] tabular-nums text-grafito/80">
-    {producto.presentaciones.map((presentacion) => presentacion.etiqueta).join(' · ')}
-  </p>
+  <!--
+    Las presentaciones como fichas sueltas y no como una lista separada
+    por puntos: es lo primero que mira un comprador industrial, y en
+    bloques se cuentan de un vistazo. `mt-auto` las empuja al pie para
+    que todas las tarjetas de la fila terminen alineadas.
+  -->
+  <ul class="mt-auto flex flex-wrap gap-1.5 pt-4" aria-label={contenido.ficha.presentaciones}>
+    {
+      producto.presentaciones.map((presentacion) => (
+        <li class="rounded-chip bg-hueso px-2 py-1 text-[0.78rem] font-medium tabular-nums text-grafito ring-1 ring-gris-claro/80 ring-inset">
+          {presentacion.etiqueta}
+        </li>
+      ))
+    }
+  </ul>
 
   <p
     class="mt-4 inline-flex items-center gap-1.5 text-[0.9rem] font-semibold text-verde-oscuro"
@@ -92,7 +112,8 @@ const modulo = resolverImagen(producto.imagen.src);
     {contenido.catalogo.verFicha}
     <Icon
       name="lucide:arrow-right"
-      class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+      class="size-4 transition-transform duration-200 group-hover:translate-x-1"
     />
   </p>
+  </div>
 </article>

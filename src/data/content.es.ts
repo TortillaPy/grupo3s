@@ -86,6 +86,7 @@ export const contenidoEs: Contenido = {
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
       alt: 'Piletas de una planta de tratamiento de efluentes industriales en operación, con productos 3S en dosificación.',
+      epigrafe: 'Tratamiento de efluentes en planta — dosificación de Policloruro de Aluminio 3S.',
     },
     senales: [
       {
@@ -497,6 +498,7 @@ export const contenidoEs: Contenido = {
     especificaciones: 'Ficha técnica',
     presentaciones: 'Presentaciones',
     enUso: 'En planta',
+    descargarFicha: 'Descargar ficha técnica (PDF)',
     relacionados: 'De la misma familia',
     ctaTitulo: '¿Te sirve este producto?',
     ctaTexto:

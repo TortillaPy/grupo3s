@@ -49,24 +49,26 @@ const items = productosDestacados.map((producto) => ({
   bajada={precio.bajada}
   fondo="blanco"
 >
-  <ul class="grid gap-px border border-gris-claro bg-gris-claro lg:grid-cols-2">
+  <ul class="grid gap-4 sm:gap-5 lg:grid-cols-2">
     {
       items.map(({ producto, copy, modulo }, indice) => (
         <li
-          class="flex flex-col gap-4 bg-white p-5 sm:flex-row sm:gap-5 sm:p-6"
+          class="tarjeta flex flex-col gap-4 p-5 sm:flex-row sm:gap-5 sm:p-6"
           data-revelar
           data-revelar-retraso={String((indice % 2) * 90)}
         >
-          <Image
-            src={modulo}
-            alt={producto.imagen.alt}
-            widths={[160, 320]}
-            sizes="128px"
-            loading="lazy"
-            format="webp"
-            quality={80}
-            class="h-28 w-32 shrink-0 self-start object-contain"
-          />
+          <div class="plinto plinto-sombra grid h-32 w-full shrink-0 place-items-center px-3 sm:w-36">
+            <Image
+              src={modulo}
+              alt={producto.imagen.alt}
+              widths={[160, 320]}
+              sizes="128px"
+              loading="lazy"
+              format="webp"
+              quality={80}
+              class="relative z-10 h-24 w-auto max-w-full object-contain"
+            />
+          </div>
 
           <div class="min-w-0 flex-1">
             <h3 class="font-display text-[1.1rem] font-bold text-negro">
@@ -93,7 +95,7 @@ const items = productosDestacados.map((producto) => ({
                       locale,
                     )}
                     {...ATRIBUTOS_ENLACE_EXTERNO}
-                    class="inline-flex items-center gap-1.5 rounded-xs border border-gris-claro bg-hueso px-3 py-1.5 text-sm font-medium tabular-nums text-grafito transition-colors hover:border-verde-oscuro hover:bg-verde-suave hover:text-verde-profundo"
+                    class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-hueso px-3 py-1.5 text-sm font-medium tabular-nums text-grafito transition-colors hover:border-verde-oscuro hover:bg-verde-suave hover:text-verde-profundo"
                     aria-label={`${precio.ctaVariante}: ${producto.nombre}, ${presentacion.etiqueta}`}
                   >
                     {presentacion.etiqueta}

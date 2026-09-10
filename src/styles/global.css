@@ -33,6 +33,14 @@
   --color-hueso: #fafaf8;
   --color-blanco: #ffffff;
 
+  /* Familia oscura para los paneles de contraste (hero, CTA final,
+     pie). No es negro puro: es el grafito de marca llevado a
+     profundidad, así el panel se lee como parte del sistema de color
+     y no como un bloque genérico. */
+  --color-carbon: #14100f;
+  --color-carbon-medio: #221c1b;
+  --color-carbon-borde: #3a3130;
+
   /* — Tipografía ————————————————————————————————————————————
      Dos familias, como pide el brief. Chivo (grotesca industrial) para
      titulares; IBM Plex Sans para cuerpo, tablas y formulario. */
@@ -54,6 +62,21 @@
   /* Ancho de línea de lectura: 60–75 caracteres, como pide el brief. */
   --container-lectura: 38rem;
   --container-contenido: 72rem;
+
+  /* — Radios ————————————————————————————————————————————————
+     La marca es industrial: nada de cápsulas ni bordes muy redondeados.
+     Dos pasos y nada más. `card` para superficies, `chip` para botones,
+     etiquetas y campos. */
+  --radius-card: 0.625rem;
+  --radius-chip: 0.375rem;
+
+  /* — Elevación ——————————————————————————————————————————————
+     Tres niveles, todos teñidos con el grafito de marca en vez de negro
+     neutro: una sombra gris azulada sobre fondo hueso se ve sucia.
+     `nivel-1` reposo, `nivel-2` hover, `nivel-3` elementos flotantes. */
+  --shadow-nivel-1: 0 1px 2px -1px rgb(70 59 67 / 0.1), 0 4px 14px -6px rgb(70 59 67 / 0.12);
+  --shadow-nivel-2: 0 2px 4px -2px rgb(70 59 67 / 0.12), 0 14px 32px -12px rgb(70 59 67 / 0.22);
+  --shadow-nivel-3: 0 8px 20px -6px rgb(11 6 12 / 0.18), 0 28px 60px -24px rgb(11 6 12 / 0.35);
 
   /* — Movimiento ————————————————————————————————————————————— */
   --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
@@ -97,6 +120,17 @@
     border-radius: 2px;
   }
 
+  /*
+    Sobre los paneles de carbón el verde oscuro del foco se pierde
+    contra el fondo. Ahí el anillo pasa al verde del isotipo, que sobre
+    carbón da 6,4:1 — muy por encima del 3:1 que exige AA para un
+    indicador de foco.
+  */
+  .bg-carbon :focus-visible,
+  .bg-carbon-medio :focus-visible {
+    outline-color: var(--color-verde);
+  }
+
   /* Los números de tablas y especificaciones alinean en columna. */
   table {
     font-variant-numeric: tabular-nums;
@@ -119,6 +153,121 @@
 
   @media (width >= 48rem) {
     padding-inline: 2rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   SUPERFICIES
+   Las tres formas en que algo puede apoyarse sobre el fondo. Todo el
+   sitio usa estas tres y ninguna más: es lo que hace que secciones
+   distintas se lean como el mismo sistema.
+--------------------------------------------------------------------------- */
+
+/* Tarjeta en reposo: blanca, borde tenue, elevación mínima. */
+@utility tarjeta {
+  background-color: var(--color-blanco);
+  border: 1px solid color-mix(in oklab, var(--color-gris-claro) 70%, transparent);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-nivel-1);
+}
+
+/* Tarjeta que responde al puntero. El desplazamiento es de 3 px: lo
+   suficiente para que se note, no tanto como para que la grilla “salte”.
+   Se anula solo con prefers-reduced-motion, más abajo. */
+@utility tarjeta-viva {
+  transition:
+    box-shadow 220ms var(--ease-salida),
+    transform 220ms var(--ease-salida),
+    border-color 220ms var(--ease-salida);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-nivel-2);
+    border-color: color-mix(in oklab, var(--color-verde) 42%, transparent);
+  }
+}
+
+/* Plinto para las fotos de producto. Los envases están recortados sobre
+   blanco: apoyados sobre un degradado tenue con una elipse de sombra
+   debajo, dejan de flotar y se leen como objetos. */
+@utility plinto {
+  position: relative;
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(
+      120% 88% at 50% 8%,
+      var(--color-blanco) 0%,
+      color-mix(in oklab, var(--color-verde-suave) 55%, var(--color-blanco)) 62%,
+      color-mix(in oklab, var(--color-verde-suave) 92%, var(--color-blanco)) 100%
+    );
+}
+
+/* Sombra de contacto bajo el envase. Decorativa: va en un ::after. */
+@utility plinto-sombra {
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 22%;
+    bottom: 8%;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      rgb(70 59 67 / 0.22) 0%,
+      rgb(70 59 67 / 0) 72%
+    );
+  }
+}
+
+/* Trama de líneas para los paneles oscuros. Es un degradado repetido,
+   no una imagen: pesa cero y se ve nítido en cualquier densidad de
+   pantalla. */
+@utility trama-carbon {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-verde) 20%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-verde) 20%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 88px 88px;
+
+  /*
+    La máscara es lo que separa una textura de un papel cuadriculado:
+    la trama existe arriba a la derecha, donde acompaña al halo verde,
+    y se disuelve antes de llegar al titular y al zócalo. Sin esto las
+    líneas cruzan el texto y le bajan la legibilidad.
+  */
+  mask-image: radial-gradient(
+    118% 92% at 88% 0%,
+    rgb(0 0 0 / 0.9) 0%,
+    rgb(0 0 0 / 0.35) 45%,
+    transparent 78%
+  );
+}
+
+/* Volanta: el rótulo corto en versalitas que abre cada sección.
+   Antes era solo texto verde; ahora lleva un guion que le da anclaje
+   y la separa del título. */
+@utility volanta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  &::before {
+    content: '';
+    inline-size: 1.75rem;
+    block-size: 2px;
+    flex: none;
+    background-color: currentColor;
   }
 }
 
@@ -176,6 +325,11 @@
 
   .esta-oculto {
     opacity: 1;
+    transform: none;
+  }
+
+  /* El hover de las tarjetas cambia la sombra, no la posición. */
+  .tarjeta-viva:hover {
     transform: none;
   }
 }

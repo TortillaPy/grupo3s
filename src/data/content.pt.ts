@@ -21,7 +21,7 @@ export const contenidoPt: Contenido = {
       titulo:
         'Tratamento de efluentes industriais no Paraguai | 3S Grupo Industrial',
       descripcion:
-        'Coagulantes, floculantes, desinfetantes e desengraxantes com registro sanitário, fabricados no nosso laboratório em Assunção. Para frigoríficos, curtumes e plantas de alimentos. Entrega em todo o país.',
+        'Coagulantes, floculantes, desinfetantes e desengraxantes com registro sanitário, fabricados no nosso laboratório em Assunção. Para frigoríficos, curtumes e plantas de alimentos. Entrega em todo o Paraguai.',
     },
     productos: {
       titulo: 'Catálogo de produtos químicos industriais | 3S Grupo Industrial',
@@ -72,11 +72,12 @@ export const contenidoPt: Contenido = {
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
       alt: 'Tanques de uma estação de tratamento de efluentes industriais em operação, com produtos 3S sendo dosados.',
+      epigrafe: 'Tratamento de efluentes em planta — dosagem de Policloruro de Aluminio 3S.',
     },
     senales: [
       {
         icono: 'truck',
-        titulo: 'Entrega em todo o país',
+        titulo: 'Entrega em todo o Paraguai',
         detalle: 'Frete a combinar conforme o volume e o destino.',
       },
       {
@@ -139,7 +140,7 @@ export const contenidoPt: Contenido = {
         icono: 'shield-check',
         titulo: 'Com registro sanitário',
         texto:
-          'Quase toda a linha tem, e o White Clean soma registro DINAVISA e aprovação do INTN.',
+          'Quase toda a linha tem, e o White Clean soma registro DINAVISA e aprovação do INTN, os órgãos sanitário e de normas técnicas do Paraguai.',
       },
       {
         icono: 'leaf',
@@ -216,7 +217,7 @@ export const contenidoPt: Contenido = {
       {
         titulo: 'Entregamos na sua planta',
         texto:
-          'Despachamos para qualquer ponto do país, na embalagem que você escolher, do bombona de 5 litros ao contêiner de 1000.',
+          'Despachamos para qualquer ponto do Paraguai, na embalagem que você escolher, da bombona de 5 litros ao contêiner IBC de 1000.',
       },
     ],
   },
@@ -316,9 +317,9 @@ export const contenidoPt: Contenido = {
     bajada: 'O que mais nos perguntam antes da primeira compra.',
     items: [
       {
-        pregunta: 'Vocês entregam em todo o país?',
+        pregunta: 'Vocês entregam em todo o Paraguai?',
         respuesta:
-          'Sim, despachamos para os dezessete departamentos. O frete é combinado conforme o volume e o destino, e já vem incluído no orçamento antes de você confirmar.',
+          'Sim, despachamos para os dezessete departamentos do Paraguai. O frete é combinado conforme o volume e o destino, e já vem incluído no orçamento antes de você confirmar.',
       },
       {
         pregunta: 'Quanto tempo leva a entrega?',
@@ -333,12 +334,12 @@ export const contenidoPt: Contenido = {
       {
         pregunta: 'Que garantia têm os produtos?',
         respuesta:
-          'Quase toda a linha tem registro sanitário, e o White Clean soma ainda registro DINAVISA e aprovação do INTN. A garantia cobre que o produto cumpra a especificação declarada na sua ficha técnica, dentro da validade indicada e armazenado nas condições que ali constam.',
+          'Quase toda a linha tem registro sanitário, e o White Clean soma ainda registro DINAVISA (órgão sanitário do Paraguai) e aprovação do INTN (instituto paraguaio de normas técnicas). A garantia cobre que o produto cumpra a especificação declarada na sua ficha técnica, dentro da validade indicada e armazenado nas condições que ali constam.',
       },
       {
         pregunta: 'Quais formas de pagamento vocês aceitam?',
         respuesta:
-          'Transferência bancária e cheque. Para clientes com conta aberta trabalhamos com prazos conforme o histórico. As condições são acertadas no momento do orçamento: emitimos nota fiscal em todos os casos.',
+          'Transferência bancária e cheque. Para clientes com conta aberta trabalhamos com prazos conforme o histórico. As condições são acertadas no momento do orçamento: emitimos fatura legal paraguaia em todos os casos.',
       },
       {
         pregunta: 'Posso pedir uma amostra antes de comprar?',
@@ -482,6 +483,7 @@ export const contenidoPt: Contenido = {
     especificaciones: 'Ficha técnica',
     presentaciones: 'Embalagens',
     enUso: 'Na planta',
+    descargarFicha: 'Baixar ficha técnica (PDF)',
     relacionados: 'Da mesma família',
     ctaTitulo: 'Este produto serve para você?',
     ctaTexto:
@@ -505,7 +507,7 @@ export const contenidoPt: Contenido = {
       id: 'desinfectantes',
       nombre: 'Desinfetantes',
       descripcion:
-        'Amônio quaternário, ácido peracético e peróxido para a indústria alimentícia e sanitária.',
+        'Amônio quaternário, ácido peracético e peróxido para a indústria alimentícia e a área da saúde.',
       icono: 'shield-check',
     },
     {

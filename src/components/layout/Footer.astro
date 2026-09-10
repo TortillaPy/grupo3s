@@ -13,7 +13,9 @@ interface Props {
 const { locale = config.localePorDefecto } = Astro.props;
 const { footer } = obtenerContenido(locale);
 
-const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
+/* Versión con el fondo recortado: el archivo original del catálogo
+   traía un rectángulo blanco que se recortaba contra el hueso. */
+const logo = resolverImagen('/src/assets/images/marca/logo-3s-transparente.png');
 
 /** Año calculado en cada build: no hay que tocarlo nunca a mano. */
 const anio = new Date().getFullYear();
@@ -49,7 +51,7 @@ const redes = config.contacto.redes.filter((red) => red.url !== '');
                     href={red.url}
                     {...ATRIBUTOS_ENLACE_EXTERNO}
                     aria-label={`${config.site.nombre} en ${red.nombre}`}
-                    class="inline-flex size-10 items-center justify-center rounded-xs border border-gris-claro text-grafito transition-colors hover:border-verde-oscuro hover:text-verde-oscuro"
+                    class="inline-flex size-10 items-center justify-center rounded-chip border border-gris-claro text-grafito transition-colors hover:border-verde-oscuro hover:text-verde-oscuro"
                   >
                     <Icon name={`lucide:${red.icono}`} class="size-5" aria-hidden="true" />
                   </a>

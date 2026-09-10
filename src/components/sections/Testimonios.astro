@@ -44,12 +44,12 @@ const hayPlaceholders = testimonios.items.some((item) => item.esPlaceholder);
     )
   }
 
-  <ul class="grid gap-px border border-gris-claro bg-gris-claro lg:grid-cols-3">
+  <ul class="grid gap-4 sm:gap-5 lg:grid-cols-3">
     {
       testimonios.items.map((testimonio, indice) => (
         <li
           class:list={[
-            'flex flex-col justify-between gap-6 bg-white p-6 sm:p-7',
+            'tarjeta flex flex-col justify-between gap-6 p-6 sm:p-7',
             testimonio.esPlaceholder && 'opacity-70',
           ]}
           data-revelar

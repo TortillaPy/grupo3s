@@ -18,81 +18,148 @@ const { hero } = obtenerContenido(locale);
 const imagenHero = resolverImagen(hero.imagen.src);
 ---
 
-<section class="relative overflow-hidden bg-hueso" aria-labelledby="hero-titulo">
-  <!-- Banda diagonal: retoma la geometría del rombo del isotipo 3S. -->
+{/*
+  Panel oscuro. Es el cambio de fondo más grande del sitio y está puesto
+  a propósito en el primer viewport: contra el carbón, el verde del
+  isotipo por fin se lee como color de marca y no como un detalle.
+  Todo lo que viene después es claro, así que el contraste también
+  ordena la lectura: acá se promete, abajo se explica.
+*/}
+<section
+  class="relative isolate overflow-hidden bg-carbon text-white"
+  aria-labelledby="hero-titulo"
+>
+  {/*
+    Fondo del panel. Tres capas, todas CSS: no pesan un byte de imagen
+    y se ven nítidas en cualquier densidad de pantalla.
+    1. Trama de líneas, enmascarada hacia el ángulo superior derecho.
+    2. Halo verde difuso detrás de la foto.
+    3. Rombo del isotipo a escala de página, apenas insinuado.
+  */}
+  {/*
+    En móvil la trama se atenúa: la máscara está pensada para el ángulo
+    superior derecho de una pantalla ancha, y en 375 px las líneas
+    terminan cruzando el titular.
+  */}
   <div
-    class="pointer-events-none absolute -top-40 -right-32 hidden h-[38rem] w-[38rem] rotate-45 bg-verde/8 lg:block"
+    class="trama-carbon pointer-events-none absolute inset-0 opacity-35 lg:opacity-100"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -top-40 -right-40 aspect-square w-[44rem] rounded-full bg-verde/12 blur-[100px]"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -top-24 -right-24 hidden size-[34rem] rotate-45 border border-verde/12 lg:block"
     aria-hidden="true"
   >
   </div>
 
-  <div class="contenedor relative py-14 sm:py-20 lg:py-24">
-    <div class="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-      <div class="lg:col-span-6" data-revelar>
-        <p
-          class="mb-5 inline-block border-l-3 border-verde pl-3 text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase"
-        >
+  {/*
+    El padding superior incluye los 4,5rem del header, que en esta
+    página flota sobre el panel en vez de empujarlo: 4,5 + 3,5 = 8rem
+    en móvil, y así en cada breakpoint.
+  */}
+  <div class="contenedor relative pt-32 pb-16 sm:pt-38 sm:pb-20 lg:pt-42 lg:pb-24">
+    <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-7" data-revelar>
+        <p class="volanta mb-6 text-verde">
           {config.site.razonSocial}
         </p>
 
-        <h1 id="hero-titulo" class="text-display font-black text-negro">
+        {/*
+          `max-w` en ch y no en rem: el titular corta por cantidad de
+          caracteres, que es lo que decide dónde se rompe una frase.
+          Antes se partía en cinco líneas cortas y perdía el golpe.
+        */}
+        <h1
+          id="hero-titulo"
+          class="max-w-[19ch] text-display font-black text-white"
+        >
           {hero.titular}
         </h1>
 
-        <p class="mt-6 max-w-lectura text-subtitulo text-grafito">
+        <p class="mt-7 max-w-lectura text-subtitulo text-white/72">
           {hero.subtitulo}
         </p>
 
-        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <WhatsAppLink contexto={{ tipo: 'hero' }} locale={locale} tamano="grande">
             <Icon name="lucide:message-circle" class="size-5" aria-hidden="true" />
             {hero.ctaPrimario}
           </WhatsAppLink>
 
-          <Button href={rutaLocal('/productos', locale)} variante="secundario" tamano="grande">
+          <Button
+            href={rutaLocal('/productos', locale)}
+            variante="fantasma"
+            tamano="grande"
+          >
             {hero.ctaSecundario}
             <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
           </Button>
         </div>
       </div>
 
-      <div class="lg:col-span-6" data-revelar data-revelar-retraso="120">
-        <!--
+      <div class="lg:col-span-5" data-revelar data-revelar-retraso="120">
+        {/*
+          Las fotos del catálogo miden entre 400 y 500 px de ancho. En vez
+          de estirarlas a un hero a ancho completo —donde se verían
+          blandas—, van dentro de un marco que las contiene a su tamaño
+          real y las trata como una placa técnica: nítidas, con su
+          epígrafe. El límite de 34rem es deliberado.
+
           fetchpriority="high" y loading="eager": es la imagen más grande
-          del primer viewport, así que se carga primero y no compite con
-          nada. width y alto van explícitos: cero desplazamiento de layout.
-        -->
-        <Image
-          src={imagenHero}
-          alt={hero.imagen.alt}
-          widths={[400, 800, 1200]}
-          sizes="(min-width: 1024px) 34rem, 100vw"
-          loading="eager"
-          fetchpriority="high"
-          format="webp"
-          quality={80}
-          class="w-full rounded-xs border border-gris-claro object-cover shadow-[0_18px_48px_-24px_rgba(11,6,12,0.35)]"
-        />
+          del primer viewport. width y alto explícitos: cero CLS.
+        */}
+        <figure
+          class="relative mx-auto max-w-[34rem] rounded-card border border-carbon-borde bg-carbon-medio p-2.5 shadow-nivel-3"
+        >
+          <Image
+            src={imagenHero}
+            alt={hero.imagen.alt}
+            widths={[400, 800, 1200]}
+            sizes="(min-width: 1024px) 32rem, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            format="webp"
+            quality={82}
+            class="aspect-4/3 w-full rounded-[0.35rem] object-cover"
+          />
+          <figcaption
+            class="flex items-center gap-2 px-2 pt-3 pb-1 text-[0.78rem] text-white/55"
+          >
+            <span class="size-1.5 shrink-0 rounded-full bg-verde" aria-hidden="true"></span>
+            {hero.imagen.epigrafe}
+          </figcaption>
+        </figure>
       </div>
     </div>
+  </div>
 
-    <!-- Señales de confianza -->
+  {/*
+    Señales de confianza como zócalo del panel. Al ir pegadas al borde
+    inferior cierran el bloque oscuro y hacen de transición al contenido
+    claro, en lugar de flotar como una cuarta fila suelta.
+  */}
+  <div class="relative border-t border-white/10 bg-white/[0.03]">
     <ul
-      class="mt-12 grid gap-px border border-gris-claro bg-gris-claro sm:mt-16 sm:grid-cols-3"
+      class="contenedor grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
       data-revelar
       data-revelar-retraso="220"
     >
       {
         hero.senales.map((senal) => (
-          <li class="flex gap-3.5 bg-white p-5 sm:p-6">
+          <li class="flex gap-3.5 py-5 sm:px-6 sm:py-7 sm:first:pl-0 sm:last:pr-0">
             <Icon
               name={`lucide:${senal.icono}`}
-              class="mt-0.5 size-6 shrink-0 text-verde-oscuro"
+              class="mt-0.5 size-6 shrink-0 text-verde"
               aria-hidden="true"
             />
             <div>
-              <p class="font-display text-[0.95rem] font-bold text-negro">{senal.titulo}</p>
-              <p class="mt-1 text-sm text-grafito/85">{senal.detalle}</p>
+              <p class="font-display text-[0.95rem] font-bold text-white">{senal.titulo}</p>
+              <p class="mt-1 text-sm text-white/60">{senal.detalle}</p>
             </div>
           </li>
         ))

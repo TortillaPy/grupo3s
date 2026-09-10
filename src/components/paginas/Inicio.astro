@@ -51,7 +51,8 @@ const schemaFaq = {
   locale={locale}
   schemas={[schemaFaq]}
 >
-  <Header slot="header" locale={locale} />
+  {/* Única página que arranca con el panel oscuro del hero. */}
+  <Header slot="header" locale={locale} sobreOscuro />
 
   <Hero locale={locale} />
   <ProblemaSolucion locale={locale} />

@@ -43,7 +43,7 @@ function tipoDe(slug: string): string {
     desplace de lado en móvil.
   -->
   <div
-    class="overflow-x-auto border border-gris-claro bg-white"
+    class="tarjeta overflow-x-auto"
     tabindex="0"
     role="region"
     aria-labelledby="especificaciones-titulo"
@@ -51,7 +51,7 @@ function tipoDe(slug: string): string {
   >
     <table class="w-full min-w-[46rem] border-collapse text-left text-[0.9rem]">
       <thead>
-        <tr class="border-b border-gris-claro bg-hueso">
+        <tr class="border-b border-gris-claro bg-hueso/90">
           <th scope="col" class="px-4 py-3 text-xs font-semibold tracking-[0.1em] text-gris uppercase">
             {especificaciones.columnas.producto}
           </th>
@@ -80,7 +80,7 @@ function tipoDe(slug: string): string {
               </th>
             </tr>
             {grupo.items.map((producto) => (
-              <tr class="border-b border-gris-claro/70 last:border-b-0">
+              <tr class="border-b border-gris-claro/70 transition-colors last:border-b-0 hover:bg-verde-suave/35">
                 <th scope="row" class="px-4 py-3 align-top font-display font-bold text-negro">
                   <a
                     href={rutaLocal(`/productos/${producto.slug}`, locale)}

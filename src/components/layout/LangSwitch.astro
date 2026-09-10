@@ -42,6 +42,12 @@ const base = rutaBase(Astro.url.pathname);
       <ul class="flex items-center gap-1">
         {localesDisponibles.map((disponible) => {
           const activo = disponible === locale;
+          /*
+            Los colores no van como clases fijas sino en el <style> de
+            abajo: el mismo componente tiene que leerse igual de bien
+            en el header claro y flotando sobre el panel oscuro del
+            hero, y el estado lo decide una clase del <header>.
+          */
           return (
             <li>
               <a
@@ -50,10 +56,8 @@ const base = rutaBase(Astro.url.pathname);
                 lang={disponible}
                 aria-current={activo ? 'true' : undefined}
                 class:list={[
-                  'inline-flex min-w-9 items-center justify-center rounded-xs px-1.5 py-1.5 text-[0.78rem] font-semibold transition-colors',
-                  activo
-                    ? 'bg-negro/8 text-negro'
-                    : 'text-grafito/80 hover:bg-negro/5 hover:text-negro',
+                  'idioma inline-flex min-w-9 items-center justify-center rounded-chip px-1.5 py-1.5 text-[0.78rem] font-semibold transition-colors',
+                  activo && 'idioma-activo',
                 ]}
               >
                 <span aria-hidden="true">{NOMBRES[disponible].corto}</span>
@@ -66,3 +70,39 @@ const base = rutaBase(Astro.url.pathname);
     </nav>
   )
 }
+
+<style>
+  /*
+    Estado por defecto: header claro o menú móvil. El idioma activo se
+    marca con fondo, no con color, para que se distinga sin depender de
+    que alguien perciba la diferencia de tono.
+  */
+  .idioma {
+    color: color-mix(in oklab, var(--color-grafito) 82%, transparent);
+  }
+
+  .idioma:hover {
+    background-color: color-mix(in oklab, var(--color-negro) 5%, transparent);
+    color: var(--color-negro);
+  }
+
+  .idioma-activo {
+    background-color: color-mix(in oklab, var(--color-negro) 8%, transparent);
+    color: var(--color-negro);
+  }
+
+  /* Sobre el panel oscuro del hero, mientras el header sigue flotando. */
+  :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma {
+    color: color-mix(in oklab, var(--color-blanco) 70%, transparent);
+  }
+
+  :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma:hover {
+    background-color: color-mix(in oklab, var(--color-blanco) 12%, transparent);
+    color: var(--color-blanco);
+  }
+
+  :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma-activo {
+    background-color: color-mix(in oklab, var(--color-blanco) 16%, transparent);
+    color: var(--color-blanco);
+  }
+</style>

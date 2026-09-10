@@ -20,24 +20,26 @@ const { beneficios } = obtenerContenido(locale);
   fondo="hueso"
 >
   <!--
-    Grilla de una sola pieza: celdas blancas separadas por una línea de
-    1 px, en vez de seis tarjetas con sombra. Es más sobrio y evita que
-    todo el sitio se lea como una pila de cajas iguales.
+    Tarjetas separadas, no celdas de una grilla continua. El ícono va
+    dentro de una placa verde suave: es lo que le da a cada tarjeta un
+    punto de entrada para la vista, y de paso hace que el verde de
+    marca aparezca seis veces sin saturar la sección.
   -->
-  <ul class="grid gap-px border border-gris-claro bg-gris-claro sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
     {
       beneficios.items.map((beneficio, indice) => (
         <li
-          class="flex flex-col bg-white p-6 sm:p-7"
+          class="tarjeta tarjeta-viva flex flex-col p-6 sm:p-7"
           data-revelar
           data-revelar-retraso={String((indice % 3) * 90)}
         >
-          <Icon
-            name={`lucide:${beneficio.icono}`}
-            class="size-7 text-verde-oscuro"
+          <span
+            class="inline-flex size-12 shrink-0 items-center justify-center rounded-chip bg-verde-suave text-verde-profundo"
             aria-hidden="true"
-          />
-          <h3 class="mt-4 font-display text-[1.05rem] font-bold text-negro">
+          >
+            <Icon name={`lucide:${beneficio.icono}`} class="size-6" />
+          </span>
+          <h3 class="mt-5 font-display text-[1.05rem] font-bold text-negro">
             {beneficio.titulo}
           </h3>
           <p class="mt-2 text-[0.95rem] text-grafito/85">{beneficio.texto}</p>

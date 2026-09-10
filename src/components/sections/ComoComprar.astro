@@ -26,28 +26,45 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
     Acá la numeración no es decorativa: los pasos ocurren en este orden y
     el número le dice al lector dónde está del proceso.
   -->
-  <ol class="grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+  <ol class="relative grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+    <!--
+      Línea que une los tres pasos. Existe solo desde `sm`, que es
+      donde los pasos van en fila y la línea significa "esto sigue a
+      esto"; apilados en móvil no aportaría nada.
+    -->
+    <span
+      class="absolute top-6 right-[16.67%] left-[16.67%] hidden h-px bg-gris-claro sm:block"
+      aria-hidden="true"></span>
+
     {
       comoComprar.pasos.map((paso, indice) => (
         <li
-          class="border-t-2 border-verde pt-5"
+          class="relative"
           data-revelar
           data-revelar-retraso={String(indice * 110)}
         >
-          <span class="block text-sm font-semibold tabular-nums text-verde-oscuro">
+          {/*
+            El número va en un disco verde sobre la línea. Es el ancla
+            visual del paso: se ve de un vistazo cuántos pasos hay y en
+            cuál se está.
+          */}
+          <span
+            class="relative z-10 inline-flex size-12 items-center justify-center rounded-full bg-verde-oscuro font-display text-[1.05rem] font-bold tabular-nums text-white shadow-[0_8px_20px_-10px_rgb(30_90_34/0.8)]"
+            aria-hidden="true"
+          >
             {String(indice + 1).padStart(2, '0')}
           </span>
-          <h3 class="mt-2 font-display text-[1.15rem] font-bold text-negro">
+          <h3 class="mt-5 font-display text-[1.15rem] font-bold text-negro">
             {paso.titulo}
           </h3>
-          <p class="mt-2 text-[0.95rem] text-grafito/85">{paso.texto}</p>
+          <p class="mt-2 max-w-lectura text-[0.95rem] text-grafito/85">{paso.texto}</p>
         </li>
       ))
     }
   </ol>
 
   <div
-    class="mt-12 flex flex-col gap-4 border border-gris-claro bg-hueso p-6 sm:mt-14 sm:flex-row sm:items-center sm:justify-between sm:p-8"
+    class="tarjeta mt-14 flex flex-col gap-5 bg-hueso p-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between sm:p-8"
     data-revelar
   >
     <div>

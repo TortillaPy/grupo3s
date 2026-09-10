@@ -11,7 +11,7 @@ const { locale = config.localePorDefecto } = Astro.props;
 const { problemaSolucion } = obtenerContenido(locale);
 ---
 
-<section id="problema" aria-labelledby="problema-titulo" class="bg-white py-14 sm:py-20 lg:py-24">
+<section id="problema" aria-labelledby="problema-titulo" class="bg-white py-16 sm:py-24 lg:py-28">
   <div class="contenedor">
     <h2
       id="problema-titulo"
@@ -22,44 +22,67 @@ const { problemaSolucion } = obtenerContenido(locale);
     </h2>
 
     <!--
-      Dos bloques enfrentados: el de la izquierda es el estado actual y va
-      sobre fondo apagado; el de la derecha es el estado deseado y lleva el
-      único acento verde. El contraste de fondo hace el trabajo que en otro
-      diseño harían dos tarjetas iguales.
+      Dos estados enfrentados: a la izquierda el de hoy, apagado y de
+      borde discontinuo —el borde punteado dice "provisorio" sin
+      necesidad de escribirlo—; a la derecha el estado con 3S, en
+      tarjeta sólida y con el único acento verde de la sección. Entre
+      ambos, una flecha que marca la dirección de la lectura.
     -->
-    <div class="mt-10 grid gap-px border border-gris-claro bg-gris-claro lg:mt-12 lg:grid-cols-2">
-      <div class="bg-hueso p-6 sm:p-8 lg:p-10" data-revelar>
+    <div class="relative mt-10 grid gap-5 lg:mt-14 lg:grid-cols-2 lg:gap-6">
+      <div
+        class="rounded-card border border-dashed border-gris-claro bg-hueso p-6 sm:p-8 lg:p-10"
+        data-revelar
+      >
         <div class="flex items-center gap-2.5">
-          <Icon
-            name="lucide:alert-circle"
-            class="size-5 shrink-0 text-gris"
+          <span
+            class="inline-flex size-9 shrink-0 items-center justify-center rounded-chip bg-gris-claro/60 text-gris"
             aria-hidden="true"
-          />
+          >
+            <Icon name="lucide:alert-circle" class="size-5" />
+          </span>
           <h3 class="text-xs font-semibold tracking-[0.16em] text-gris uppercase">
             {problemaSolucion.problema.titulo}
           </h3>
         </div>
-        <p class="mt-4 max-w-lectura text-grafito/85">
+        <p class="mt-5 max-w-lectura text-grafito/85">
           {problemaSolucion.problema.texto}
         </p>
       </div>
 
+      <!--
+        Flecha de transición. Puramente decorativa: el orden de lectura
+        ya lo dan los dos encabezados, así que va oculta a los lectores
+        de pantalla. En móvil apunta hacia abajo, que es como se apilan.
+      -->
       <div
-        class="bg-white p-6 shadow-[inset_4px_0_0_var(--color-verde)] sm:p-8 lg:p-10"
+        class="pointer-events-none absolute top-1/2 left-1/2 z-10 hidden size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gris-claro bg-white text-verde-oscuro shadow-nivel-1 lg:flex"
+        aria-hidden="true"
+      >
+        <Icon name="lucide:arrow-right" class="size-5" />
+      </div>
+
+      <div
+        class="tarjeta relative overflow-hidden p-6 sm:p-8 lg:p-10"
         data-revelar
         data-revelar-retraso="120"
       >
+        <!-- Filete verde superior: marca cuál de los dos es el desenlace. -->
+        <span
+          class="absolute inset-x-0 top-0 h-1 bg-verde"
+          aria-hidden="true"
+        ></span>
         <div class="flex items-center gap-2.5">
-          <Icon
-            name="lucide:check"
-            class="size-5 shrink-0 text-verde-oscuro"
+          <span
+            class="inline-flex size-9 shrink-0 items-center justify-center rounded-chip bg-verde-suave text-verde-profundo"
             aria-hidden="true"
-          />
+          >
+            <Icon name="lucide:check" class="size-5" />
+          </span>
           <h3 class="text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase">
             {problemaSolucion.solucion.titulo}
           </h3>
         </div>
-        <p class="mt-4 max-w-lectura text-grafito">
+        <p class="mt-5 max-w-lectura text-grafito">
           {problemaSolucion.solucion.texto}
         </p>
       </div>

@@ -27,13 +27,29 @@ const imagenes = galeria.items.map((item) => ({
   bajada={galeria.bajada}
   fondo="blanco"
 >
-  <ul class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+  <!--
+    Mosaico asimétrico en vez de una grilla pareja: una grilla de seis
+    rectángulos iguales no le dice a nadie qué mirar primero. Las seis
+    imágenes llenan la grilla exacta en los dos tamaños: en móvil, dos
+    columnas por tres filas; desde `lg`, tres columnas donde la primera
+    ocupa un cuadrado de 2×2 y las otras cinco completan el rectángulo
+    sin dejar un hueco.
+  -->
+  <ul class="grid auto-rows-[9rem] grid-cols-2 gap-3 sm:auto-rows-[12rem] sm:gap-4 lg:grid-cols-3">
     {
       imagenes.map((imagen, indice) => (
-        <li data-revelar data-revelar-retraso={String((indice % 3) * 90)}>
+        <li
+          class:list={[
+            'min-w-0',
+            /* Solo la primera se agranda, y solo desde tres columnas. */
+            indice === 0 && 'lg:col-span-2 lg:row-span-2',
+          ]}
+          data-revelar
+          data-revelar-retraso={String((indice % 3) * 90)}
+        >
           <button
             type="button"
-            class="group block w-full cursor-zoom-in overflow-hidden rounded-xs border border-gris-claro bg-hueso"
+            class="group relative block size-full cursor-zoom-in overflow-hidden rounded-card border border-gris-claro/70 bg-hueso shadow-nivel-1 transition-shadow duration-200 hover:shadow-nivel-2"
             data-abrir-galeria
             data-indice={String(indice)}
             aria-label={`${imagen.alt} — ${galeria.titulo}, ${indice + 1} ${galeria.de} ${imagenes.length}`}
@@ -41,13 +57,30 @@ const imagenes = galeria.items.map((item) => ({
             <Image
               src={imagen.modulo}
               alt={imagen.alt}
-              widths={[300, 600]}
-              sizes="(min-width: 1024px) 22rem, 45vw"
+              widths={[300, 600, 900]}
+              sizes={
+                indice === 0
+                  ? '(min-width: 1024px) 31rem, 45vw'
+                  : '(min-width: 1024px) 15rem, 45vw'
+              }
               loading="lazy"
               format="webp"
               quality={78}
-              class="aspect-4/3 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              class="size-full object-cover transition-transform duration-300 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
+            {/*
+              Velo que aparece al pasar el puntero, con el ícono de lupa.
+              Es la señal de que la imagen se abre; sin él, que la foto
+              sea clicable hay que adivinarlo.
+            */}
+            <span
+              class="absolute inset-0 flex items-end justify-end bg-linear-to-t from-negro/55 to-transparent p-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+              aria-hidden="true"
+            >
+              <span class="grid size-9 place-items-center rounded-full bg-white/90 text-negro">
+                <Icon name="lucide:maximize-2" class="size-4" />
+              </span>
+            </span>
           </button>
         </li>
       ))
@@ -79,7 +112,7 @@ const imagenes = galeria.items.map((item) => ({
       </p>
       <button
         type="button"
-        class="inline-flex size-11 items-center justify-center rounded-xs text-white transition-colors hover:bg-white/15"
+        class="inline-flex size-11 items-center justify-center rounded-chip text-white transition-colors hover:bg-white/15"
         aria-label={galeria.cerrar}
         data-cerrar-galeria
       >

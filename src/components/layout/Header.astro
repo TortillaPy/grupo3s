@@ -10,18 +10,42 @@ import { resolverImagen } from '../../lib/imagenes';
 
 interface Props {
   readonly locale?: Locale;
+  /**
+   * `true` cuando la página arranca con el panel oscuro del hero. El
+   * header nace transparente y con texto claro, y recién al scrollear
+   * pasa a fondo claro. En las páginas que arrancan en claro
+   * —catálogo, ficha, gracias— va en `false` y el header es claro
+   * desde el primer píxel.
+   */
+  readonly sobreOscuro?: boolean;
 }
 
-const { locale = config.localePorDefecto } = Astro.props;
+const { locale = config.localePorDefecto, sobreOscuro = false } = Astro.props;
 const { nav } = obtenerContenido(locale);
 
-const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
+/*
+  Dos versiones del logotipo, ambas con el fondo recortado. La original
+  del catálogo venía sobre un rectángulo blanco opaco: sobre el carbón
+  del hero se veía el recuadro, no la marca.
+  - `logo-3s-transparente`: tinta original, para fondo claro.
+  - `logo-3s-blanco`: la misma pieza con la tinta en blanco y la hoja en
+    el verde del isotipo, para los paneles oscuros.
+  Cuando llegue el logotipo vectorial del cliente, se reemplazan estos
+  dos archivos y no hay que tocar nada más.
+*/
+const logoClaro = resolverImagen('/src/assets/images/marca/logo-3s-transparente.png');
+const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png');
 ---
 
 <header
   id="cabecera"
-  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,box-shadow] duration-200"
+  class:list={[
+    'fixed inset-x-0 top-0 z-50 border-b border-transparent text-grafito',
+    'transition-[background-color,border-color,box-shadow,color] duration-200',
+    sobreOscuro && 'cabecera-sobre-oscuro',
+  ]}
   data-cabecera
+  data-sobre-oscuro={sobreOscuro ? 'si' : 'no'}
 >
   <div class="contenedor flex h-18 items-center justify-between gap-4">
     <a
@@ -29,16 +53,38 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
       class="flex shrink-0 items-center"
       aria-label={`${config.site.nombre}, ir al inicio`}
     >
+      {/*
+        Las dos versiones se emiten siempre y se alternan por CSS con
+        una clase en el <header>. Hacerlo así —en vez de cambiar el src
+        por JS— evita que el logotipo parpadee al scrollear y mantiene
+        el alto reservado: cero desplazamiento de layout.
+      */}
       <Image
-        src={logo}
+        src={logoClaro}
         alt=""
         widths={[120, 240]}
         sizes="76px"
         loading="eager"
         format="webp"
         quality={90}
-        class="h-11 w-auto"
+        class:list={['h-11 w-auto', sobreOscuro && 'hidden']}
+        data-logo-claro
       />
+      {
+        sobreOscuro && (
+          <Image
+            src={logoOscuro}
+            alt=""
+            widths={[120, 240]}
+            sizes="76px"
+            loading="eager"
+            format="webp"
+            quality={90}
+            class="h-11 w-auto"
+            data-logo-oscuro
+          />
+        )
+      }
     </a>
 
     <!-- Navegación de escritorio -->
@@ -47,9 +93,14 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
         {
           nav.enlaces.map((enlace) => (
             <li>
+              {/*
+                El color se hereda del <header> vía `currentColor`:
+                blanco mientras flota sobre el hero, grafito en cuanto
+                se vuelve sólido. Ni una clase condicional acá.
+              */}
               <a
                 href={rutaLocal(enlace.href, locale)}
-                class="text-[0.92rem] font-medium text-grafito transition-colors hover:text-verde-oscuro"
+                class="enlace-nav rounded-chip text-[0.92rem] font-medium transition-colors"
               >
                 {enlace.texto}
               </a>
@@ -71,7 +122,7 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
       <button
         type="button"
         id="alternar-menu"
-        class="inline-flex size-11 items-center justify-center rounded-xs border-2 border-negro/15 text-negro transition-colors hover:border-negro/40 lg:hidden"
+        class="boton-menu inline-flex size-11 items-center justify-center rounded-chip border transition-colors lg:hidden"
         aria-expanded="false"
         aria-controls="menu-movil"
         aria-label={nav.abrirMenu}
@@ -87,7 +138,7 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
   <!-- Menú móvil -->
   <div
     id="menu-movil"
-    class="hidden border-t border-gris-claro bg-white lg:hidden"
+    class="hidden border-t border-gris-claro bg-white text-grafito shadow-nivel-2 lg:hidden"
     data-menu-movil
   >
     <nav class="contenedor py-4" aria-label="Navegación principal en móvil">
@@ -123,8 +174,13 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
   </div>
 </header>
 
-<!-- Reserva del alto del header: sin esto el hero arranca debajo y salta. -->
-<div class="h-18" aria-hidden="true"></div>
+{/*
+  Reserva del alto del header. Solo hace falta en las páginas de fondo
+  claro: ahí el header es opaco y empujaría el contenido. Sobre el hero
+  oscuro el header flota por encima del panel a propósito, y el espacio
+  lo pone el propio hero con su padding superior.
+*/}
+{!sobreOscuro && <div class="h-18" aria-hidden="true" />}
 
 <script>
   const cabecera = document.querySelector<HTMLElement>('[data-cabecera]');
@@ -135,15 +191,33 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
 
   /* ── Fondo translúcido con blur al scrollear ──────────────────────── */
   if (cabecera !== null) {
+    /*
+      `bg-hueso/92` y no `/85`: con más transparencia el desenfoque
+      arrastra manchas de color del contenido que pasa por debajo —las
+      tarjetas de producto, las etiquetas verdes— y el header se ve
+      sucio. A 92 % el desenfoque sigue notándose como profundidad pero
+      el fondo se lee parejo.
+    */
     const CLASES_SCROLL = [
-      'bg-hueso/85',
+      'cabecera-solida',
+      'bg-hueso/92',
       'backdrop-blur-md',
+      'backdrop-saturate-50',
       'border-gris-claro',
       'shadow-[0_1px_16px_-8px_rgba(11,6,12,0.45)]',
     ];
 
+    /*
+      El umbral es de 8 px en las páginas claras, pero en las que
+      arrancan con el hero oscuro conviene esperar un poco más: si el
+      header se vuelve claro apenas el usuario roza la rueda, el cambio
+      se lee como un parpadeo. 64 px es la distancia a la que ya se
+      entiende que hubo scroll.
+    */
+    const umbral = cabecera.dataset.sobreOscuro === 'si' ? 64 : 8;
+
     const actualizarCabecera = (): void => {
-      const activa = window.scrollY > 8;
+      const activa = window.scrollY > umbral;
       CLASES_SCROLL.forEach((clase) => cabecera.classList.toggle(clase, activa));
       cabecera.classList.toggle('border-transparent', !activa);
     };
@@ -189,3 +263,61 @@ const logo = resolverImagen('/src/assets/images/marca/logo-3s.png');
     });
   }
 </script>
+
+<style>
+  /*
+    Los dos estados del header. La regla es una sola: sobre el panel
+    oscuro del hero el header es transparente y de tinta clara; en
+    cuanto entra `.cabecera-solida` —o si la página no arranca en
+    oscuro— vuelve al esquema claro. Todo lo demás hereda de
+    `currentColor`, así que no hay clases condicionales repartidas por
+    el marcado.
+  */
+
+  .enlace-nav {
+    padding-block: 0.25rem;
+  }
+
+  .enlace-nav:hover {
+    color: var(--color-verde-oscuro);
+  }
+
+  .boton-menu {
+    border-color: color-mix(in oklab, var(--color-negro) 15%, transparent);
+  }
+
+  .boton-menu:hover {
+    border-color: color-mix(in oklab, var(--color-negro) 40%, transparent);
+  }
+
+  /* ── Estado “sobre el hero oscuro”, antes de scrollear ───────────── */
+
+  .cabecera-sobre-oscuro:not(.cabecera-solida) {
+    color: var(--color-blanco);
+  }
+
+  /* El verde oscuro no se lee sobre carbón; ahí el hover va al verde
+     del isotipo, que da 6,4:1 contra el fondo del hero. */
+  .cabecera-sobre-oscuro:not(.cabecera-solida) .enlace-nav:hover {
+    color: var(--color-verde);
+  }
+
+  .cabecera-sobre-oscuro:not(.cabecera-solida) .boton-menu {
+    border-color: color-mix(in oklab, var(--color-blanco) 30%, transparent);
+  }
+
+  .cabecera-sobre-oscuro:not(.cabecera-solida) .boton-menu:hover {
+    border-color: color-mix(in oklab, var(--color-blanco) 60%, transparent);
+    background-color: color-mix(in oklab, var(--color-blanco) 10%, transparent);
+  }
+
+  /* Al volverse sólido el header, el logotipo claro reemplaza al
+     blanco. Se alternan por display para que no haya reflow. */
+  .cabecera-sobre-oscuro.cabecera-solida [data-logo-oscuro] {
+    display: none;
+  }
+
+  .cabecera-sobre-oscuro.cabecera-solida [data-logo-claro] {
+    display: block;
+  }
+</style>

@@ -40,10 +40,10 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
   <div class="contenedor">
     <div class="grid gap-10 lg:grid-cols-12 lg:gap-14">
       <div class="lg:col-span-5" data-revelar>
-        <p class="text-xs font-semibold tracking-[0.16em] text-verde-oscuro uppercase">
+        <p class="volanta mb-4 text-verde-oscuro">
           {contenido.nav.cta}
         </p>
-        <h2 id="formulario-titulo" class="mt-3 text-titulo font-bold text-negro">
+        <h2 id="formulario-titulo" class="text-titulo font-bold text-negro">
           {presupuesto.titulo}
         </h2>
         <p class="mt-4 max-w-lectura text-subtitulo text-grafito/90">
@@ -75,7 +75,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
         -->
         <form
           id="form-presupuesto"
-          class="border border-gris-claro bg-white p-5 sm:p-7"
+          class="tarjeta p-5 sm:p-7 lg:p-8"
           method="post"
           action={endpoint}
           novalidate
@@ -100,7 +100,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                 autocomplete="name"
                 aria-describedby="nombre-error"
                 data-error-vacio={presupuesto.errores.nombre}
-                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+                class="mt-2 w-full rounded-chip border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-[background-color,border-color,box-shadow] focus:border-verde-oscuro focus:bg-white focus:shadow-[0_0_0_3px_var(--color-verde-suave)] aria-invalid:border-red-700"
               />
               <p id="nombre-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
             </div>
@@ -120,7 +120,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                   aria-describedby="email-error"
                   data-error-vacio={presupuesto.errores.email}
                   data-error-formato={presupuesto.errores.emailFormato}
-                  class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+                  class="mt-2 w-full rounded-chip border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-[background-color,border-color,box-shadow] focus:border-verde-oscuro focus:bg-white focus:shadow-[0_0_0_3px_var(--color-verde-suave)] aria-invalid:border-red-700"
                 />
                 <p id="email-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
               </div>
@@ -136,7 +136,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                   name="telefono"
                   autocomplete="tel"
                   inputmode="tel"
-                  class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white"
+                  class="mt-2 w-full rounded-chip border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-[background-color,border-color,box-shadow] focus:border-verde-oscuro focus:bg-white focus:shadow-[0_0_0_3px_var(--color-verde-suave)]"
                 />
               </div>
             </div>
@@ -151,7 +151,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                 required
                 aria-describedby="producto-error"
                 data-error-vacio={presupuesto.errores.producto}
-                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+                class="mt-2 w-full rounded-chip border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-[background-color,border-color,box-shadow] focus:border-verde-oscuro focus:bg-white focus:shadow-[0_0_0_3px_var(--color-verde-suave)] aria-invalid:border-red-700"
               >
                 <option value="">{presupuesto.campos.productoPlaceholder}</option>
                 {
@@ -184,7 +184,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                 required
                 aria-describedby="mensaje-error"
                 data-error-vacio={presupuesto.errores.mensaje}
-                class="mt-2 w-full rounded-xs border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-colors focus:border-verde-oscuro focus:bg-white aria-invalid:border-red-700"
+                class="mt-2 w-full rounded-chip border border-gris-claro bg-hueso px-3.5 py-2.5 text-grafito transition-[background-color,border-color,box-shadow] focus:border-verde-oscuro focus:bg-white focus:shadow-[0_0_0_3px_var(--color-verde-suave)] aria-invalid:border-red-700"
               ></textarea>
               <p id="mensaje-error" class="mt-1.5 hidden text-sm text-red-700" data-error></p>
             </div>
@@ -219,7 +219,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
             <div>
               <button
                 type="submit"
-                class="inline-flex w-full items-center justify-center gap-2 rounded-xs bg-verde-oscuro px-6 py-3.5 font-semibold text-white transition-colors hover:bg-verde-profundo disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8"
+                class="inline-flex w-full items-center justify-center gap-2 rounded-chip bg-verde-oscuro px-6 py-3.5 font-semibold text-white shadow-[0_1px_2px_-1px_rgb(30_90_34/0.4),0_10px_24px_-10px_rgb(30_90_34/0.55)] transition-[background-color,box-shadow] hover:bg-verde-profundo hover:shadow-[0_2px_4px_-2px_rgb(30_90_34/0.45),0_16px_32px_-12px_rgb(30_90_34/0.65)] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8"
                 data-enviar
                 data-texto-normal={presupuesto.enviar}
                 data-texto-enviando={presupuesto.enviando}

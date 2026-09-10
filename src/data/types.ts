@@ -255,7 +255,12 @@ export interface Contenido {
     readonly subtitulo: string;
     readonly ctaPrimario: string;
     readonly ctaSecundario: string;
-    readonly imagen: Imagen;
+    /**
+     * `epigrafe` es el pie de la foto del hero. No repite el `alt`: el
+     * alt describe la imagen para quien no la ve, el epígrafe le dice a
+     * quien sí la ve qué está mirando y dónde fue tomada.
+     */
+    readonly imagen: Imagen & { readonly epigrafe: string };
     readonly senales: readonly SenalConfianza[];
   };
 
@@ -410,6 +415,9 @@ export interface Contenido {
     readonly especificaciones: string;
     readonly presentaciones: string;
     readonly enUso: string;
+    /** Botón de descarga del PDF. Solo se muestra si el producto tiene
+     *  cargada la ruta en `fichaTecnica`. */
+    readonly descargarFicha: string;
     readonly relacionados: string;
     readonly ctaTitulo: string;
     readonly ctaTexto: string;

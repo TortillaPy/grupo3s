@@ -49,6 +49,7 @@ export default defineConfig({
           'chevron-right',
           'chevron-down',
           'arrow-right',
+          'maximize-2',
           'phone',
           'mail',
           'map-pin',

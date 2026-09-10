@@ -41,7 +41,7 @@ const idTitulo = `${id}-titulo`;
 <section
   id={id}
   aria-labelledby={idTitulo}
-  class={`${porFondo[fondo]} py-14 sm:py-20 lg:py-24 ${claseExtra}`}
+  class={`${porFondo[fondo]} py-16 sm:py-24 lg:py-28 ${claseExtra}`}
 >
   <div class="contenedor">
     <div class={centrado ? 'mx-auto max-w-lectura text-center' : 'max-w-lectura'} data-revelar>
@@ -49,7 +49,7 @@ const idTitulo = `${id}-titulo`;
         volanta !== undefined && (
           <p
             class:list={[
-              'mb-3 text-xs font-semibold tracking-[0.16em] uppercase',
+              'volanta mb-4',
               fondo === 'negro' ? 'text-verde' : 'text-verde-oscuro',
             ]}
           >

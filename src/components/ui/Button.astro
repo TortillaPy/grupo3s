@@ -1,7 +1,7 @@
 ---
 import { ATRIBUTOS_ENLACE_EXTERNO } from '@data/site';
 
-type Variante = 'primario' | 'secundario' | 'claro';
+type Variante = 'primario' | 'secundario' | 'claro' | 'fantasma';
 type Tamano = 'normal' | 'grande';
 
 interface Props {
@@ -31,9 +31,10 @@ const {
 } = Astro.props;
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-xs font-semibold ' +
-  'transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60 ' +
-  'text-center leading-tight';
+  'inline-flex items-center justify-center gap-2 rounded-chip font-semibold ' +
+  'transition-[background-color,border-color,color,box-shadow,transform] duration-150 ' +
+  'disabled:cursor-not-allowed disabled:opacity-60 text-center leading-tight ' +
+  'active:translate-y-px motion-reduce:active:translate-y-0';
 
 const porTamano: Record<Tamano, string> = {
   normal: 'px-5 py-3 text-[0.95rem]',
@@ -42,10 +43,17 @@ const porTamano: Record<Tamano, string> = {
 
 const porVariante: Record<Variante, string> = {
   // Verde profundo: 7.4:1 con texto blanco. El verde del isotipo no alcanza.
-  primario: 'bg-verde-oscuro text-white hover:bg-verde-profundo',
+  // La sombra teñida de verde le da peso de botón principal sin subirle
+  // la saturación al color.
+  primario:
+    'bg-verde-oscuro text-white shadow-[0_1px_2px_-1px_rgb(30_90_34/0.4),0_10px_24px_-10px_rgb(30_90_34/0.55)] ' +
+    'hover:bg-verde-profundo hover:shadow-[0_2px_4px_-2px_rgb(30_90_34/0.45),0_16px_32px_-12px_rgb(30_90_34/0.65)]',
   secundario:
-    'border-2 border-negro/15 bg-transparent text-negro hover:border-negro/40 hover:bg-negro/5',
-  claro: 'bg-white text-negro hover:bg-hueso',
+    'border border-negro/15 bg-white text-negro shadow-nivel-1 hover:border-negro/30 hover:bg-hueso',
+  claro: 'bg-white text-negro shadow-nivel-1 hover:bg-hueso',
+  // Para los paneles oscuros: contorno claro sobre carbón, sin relleno.
+  fantasma:
+    'border border-white/25 bg-white/5 text-white backdrop-blur-sm hover:border-white/50 hover:bg-white/12',
 };
 
 const clases = [base, porTamano[tamano], porVariante[variante], claseExtra]

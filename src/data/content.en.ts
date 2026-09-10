@@ -21,7 +21,7 @@ export const contenidoEn: Contenido = {
       titulo:
         'Industrial wastewater treatment in Paraguay | 3S Grupo Industrial',
       descripcion:
-        'Coagulants, flocculants, disinfectants and degreasers with sanitary registration, manufactured in our Asunción laboratory. For meat plants, tanneries and food processors. Nationwide delivery.',
+        'Coagulants, flocculants, disinfectants and degreasers with sanitary registration, manufactured in our Asunción laboratory. For meat plants, tanneries and food processors. Delivery throughout Paraguay.',
     },
     productos: {
       titulo: 'Industrial chemical product catalog | 3S Grupo Industrial',
@@ -72,11 +72,12 @@ export const contenidoEn: Contenido = {
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
       alt: 'Clarifier tanks at an industrial wastewater treatment plant in operation, dosing 3S products.',
+      epigrafe: 'On-site effluent treatment — dosing Policloruro de Aluminio 3S.',
     },
     senales: [
       {
         icono: 'truck',
-        titulo: 'Nationwide delivery',
+        titulo: 'Delivery across Paraguay',
         detalle: 'Freight quoted by volume and destination.',
       },
       {
@@ -139,7 +140,7 @@ export const contenidoEn: Contenido = {
         icono: 'shield-check',
         titulo: 'Sanitary registration',
         texto:
-          'Nearly the whole line has it, and White Clean adds DINAVISA registration and INTN approval.',
+          'Nearly the whole line has it, and White Clean adds registration with DINAVISA and INTN approval — the health authority and the technical standards institute of Paraguay.',
       },
       {
         icono: 'leaf',
@@ -216,7 +217,7 @@ export const contenidoEn: Contenido = {
       {
         titulo: 'We deliver to your plant',
         texto:
-          'We ship anywhere in the country, in the size you choose, from the 5-liter jerrican to the 1,000-liter tote.',
+          'We ship anywhere in Paraguay, in the size you choose, from the 5-liter jug to the 1,000-liter IBC tote.',
       },
     ],
   },
@@ -316,9 +317,9 @@ export const contenidoEn: Contenido = {
     bajada: 'What we get asked most before a first order.',
     items: [
       {
-        pregunta: 'Do you deliver nationwide?',
+        pregunta: 'Do you deliver throughout Paraguay?',
         respuesta:
-          'Yes, we ship to all seventeen departments. Freight is agreed based on volume and destination, and it is included in the quote before you confirm.',
+          'Yes, we ship to all seventeen departments of Paraguay. Freight is agreed based on volume and destination, and it is included in the quote before you confirm.',
       },
       {
         pregunta: 'How long does delivery take?',
@@ -333,7 +334,7 @@ export const contenidoEn: Contenido = {
       {
         pregunta: 'What warranty do the products carry?',
         respuesta:
-          'Nearly the whole line holds sanitary registration, and White Clean also carries DINAVISA registration and INTN approval. The warranty covers that the product meets the specification stated on its data sheet, within the stated shelf life and stored under the conditions listed there.',
+          'Nearly the whole line holds sanitary registration, and White Clean also carries registration with DINAVISA (the health authority of Paraguay) and approval from INTN (its national standards institute). The warranty covers that the product meets the specification stated on its data sheet, within the stated shelf life and stored under the conditions listed there.',
       },
       {
         pregunta: 'What payment methods do you accept?',
@@ -482,6 +483,7 @@ export const contenidoEn: Contenido = {
     especificaciones: 'Technical data',
     presentaciones: 'Container sizes',
     enUso: 'On site',
+    descargarFicha: 'Download technical data sheet (PDF)',
     relacionados: 'From the same family',
     ctaTitulo: 'Is this the product you need?',
     ctaTexto:
@@ -505,7 +507,7 @@ export const contenidoEn: Contenido = {
       id: 'desinfectantes',
       nombre: 'Disinfectants',
       descripcion:
-        'Quaternary ammonium, peracetic acid and peroxide for food and sanitary industries.',
+        'Quaternary ammonium, peracetic acid and peroxide for the food and healthcare industries.',
       icono: 'shield-check',
     },
     {
@@ -542,7 +544,7 @@ export const contenidoEn: Contenido = {
     'policloruro-de-aluminio-3s': {
       resumen: 'Clarifies effluent and strips color at the coagulation stage.',
       accion:
-        'Polyaluminium chloride is used mainly to remove color and colloidal matter from aqueous systems, drinking water plants and industrial effluent clarification. It replaces aluminium sulfate, aluminium chloride, ferric chloride, ferric sulfate and other conventional non-polymerized inorganic salts.',
+        'Polyaluminum chloride is used mainly to remove color and colloidal matter from aqueous systems, drinking water plants and industrial effluent clarification. It replaces aluminum sulfate, aluminum chloride, ferric chloride, ferric sulfate and other conventional non-polymerized inorganic salts.',
       sectores: [
         'Industrial wastewater treatment plants',
         'Drinking water treatment plants',
@@ -553,7 +555,7 @@ export const contenidoEn: Contenido = {
     'sulfato-de-aluminio-3s': {
       resumen: 'The classic coagulant, made from iron-free raw material.',
       accion:
-        'Aluminium sulfate is an excellent-quality solution manufactured from aluminium-rich, iron-free raw material and sulfuric acid, through a controlled process that guarantees its quality. It delivers excellent results in the clarification of drinking water and in the treatment of industrial effluent in general.',
+        'Aluminum sulfate is an excellent-quality solution manufactured from aluminum-rich, iron-free raw material and sulfuric acid, through a controlled process that guarantees its quality. It delivers excellent results in the clarification of drinking water and in the treatment of industrial effluent in general.',
       sectores: [
         'Drinking water clarification',
         'Industrial effluent in general',
