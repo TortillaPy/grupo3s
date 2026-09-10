@@ -38,7 +38,7 @@ export const config: Config = {
       { e164: '595215505920', visible: '(021) 550 592' },
       { e164: '595972572007', visible: '(0972) 572 007' },
     ],
-    email: 'ventas@3sgrupoindustrial.com.py',
+    email: '3sgrupoindustrial@gmail.com',
     direccion: {
       calle: 'Pilar N° 1717 c/ Nazareth',
       ciudad: 'Asunción',

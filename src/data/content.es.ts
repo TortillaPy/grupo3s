@@ -419,7 +419,7 @@ export const contenidoEs: Contenido = {
         titulo: 'Quién trata tus datos',
         parrafos: [
           '3S Grupo Industrial S.R.L., con domicilio en Pilar N.° 1717 casi Nazareth, Asunción, Paraguay, es responsable de los datos personales que dejás en este sitio.',
-          'Para cualquier consulta sobre esta política podés escribirnos a ventas@3sgrupoindustrial.com.py o al (0972) 572 007.',
+          'Para cualquier consulta sobre esta política podés escribirnos a 3sgrupoindustrial@gmail.com o al (0972) 572 007.',
         ],
       },
       {
@@ -454,7 +454,7 @@ export const contenidoEs: Contenido = {
         titulo: 'Tus derechos',
         parrafos: [
           'Podés pedirnos en cualquier momento que te digamos qué datos tuyos tenemos, que los corrijamos si están mal, o que los eliminemos.',
-          'Escribinos a ventas@3sgrupoindustrial.com.py y te respondemos. No hace falta que justifiques el pedido.',
+          'Escribinos a 3sgrupoindustrial@gmail.com y te respondemos. No hace falta que justifiques el pedido.',
         ],
       },
       {

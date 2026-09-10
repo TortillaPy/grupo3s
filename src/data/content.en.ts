@@ -404,7 +404,7 @@ export const contenidoEn: Contenido = {
         titulo: 'Who handles your data',
         parrafos: [
           '3S Grupo Industrial S.R.L., located at Pilar No. 1717 and Nazareth, Asunción, Paraguay, is responsible for the personal data you submit through this site.',
-          'For any question about this policy, write to ventas@3sgrupoindustrial.com.py or call (0972) 572 007.',
+          'For any question about this policy, write to 3sgrupoindustrial@gmail.com or call (0972) 572 007.',
         ],
       },
       {
@@ -439,7 +439,7 @@ export const contenidoEn: Contenido = {
         titulo: 'Your rights',
         parrafos: [
           'You can ask us at any time what data of yours we hold, to correct it if it is wrong, or to delete it.',
-          'Write to ventas@3sgrupoindustrial.com.py and we will respond. You do not need to justify the request.',
+          'Write to 3sgrupoindustrial@gmail.com and we will respond. You do not need to justify the request.',
         ],
       },
       {
