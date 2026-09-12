@@ -68,7 +68,7 @@ export const contenidoEn: Contenido = {
   hero: {
     titular: 'Clean operations. Compliant effluent. Production keeps moving.',
     subtitulo:
-      'We formulate a range of products in Asunción for every stage: degreasing, disinfection, coagulation and flocculation, and odor control. For meat plants, tanneries and food processors, in sizes from 5 to 1,000 liters, including products with sanitary registration.',
+      'We formulate a range of products for every stage in Asunción: degreasing, disinfection, coagulation and flocculation, and odor control. For meat plants, tanneries and food processors, in sizes from 5 to 1,000 liters, including products with sanitary registration.',
     ctaPrimario: 'Request a quote',
     ctaSecundario: 'See the products',
     imagen: {
@@ -105,7 +105,7 @@ export const contenidoEn: Contenido = {
     solucion: {
       titulo: 'How it changes with 3S',
       texto:
-        'We manufacture the full line your plant needs right here in Asunción: the coagulant and the flocculant that clarify the effluent, the degreaser that removes organic load before it reaches the water, the disinfectant for the process area and the odor neutralizer. One supplier, sanitary registration, container sizes from 5 to 1,000 liters, and restocking that does not depend on an import.',
+        'We formulate a range of products in Asunción to support the main stages of your plant: degreasing, disinfection, effluent coagulation and flocculation, and odor control. One supplier, with sizes from 5 to 1,000 liters, products with sanitary registration and local restocking that does not depend on imports.',
     },
   },
 
@@ -160,7 +160,7 @@ export const contenidoEn: Contenido = {
         icono: 'flask-conical',
         titulo: 'The complete line',
         texto:
-          'Coagulation, flocculation, degreasing, disinfection and odor control. One supplier instead of five.',
+          'Degreasing, disinfection, coagulation and flocculation, and odor control. One supplier instead of five.',
       },
       {
         icono: 'gauge',

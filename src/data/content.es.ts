@@ -82,7 +82,7 @@ export const contenidoEs: Contenido = {
   hero: {
     titular: 'Tu proceso limpio. Tu efluente dentro de norma. Tu planta en marcha.',
     subtitulo:
-      'Elaboramos en Asunción una gama de productos para cada etapa: desengrase, desinfección, coagulación y floculación, y control de olor. Para frigoríficos, curtiembres y plantas de alimentos, en presentaciones de 5 a 1000 litros y con productos que cuentan con registro sanitario.',
+      'Elaboramos una gama de productos en Asunción para cada etapa: desengrase, desinfección, coagulación y floculación, y control de olor. Para frigoríficos, curtiembres y plantas de alimentos, en presentaciones de 5 a 1000 litros y con productos que cuentan con registro sanitario.',
     ctaPrimario: 'Solicitar presupuesto',
     ctaSecundario: 'Ver los productos',
     imagen: {
@@ -119,7 +119,7 @@ export const contenidoEs: Contenido = {
     solucion: {
       titulo: 'Cómo cambia con 3S',
       texto:
-        'Fabricamos acá, en Asunción, la línea completa que tu planta necesita: el coagulante y el floculante que clarifican el efluente, el desengrasante que saca la carga orgánica antes de que llegue al agua, el desinfectante del área de proceso y el neutralizador del olor. Un solo proveedor, con registro sanitario, presentaciones de 5 a 1000 litros y reposición sin depender de una importación.',
+        'Elaboramos una gama de productos en Asunción que acompaña las etapas principales de tu planta: desengrase, desinfección, coagulación y floculación del efluente, y control de olor. Un solo proveedor, con presentaciones de 5 a 1000 litros, productos que cuentan con registro sanitario y reposición local sin depender de una importación.',
     },
   },
 
@@ -174,7 +174,7 @@ export const contenidoEs: Contenido = {
         icono: 'flask-conical',
         titulo: 'La línea completa',
         texto:
-          'Coagulación, floculación, desengrase, desinfección y control de olor. Un proveedor en lugar de cinco.',
+          'Desengrase, desinfección, coagulación y floculación, y control de olor. Un proveedor en lugar de cinco.',
       },
       {
         icono: 'gauge',

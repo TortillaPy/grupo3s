@@ -93,4 +93,5 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El hero pasa de enumerar familias químicas a comunicar tres resultados: proceso limpio, efluente dentro de norma y planta en marcha.
 - La descripción presenta la línea en el orden del recorrido aprobado: desengrase → desinfección → coagulación y floculación → control de olor.
 - La descripción SEO de inicio usa la misma jerarquía. Español, portugués e inglés se actualizaron juntos con redacción natural en cada idioma.
+- “La línea completa” y “Cómo cambia con 3S” adoptan el mismo orden; este último usa la fórmula institucional “Elaboramos una gama de productos…”. La ficha del Policloruro de Aluminio indica “Coagulante en solución”.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints. El contenido completo, incluidos ambos CTA, entra en 1280 × 720, 390 × 844 y 375 × 667, sin desbordamiento horizontal ni errores de consola.
