@@ -1,8 +1,4 @@
-import {
-  ETAPAS_FLUJO,
-  FAMILIAS_CATALOGO,
-  type Producto,
-} from './types';
+import type { Producto } from './types';
 
 /**
  * ════════════════════════════════════════════════════════════════════════
@@ -31,14 +27,11 @@ import {
 
 const REGISTRO_SANITARIO = 'Posee registro sanitario';
 
-const productosSinOrdenar: readonly Producto[] = [
+export const productos: readonly Producto[] = [
   /* ── Tratamiento de efluentes ──────────────────────────────────── */
   {
     slug: 'policloruro-de-aluminio-3s',
     nombre: 'Policloruro de Aluminio 3S',
-    familia: 'efluentes-aguas-residuales',
-    etapas: ['coagulacion-floculacion'],
-    etapaPrincipal: 'coagulacion-floculacion',
     categoria: 'tratamiento-efluentes',
     destacado: true,
     usoProfesional: true,
@@ -73,9 +66,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'sulfato-de-aluminio-3s',
     nombre: 'Sulfato de Aluminio 3S',
-    familia: 'efluentes-aguas-residuales',
-    etapas: ['coagulacion-floculacion'],
-    etapaPrincipal: 'coagulacion-floculacion',
     categoria: 'tratamiento-efluentes',
     destacado: true,
     usoProfesional: true,
@@ -110,9 +100,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'polimero-3s-anionico',
     nombre: 'Polímero 3S Aniónico',
-    familia: 'efluentes-aguas-residuales',
-    etapas: ['coagulacion-floculacion'],
-    etapaPrincipal: 'coagulacion-floculacion',
     categoria: 'tratamiento-efluentes',
     destacado: true,
     usoProfesional: true,
@@ -145,9 +132,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'polimero-3s-cationico',
     nombre: 'Polímero 3S Catiónico',
-    familia: 'efluentes-aguas-residuales',
-    etapas: ['coagulacion-floculacion'],
-    etapaPrincipal: 'coagulacion-floculacion',
     categoria: 'tratamiento-efluentes',
     destacado: true,
     usoProfesional: true,
@@ -180,9 +164,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'odor-free',
     nombre: 'Odor Free',
-    familia: 'efluentes-aguas-residuales',
-    etapas: ['control-olor'],
-    etapaPrincipal: 'control-olor',
     categoria: 'tratamiento-efluentes',
     destacado: true,
     usoProfesional: false,
@@ -217,9 +198,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'decuat',
     nombre: 'Decuat',
-    familia: 'desinfeccion-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'desinfectantes',
     destacado: true,
     usoProfesional: true,
@@ -261,9 +239,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'bioperacid',
     nombre: 'Bioperacid',
-    familia: 'desinfeccion-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'desinfectantes',
     destacado: true,
     usoProfesional: true,
@@ -298,9 +273,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'ardiox',
     nombre: 'Ardiox',
-    familia: 'desinfeccion-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'desinfectantes',
     destacado: false,
     usoProfesional: true,
@@ -344,9 +316,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'desinper',
     nombre: 'Desinper',
-    familia: 'desinfeccion-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'desinfectantes',
     destacado: false,
     usoProfesional: false,
@@ -386,9 +355,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'king-klor',
     nombre: 'King Klor',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa', 'desinfecta'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'desengrasantes',
     destacado: true,
     usoProfesional: true,
@@ -433,9 +399,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'stronger',
     nombre: 'Stronger',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'desengrasantes',
     destacado: true,
     usoProfesional: true,
@@ -473,9 +436,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'desinal',
     nombre: 'Desinal',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa', 'desinfecta'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'desengrasantes',
     destacado: false,
     usoProfesional: true,
@@ -520,9 +480,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'enzurpon',
     nombre: 'Enzurpon',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'desengrasantes',
     destacado: false,
     usoProfesional: false,
@@ -561,9 +518,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'purson-plus',
     nombre: 'Purson Plus',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'desengrasantes',
     destacado: false,
     usoProfesional: false,
@@ -605,9 +559,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'madox',
     nombre: 'Madox',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'detergentes',
     destacado: false,
     usoProfesional: false,
@@ -651,9 +602,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'fine-white',
     nombre: 'Fine White',
-    familia: 'limpieza-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'lavanderia',
     destacado: false,
     usoProfesional: true,
@@ -695,9 +643,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'white-clean',
     nombre: 'White Clean',
-    familia: 'limpieza-industrial',
-    etapas: ['desengrasa', 'desinfecta'],
-    etapaPrincipal: 'desengrasa',
     categoria: 'lavanderia',
     destacado: false,
     usoProfesional: false,
@@ -733,9 +678,6 @@ const productosSinOrdenar: readonly Producto[] = [
   {
     slug: 'sanitol',
     nombre: 'Sanitol',
-    familia: 'limpieza-industrial',
-    etapas: ['desinfecta'],
-    etapaPrincipal: 'desinfecta',
     categoria: 'higiene-manos',
     destacado: false,
     usoProfesional: false,
@@ -769,27 +711,6 @@ const productosSinOrdenar: readonly Producto[] = [
     ],
   },
 ];
-
-const ordenFamilias = new Map(
-  FAMILIAS_CATALOGO.map((familia, indice) => [familia, indice]),
-);
-const ordenEtapas = new Map(
-  ETAPAS_FLUJO.map((etapa, indice) => [etapa, indice]),
-);
-
-/**
- * Orden canónico compartido por grillas, selectores, schemas y navegación:
- * primero la familia institucional, después la función principal y por
- * último la página del catálogo impreso como desempate estable.
- */
-export const productos: readonly Producto[] = [...productosSinOrdenar].sort(
-  (a, b) =>
-    (ordenFamilias.get(a.familia) ?? Number.MAX_SAFE_INTEGER) -
-      (ordenFamilias.get(b.familia) ?? Number.MAX_SAFE_INTEGER) ||
-    (ordenEtapas.get(a.etapaPrincipal) ?? Number.MAX_SAFE_INTEGER) -
-      (ordenEtapas.get(b.etapaPrincipal) ?? Number.MAX_SAFE_INTEGER) ||
-    a.paginaCatalogo - b.paginaCatalogo,
-);
 
 /** Producto por slug, o `undefined` si el slug no existe. */
 export function buscarProducto(slug: string): Producto | undefined {

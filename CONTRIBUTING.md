@@ -125,16 +125,18 @@ If you do need a dependency, explain why in the PR description.
 
 ## Git workflow
 
-- Hosting: Vercel is development (integration branch and stage previews); Cloudflare is production (main only after final approval). Verify these settings in each provider.
-- `main` is production; `development` is the integration branch (also called “dev”).
-- Start every stage from updated `development`, using `codex/NN-short-description`.
-- Never commit directly to `main` or `development`. Open one focused PR per stage targeting `development`.
-- Present changes and validation, then wait for explicit approval before merging each stage. Create the next branch from updated `development` after the approved merge.
-- Use commit messages such as `feat:`, `fix:`, `docs:` or `refactor:` with a clear summary.
-- Verify hosting branch settings before pushing. Stage previews must be isolated from production; do not run `npm run deploy` during development stages.
-- After all stages pass integrated review and receive final approval, open the release PR from `development` to `main`, merge and deploy. Stage approval alone does not authorize production deployment.
-- Verify the deployed commit and create a backup tag before starting. Preserve existing branches and uncommitted work.
-- See [CLAUDE.md](CLAUDE.md) and the [implementation plan](docs/IMPLEMENTATION_PLAN.md).
+- Branch off `main`: `type/short-description`, e.g.
+  `fix/footer-dark-logo`, `feat/related-products`.
+- Commit messages follow the pattern already in the log —
+  `type: short imperative summary`, in Spanish or English (match
+  whichever the rest of your PR is in): `feat:`, `fix:`, `update:`,
+  `docs:`, `refactor:`. Explain *why* in the body if it's not obvious
+  from the summary.
+- Keep PRs focused. A content fix, a new component, and an unrelated
+  refactor are three PRs, not one.
+- Open a PR against `main` rather than pushing directly, even for
+  small changes — it gives the change a place to be reviewed and
+  leaves a record of why it happened.
 
 ## Before opening a PR
 
