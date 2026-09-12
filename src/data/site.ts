@@ -61,6 +61,7 @@ export type {
   EnlaceNav,
   EspecificacionTecnica,
   EtapaFlujoId,
+  FamiliaCatalogo,
   FamiliaCatalogoId,
   Imagen,
   Locale,

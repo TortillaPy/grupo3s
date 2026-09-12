@@ -505,14 +505,23 @@ export const contenidoEn: Contenido = {
     bajada:
       'Eighteen products manufactured in our Asunción laboratory, from effluent treatment to hand hygiene for your crew. Filter by family or browse the whole line.',
     filtrarPor: 'Filter by family',
+    filtrarPorEtapa: 'Filter by process stage',
     todos: 'All',
+    limpiarFiltros: 'Clear filters',
     conteo: '{n} products',
     conteoSingular: '1 product',
     verFicha: 'View spec sheet',
-    sinResultados: 'No products in this family.',
-    etapaActiva: 'Workflow stage: {etapa}',
-    quitarEtapa: 'View the complete line',
+    sinResultados: 'No products match both filters.',
   },
+
+  familias: [
+    { id: 'limpieza-industrial', nombre: 'Industrial cleaning' },
+    { id: 'desinfeccion-industrial', nombre: 'Industrial disinfection' },
+    {
+      id: 'efluentes-aguas-residuales',
+      nombre: 'Effluent and wastewater treatment',
+    },
+  ],
 
   ficha: {
     migaInicio: 'Home',

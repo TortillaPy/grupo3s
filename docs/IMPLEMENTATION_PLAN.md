@@ -95,3 +95,12 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - La descripción SEO de inicio usa la misma jerarquía. Español, portugués e inglés se actualizaron juntos con redacción natural en cada idioma.
 - “La línea completa” y “Cómo cambia con 3S” adoptan el mismo orden; este último usa la fórmula institucional “Elaboramos una gama de productos…”. La ficha del Policloruro de Aluminio indica “Coagulante en solución”.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints. El contenido completo, incluidos ambos CTA, entra en 1280 × 720, 390 × 844 y 375 × 667, sin desbordamiento horizontal ni errores de consola.
+
+## Etapa 4 preparada — 2026-09-12
+
+- El catálogo permite combinar la familia institucional y la etapa del proceso. Ambos estados se reflejan en `familia` y `etapa`, por lo que cada resultado puede compartirse mediante su URL.
+- Los filtros inválidos se descartan, el conteo se actualiza en vivo, las combinaciones vacías muestran un estado explícito y un único control restablece la línea completa.
+- Las familias mantienen el orden Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales; las etapas mantienen Desengrasa → Desinfecta → Coagulación y Floculación → Control de olor.
+- El selector del formulario se agrupa por las tres familias y conserva el orden canónico de los 18 productos. Las fichas muestran su familia, enlazan sus etapas y recomiendan productos de la misma familia.
+- `ItemList`, grillas, selectores y relacionados parten del mismo arreglo ordenado de productos. No se cambian slugs ni rutas publicadas.
+- Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; filtros combinados, URL, estado vacío, limpieza, selector y fichas comprobados en navegador; vista móvil a 390 × 844 sin desbordamiento ni errores de consola.

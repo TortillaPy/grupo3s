@@ -13,11 +13,16 @@ interface Props {
 
 const { locale = config.localePorDefecto } = Astro.props;
 const contenido = obtenerContenido(locale);
-const { catalogo, categorias } = contenido;
+const { catalogo } = contenido;
 
 /** Solo las familias que efectivamente tienen productos cargados. */
-const familias = categorias.filter((categoria) =>
-  productos.some((producto) => producto.categoria === categoria.id),
+const familias = contenido.familias.filter((familia) =>
+  productos.some((producto) => producto.familia === familia.id),
+);
+
+/** Solo las etapas que efectivamente tienen productos asociados. */
+const etapas = contenido.recorrido.items.filter((etapa) =>
+  productos.some((producto) => producto.etapas.includes(etapa.id)),
 );
 
 /**
@@ -83,73 +88,57 @@ const schemaMigas = {
         <p class="mt-4 text-subtitulo text-grafito/90">{catalogo.bajada}</p>
       </div>
 
-      <!--
-        Filtro por familia. Sin JavaScript la página muestra los
-        dieciocho productos, que es el estado correcto: el filtro es una
-        comodidad, no un requisito para ver el catálogo.
-      -->
-      <div class="mt-10" data-filtro>
-        <p id="filtro-titulo" class="text-xs font-semibold tracking-[0.14em] text-gris uppercase">
-          {catalogo.filtrarPor}
-        </p>
-        <div class="mt-3 flex flex-wrap gap-2" role="group" aria-labelledby="filtro-titulo">
-          <button
-            type="button"
-            class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]"
-            data-filtro-boton
-            data-valor="todos"
-            aria-pressed="true"
-          >
-            {catalogo.todos}
-          </button>
-          {
-            familias.map((familia) => (
-              <button
-                type="button"
-                class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]"
-                data-filtro-boton
-                data-valor={familia.id}
-                aria-pressed="false"
-              >
+      <!-- Sin JavaScript se mantiene visible la línea completa. -->
+      <div class="mt-10 space-y-6" data-filtros>
+        <fieldset>
+          <legend class="text-xs font-semibold tracking-[0.14em] text-gris uppercase">
+            {catalogo.filtrarPor}
+          </legend>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button type="button" class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]" data-filtro-familia data-valor="" aria-pressed="true">
+              {catalogo.todos}
+            </button>
+            {familias.map((familia) => (
+              <button type="button" class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]" data-filtro-familia data-valor={familia.id} aria-pressed="false">
                 {familia.nombre}
               </button>
-            ))
-          }
-        </div>
+            ))}
+          </div>
+        </fieldset>
 
-        <p
-          class="mt-4 text-sm text-grafito/80"
-          aria-live="polite"
-          data-conteo
-          data-plural={catalogo.conteo}
-          data-singular={catalogo.conteoSingular}
-        >
-          {catalogo.conteo.replace('{n}', String(productos.length))}
-        </p>
+        <fieldset>
+          <legend class="text-xs font-semibold tracking-[0.14em] text-gris uppercase">
+            {catalogo.filtrarPorEtapa}
+          </legend>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button type="button" class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]" data-filtro-etapa data-valor="" aria-pressed="true">
+              {catalogo.todos}
+            </button>
+            {etapas.map((etapa) => (
+              <button type="button" class="rounded-chip border border-gris-claro bg-blanco px-4 py-2 text-sm font-medium text-grafito transition-colors hover:border-verde-oscuro aria-pressed:border-verde-oscuro aria-pressed:bg-verde-oscuro aria-pressed:text-white dark:aria-pressed:bg-[#2c7d31]" data-filtro-etapa data-valor={etapa.id} aria-pressed="false">
+                {etapa.titulo}
+              </button>
+            ))}
+          </div>
+        </fieldset>
 
-        <div
-          class="mt-4 hidden items-center justify-between gap-4 rounded-card border border-verde-oscuro/30 bg-verde-suave px-4 py-3 text-sm"
-          data-etapa-estado
-          data-plantilla={catalogo.etapaActiva}
-        >
-          <p class="font-semibold text-verde-profundo">
-            <span data-etapa-texto></span>
-          </p>
-          <a
-            href={rutaLocal('/productos', locale)}
-            class="shrink-0 font-semibold text-verde-oscuro hover:underline"
-            data-quitar-etapa
+        <div class="flex flex-wrap items-center gap-4">
+          <p
+            class="text-sm text-grafito/80"
+            aria-live="polite"
+            data-conteo
+            data-plural={catalogo.conteo}
+            data-singular={catalogo.conteoSingular}
           >
-            {catalogo.quitarEtapa}
-          </a>
-        </div>
-
-        <div hidden aria-hidden="true">
-          {
-            contenido.recorrido.items.map((etapa) => (
-              <span data-etapa-etiqueta={etapa.id}>{etapa.titulo}</span>
-            ))
-          }
+            {catalogo.conteo.replace('{n}', String(productos.length))}
+          </p>
+          <button
+            type="button"
+            class="hidden text-sm font-semibold text-verde-oscuro hover:underline"
+            data-limpiar-filtros
+          >
+            {catalogo.limpiarFiltros}
+          </button>
         </div>
       </div>
 
@@ -177,51 +166,48 @@ const schemaMigas = {
 </Layout>
 
 <script>
-  const contenedorFiltro = document.querySelector<HTMLElement>('[data-filtro]');
+  const contenedorFiltros = document.querySelector<HTMLElement>('[data-filtros]');
   const tarjetas = Array.from(
     document.querySelectorAll<HTMLElement>('[data-producto]'),
   );
   const conteo = document.querySelector<HTMLElement>('[data-conteo]');
   const sinResultados = document.querySelector<HTMLElement>('[data-sin-resultados]');
-  const estadoEtapa = document.querySelector<HTMLElement>('[data-etapa-estado]');
-  const textoEtapa = document.querySelector<HTMLElement>('[data-etapa-texto]');
+  const limpiar = document.querySelector<HTMLButtonElement>('[data-limpiar-filtros]');
 
-  if (contenedorFiltro !== null && tarjetas.length > 0) {
-    const botones = Array.from(
-      contenedorFiltro.querySelectorAll<HTMLButtonElement>('[data-filtro-boton]'),
+  if (contenedorFiltros !== null && tarjetas.length > 0) {
+    const botonesFamilia = Array.from(
+      contenedorFiltros.querySelectorAll<HTMLButtonElement>('[data-filtro-familia]'),
+    );
+    const botonesEtapa = Array.from(
+      contenedorFiltros.querySelectorAll<HTMLButtonElement>('[data-filtro-etapa]'),
     );
 
-    // Las plantillas de conteo viajan como atributos del HTML: así el
-    // copy sigue viviendo en content.es.ts y este script no lo repite.
     const plural = conteo?.dataset.plural ?? '{n} productos';
     const singular = conteo?.dataset.singular ?? '1 producto';
+    const familiasValidas = new Set(botonesFamilia.map((boton) => boton.dataset.valor ?? ''));
+    const etapasValidas = new Set(botonesEtapa.map((boton) => boton.dataset.valor ?? ''));
 
-    const etiquetasEtapa = new Map(
-      Array.from(document.querySelectorAll<HTMLElement>('[data-etapa-etiqueta]')).map(
-        (elemento) => [elemento.dataset.etapaEtiqueta ?? '', elemento.textContent ?? ''],
-      ),
-    );
+    let familiaActiva = '';
+    let etapaActiva = '';
 
-    const aplicar = (valor: string, tipo: 'categoria' | 'etapa' = 'categoria'): void => {
+    const aplicar = (actualizarUrl = true): void => {
       let visibles = 0;
 
       tarjetas.forEach((tarjeta) => {
         const etapas = tarjeta.dataset.etapas?.split(' ') ?? [];
-        const coincide =
-          valor === 'todos' ||
-          (tipo === 'etapa'
-            ? etapas.includes(valor)
-            : tarjeta.dataset.categoria === valor);
+        const coincideFamilia = familiaActiva === '' || tarjeta.dataset.familia === familiaActiva;
+        const coincideEtapa = etapaActiva === '' || etapas.includes(etapaActiva);
+        const coincide = coincideFamilia && coincideEtapa;
         tarjeta.classList.toggle('hidden', !coincide);
         if (coincide) visibles += 1;
       });
 
-      botones.forEach((boton) => {
-        boton.setAttribute(
-          'aria-pressed',
-          String(tipo === 'categoria' && boton.dataset.valor === valor),
-        );
-      });
+      botonesFamilia.forEach((boton) =>
+        boton.setAttribute('aria-pressed', String((boton.dataset.valor ?? '') === familiaActiva)),
+      );
+      botonesEtapa.forEach((boton) =>
+        boton.setAttribute('aria-pressed', String((boton.dataset.valor ?? '') === etapaActiva)),
+      );
 
       if (conteo !== null) {
         conteo.textContent =
@@ -229,34 +215,50 @@ const schemaMigas = {
       }
 
       sinResultados?.classList.toggle('hidden', visibles > 0);
+      limpiar?.classList.toggle('hidden', familiaActiva === '' && etapaActiva === '');
+
+      if (actualizarUrl) {
+        const url = new URL(window.location.href);
+        familiaActiva === ''
+          ? url.searchParams.delete('familia')
+          : url.searchParams.set('familia', familiaActiva);
+        etapaActiva === ''
+          ? url.searchParams.delete('etapa')
+          : url.searchParams.set('etapa', etapaActiva);
+        window.history.replaceState({}, '', url);
+      }
     };
 
-    botones.forEach((boton) => {
+    const leerUrl = (): void => {
+      const parametros = new URLSearchParams(window.location.search);
+      const familia = parametros.get('familia') ?? '';
+      const etapa = parametros.get('etapa') ?? '';
+      familiaActiva = familiasValidas.has(familia) ? familia : '';
+      etapaActiva = etapasValidas.has(etapa) ? etapa : '';
+      aplicar(familia !== familiaActiva || etapa !== etapaActiva);
+    };
+
+    botonesFamilia.forEach((boton) => {
       boton.addEventListener('click', () => {
-        estadoEtapa?.classList.add('hidden');
-        estadoEtapa?.classList.remove('flex');
-
-        const url = new URL(window.location.href);
-        url.searchParams.delete('etapa');
-        window.history.replaceState({}, '', url);
-
-        aplicar(boton.dataset.valor ?? 'todos');
+        familiaActiva = boton.dataset.valor ?? '';
+        aplicar();
       });
     });
 
-    const etapaSolicitada = new URLSearchParams(window.location.search).get('etapa');
-    if (etapaSolicitada !== null && etiquetasEtapa.has(etapaSolicitada)) {
-      aplicar(etapaSolicitada, 'etapa');
+    botonesEtapa.forEach((boton) => {
+      boton.addEventListener('click', () => {
+        etapaActiva = boton.dataset.valor ?? '';
+        aplicar();
+      });
+    });
 
-      if (estadoEtapa !== null && textoEtapa !== null) {
-        const plantilla = estadoEtapa.dataset.plantilla ?? '{etapa}';
-        textoEtapa.textContent = plantilla.replace(
-          '{etapa}',
-          etiquetasEtapa.get(etapaSolicitada) ?? etapaSolicitada,
-        );
-        estadoEtapa.classList.remove('hidden');
-        estadoEtapa.classList.add('flex');
-      }
-    }
+    limpiar?.addEventListener('click', () => {
+      familiaActiva = '';
+      etapaActiva = '';
+      aplicar();
+    });
+
+    window.addEventListener('popstate', leerUrl);
+    leerUrl();
   }
 </script>

@@ -505,14 +505,23 @@ export const contenidoPt: Contenido = {
     bajada:
       'Dezoito produtos fabricados no nosso laboratório em Assunção, do tratamento do efluente à higiene das mãos da equipe. Filtre por família ou veja a linha completa.',
     filtrarPor: 'Filtrar por família',
+    filtrarPorEtapa: 'Filtrar por etapa do processo',
     todos: 'Todos',
+    limpiarFiltros: 'Limpar filtros',
     conteo: '{n} produtos',
     conteoSingular: '1 produto',
     verFicha: 'Ver ficha',
-    sinResultados: 'Não há produtos nesta família.',
-    etapaActiva: 'Etapa do percurso: {etapa}',
-    quitarEtapa: 'Ver a linha completa',
+    sinResultados: 'Não há produtos que correspondam aos dois filtros.',
   },
+
+  familias: [
+    { id: 'limpieza-industrial', nombre: 'Limpeza industrial' },
+    { id: 'desinfeccion-industrial', nombre: 'Desinfecção industrial' },
+    {
+      id: 'efluentes-aguas-residuales',
+      nombre: 'Tratamento de efluentes e águas residuais',
+    },
+  ],
 
   ficha: {
     migaInicio: 'Início',

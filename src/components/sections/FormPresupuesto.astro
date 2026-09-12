@@ -12,13 +12,13 @@ interface Props {
 
 const { locale = config.localePorDefecto, productoInicial } = Astro.props;
 const contenido = obtenerContenido(locale);
-const { presupuesto, categorias } = contenido;
+const { presupuesto } = contenido;
 
 /** El select se agrupa por familia, en el orden del catálogo. */
-const familias = categorias
-  .map((categoria) => ({
-    categoria,
-    items: productos.filter((producto) => producto.categoria === categoria.id),
+const familias = contenido.familias
+  .map((familia) => ({
+    familia,
+    items: productos.filter((producto) => producto.familia === familia.id),
   }))
   .filter((grupo) => grupo.items.length > 0);
 
@@ -156,7 +156,7 @@ const [avisoAntes = '', avisoDespues = ''] = presupuesto.privacidad.split('{enla
                 <option value="">{presupuesto.campos.productoPlaceholder}</option>
                 {
                   familias.map((grupo) => (
-                    <optgroup label={grupo.categoria.nombre}>
+                    <optgroup label={grupo.familia.nombre}>
                       {grupo.items.map((producto) => (
                         <option
                           value={producto.nombre}
