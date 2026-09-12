@@ -39,7 +39,13 @@ export {
 } from './content';
 export { buildWhatsAppUrl, ATRIBUTOS_ENLACE_EXTERNO } from './whatsapp';
 export { rutaLocal } from './rutas';
-export { LOCALES, DEFAULT_LOCALE, CATEGORIAS } from './types';
+export {
+  LOCALES,
+  DEFAULT_LOCALE,
+  CATEGORIAS,
+  FAMILIAS_CATALOGO,
+  ETAPAS_FLUJO,
+} from './types';
 
 export type {
   Beneficio,
@@ -54,6 +60,8 @@ export type {
   Direccion,
   EnlaceNav,
   EspecificacionTecnica,
+  EtapaFlujoId,
+  FamiliaCatalogoId,
   Imagen,
   Locale,
   MetaPagina,

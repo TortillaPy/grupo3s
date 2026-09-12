@@ -81,6 +81,23 @@ export const CATEGORIAS = [
 ] as const;
 export type CategoriaId = (typeof CATEGORIAS)[number];
 
+/** Familias comerciales, en el orden institucional del catálogo. */
+export const FAMILIAS_CATALOGO = [
+  'limpieza-industrial',
+  'desinfeccion-industrial',
+  'efluentes-aguas-residuales',
+] as const;
+export type FamiliaCatalogoId = (typeof FAMILIAS_CATALOGO)[number];
+
+/** Momentos del recorrido de trabajo, independientes de la familia. */
+export const ETAPAS_FLUJO = [
+  'desengrasa',
+  'desinfecta',
+  'coagulacion-floculacion',
+  'control-olor',
+] as const;
+export type EtapaFlujoId = (typeof ETAPAS_FLUJO)[number];
+
 export interface Presentacion {
   /** Como se muestra: "200 L", "25 kg". */
   readonly etiqueta: string;
@@ -120,6 +137,13 @@ export interface Producto {
   readonly slug: string;
   /** Nombre comercial. Es marca: no se traduce. */
   readonly nombre: string;
+  /** Agrupación comercial principal usada para la jerarquía del catálogo. */
+  readonly familia: FamiliaCatalogoId;
+  /** Funciones que cumple dentro del recorrido. Puede tener más de una. */
+  readonly etapas: readonly EtapaFlujoId[];
+  /** Función usada para ordenar cuando el producto cumple varias. */
+  readonly etapaPrincipal: EtapaFlujoId;
+  /** Clasificación histórica de detalle; se conserva durante la migración. */
   readonly categoria: CategoriaId;
   readonly presentaciones: readonly Presentacion[];
   /** Foto del envase, recortada sobre fondo blanco. */
