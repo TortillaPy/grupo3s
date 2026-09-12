@@ -21,7 +21,7 @@ export const contenidoPt: Contenido = {
       titulo:
         'Tratamento de efluentes industriais no Paraguai | 3S Grupo Industrial',
       descripcion:
-        'Coagulantes, floculantes, desinfetantes e desengraxantes com registro sanitário, fabricados no nosso laboratório em Assunção. Para frigoríficos, curtumes e plantas de alimentos. Entrega em todo o Paraguai.',
+        'Produtos para desengraxe, desinfecção, coagulação e floculação, e controle de odor, elaborados em Assunção para frigoríficos, curtumes e plantas de alimentos.',
     },
     productos: {
       titulo: 'Catálogo de produtos químicos industriais | 3S Grupo Industrial',
@@ -66,9 +66,9 @@ export const contenidoPt: Contenido = {
   },
 
   hero: {
-    titular: 'Seu efluente dentro da norma. Sem parar a planta.',
+    titular: 'Seu processo limpo. Seu efluente dentro da norma. Sua planta em operação.',
     subtitulo:
-      'Coagulantes, floculantes, desinfetantes e desengraxantes fabricados no nosso laboratório em Assunção, para frigoríficos, curtumes e plantas de alimentos. Com registro sanitário e embalagens de 5 a 1000 litros.',
+      'Elaboramos em Assunção uma gama de produtos para cada etapa: desengraxe, desinfecção, coagulação e floculação, e controle de odor. Para frigoríficos, curtumes e plantas de alimentos, em embalagens de 5 a 1000 litros e com produtos que contam com registro sanitário.',
     ctaPrimario: 'Solicitar orçamento',
     ctaSecundario: 'Ver os produtos',
     imagen: {
