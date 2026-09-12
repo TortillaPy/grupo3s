@@ -65,23 +65,23 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
       <Image
         src={logoClaro}
         alt=""
-        widths={[120, 240]}
-        sizes="76px"
+        widths={[140, 280]}
+        sizes="88px"
         loading="eager"
         format="webp"
         quality={90}
-        class:list={['h-11 w-auto', sobreOscuro && 'hidden']}
+        class:list={['h-13 w-auto', sobreOscuro && 'hidden']}
         data-logo-claro
       />
       <Image
         src={logoOscuro}
         alt=""
-        widths={[120, 240]}
-        sizes="76px"
+        widths={[140, 280]}
+        sizes="88px"
         loading="eager"
         format="webp"
         quality={90}
-        class:list={['h-11 w-auto', !sobreOscuro && 'hidden']}
+        class:list={['h-13 w-auto', !sobreOscuro && 'hidden']}
         data-logo-oscuro
       />
     </a>
