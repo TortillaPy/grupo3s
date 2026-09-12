@@ -87,3 +87,10 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El estado filtrado identifica la etapa activa y ofrece volver a la línea completa. Al usar el filtro existente por categoría se elimina el parámetro de etapa para evitar estados contradictorios.
 - Los textos están disponibles en español, portugués e inglés. Una nota visible aclara que el recorrido es general y que la selección y aplicación exactas dependen del proceso de cada planta.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; revisión a 1280 × 720 y 390 × 844 en claro y oscuro, sin desbordamiento horizontal ni errores de consola.
+
+## Ajuste de mensaje posterior a la etapa 3 — 2026-09-12
+
+- El hero pasa de enumerar familias químicas a comunicar tres resultados: proceso limpio, efluente dentro de norma y planta en marcha.
+- La descripción presenta la línea en el orden del recorrido aprobado: desengrase → desinfección → coagulación y floculación → control de olor.
+- La descripción SEO de inicio usa la misma jerarquía. Español, portugués e inglés se actualizaron juntos con redacción natural en cada idioma.
+- Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints. El contenido completo, incluidos ambos CTA, entra en 1280 × 720, 390 × 844 y 375 × 667, sin desbordamiento horizontal ni errores de consola.

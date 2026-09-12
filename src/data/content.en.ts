@@ -21,7 +21,7 @@ export const contenidoEn: Contenido = {
       titulo:
         'Industrial wastewater treatment in Paraguay | 3S Grupo Industrial',
       descripcion:
-        'Coagulants, flocculants, disinfectants and degreasers with sanitary registration, manufactured in our Asunción laboratory. For meat plants, tanneries and food processors. Delivery throughout Paraguay.',
+        'Products for degreasing, disinfection, coagulation and flocculation, and odor control, formulated in Asunción for meat plants, tanneries and food processors.',
     },
     productos: {
       titulo: 'Industrial chemical product catalog | 3S Grupo Industrial',
@@ -66,9 +66,9 @@ export const contenidoEn: Contenido = {
   },
 
   hero: {
-    titular: 'Effluent within limits. Without stopping the plant.',
+    titular: 'Clean operations. Compliant effluent. Production keeps moving.',
     subtitulo:
-      'Coagulants, flocculants, disinfectants and degreasers manufactured in our Asunción laboratory, for meat plants, tanneries and food processors. Sanitary registration and container sizes from 5 to 1,000 liters.',
+      'We formulate a range of products in Asunción for every stage: degreasing, disinfection, coagulation and flocculation, and odor control. For meat plants, tanneries and food processors, in sizes from 5 to 1,000 liters, including products with sanitary registration.',
     ctaPrimario: 'Request a quote',
     ctaSecundario: 'See the products',
     imagen: {
