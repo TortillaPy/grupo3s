@@ -68,3 +68,12 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - La integración Git crea previews automáticamente para ramas y pull requests. No hay checks de despliegue ni deploy hooks configurados.
 - En el plan Hobby solo están disponibles los entornos estándar. Para que `grupo3s.vercel.app` represente desarrollo, la rama de producción del proyecto deberá cambiar de `main` a `development`.
 - Ese cambio moverá el alias estable de Vercel a los builds de `development`; debe hacerse como una modificación explícita de infraestructura y verificarse después con un commit identificable.
+
+## Etapa 2 preparada — 2026-09-12
+
+- La portada presenta el logotipo a gran escala, centrado y sobre una superficie blanca para conservar los grises, negros y verdes originales en los modos claro y oscuro.
+- Los recursos de marca pasan de 370 × 265 px a 970 × 607 px y Astro genera variantes WebP adaptadas al ancho de pantalla.
+- El CTA principal abre la sección única `#presupuesto`, correspondiente al formulario “Solicitá tu presupuesto”; el bloque de precios usa `#precios` para evitar identificadores duplicados.
+- La portada fue revisada en escritorio y a 390 × 844 px. Los dos CTA, el cambio de tema y las versiones ES/PT/EN conservan su destino y contenido.
+- La animación de entrada queda desactivada con `prefers-reduced-motion: reduce`.
+- Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; sin errores de consola en la portada local.

@@ -66,10 +66,12 @@ export const contenidoPt: Contenido = {
   },
 
   hero: {
+    marcaRazonSocial: 'GRUPO INDUSTRIAL S.R.L.',
+    marcaActividad: 'LABORATÓRIO DE PRODUTOS QUÍMICOS',
     titular: 'Seu efluente dentro da norma. Sem parar a planta.',
     subtitulo:
       'Coagulantes, floculantes, desinfetantes e desengraxantes fabricados no nosso laboratório em Assunção, para frigoríficos, curtumes e plantas de alimentos. Com registro sanitário e embalagens de 5 a 1000 litros.',
-    ctaPrimario: 'Falar com um técnico',
+    ctaPrimario: 'Solicitar orçamento',
     ctaSecundario: 'Ver os produtos',
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
