@@ -80,8 +80,6 @@ export const contenidoEs: Contenido = {
   },
 
   hero: {
-    marcaRazonSocial: 'GRUPO INDUSTRIAL S.R.L.',
-    marcaActividad: 'LABORATORIO DE PRODUCTOS QUÍMICOS',
     titular: 'Tu efluente, dentro de norma. Sin frenar la planta.',
     subtitulo:
       'Coagulantes, floculantes, desinfectantes y desengrasantes formulados en nuestro laboratorio en Asunción, para frigoríficos, curtiembres y plantas de alimentos. Con registro sanitario y presentaciones de 5 a 1000 litros.',

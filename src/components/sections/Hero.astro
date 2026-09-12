@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 
 import Button from '../ui/Button.astro';
-import logoMarca from '../../assets/images/marca/logo-3s-transparente.png';
+import logoMarca from '../../assets/images/marca/logo-3s-metalico-transparente.png';
 import { config, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
 
@@ -36,35 +36,18 @@ const { hero } = obtenerContenido(locale);
   </div>
 
   <div class="contenedor relative flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center pt-28 pb-14 text-center sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20">
-    <div class="w-full max-w-[50rem]" data-revelar>
-      <div class="marca-portada relative overflow-hidden rounded-card border border-white/70 bg-white px-5 py-6 shadow-nivel-3 sm:px-10 sm:py-8 lg:px-14 lg:py-10">
-        <div
-          class="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-verde-profundo via-verde to-verde-profundo"
-          aria-hidden="true"
-        >
-        </div>
-
-        <Image
-          src={logoMarca}
-          alt="3S Grupo Industrial S.R.L."
-          widths={[480, 720, 970]}
-          sizes="(min-width: 1024px) 42rem, (min-width: 640px) 75vw, 88vw"
-          loading="eager"
-          fetchpriority="high"
-          format="webp"
-          quality={94}
-          class="mx-auto w-full max-w-[42rem]"
-        />
-
-        <div class="mt-2 border-t border-[#dedcd7] pt-4 sm:mt-3 sm:pt-5">
-          <p class="font-display text-[clamp(1.05rem,0.76rem+1.2vw,1.7rem)] font-black tracking-[0.045em] text-[#0b060c]">
-            {hero.marcaRazonSocial}
-          </p>
-          <p class="mt-1 font-display text-[clamp(0.72rem,0.55rem+0.7vw,1.05rem)] font-bold tracking-[0.08em] text-[#1e5a22] sm:mt-2">
-            {hero.marcaActividad}
-          </p>
-        </div>
-      </div>
+    <div class="marca-portada w-full max-w-[58rem]" data-revelar>
+      <Image
+        src={logoMarca}
+        alt="3S Grupo Industrial S.R.L."
+        widths={[480, 960, 1565]}
+        sizes="(min-width: 1024px) 54rem, (min-width: 640px) 82vw, 94vw"
+        loading="eager"
+        fetchpriority="high"
+        format="webp"
+        quality={96}
+        class="mx-auto w-full drop-shadow-[0_24px_32px_rgb(0_0_0/0.5)]"
+      />
     </div>
 
     <div class="mt-9 max-w-[54rem] sm:mt-11" data-revelar data-revelar-retraso="100">

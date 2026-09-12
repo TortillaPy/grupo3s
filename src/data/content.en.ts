@@ -66,8 +66,6 @@ export const contenidoEn: Contenido = {
   },
 
   hero: {
-    marcaRazonSocial: 'GRUPO INDUSTRIAL S.R.L.',
-    marcaActividad: 'CHEMICAL PRODUCTS LABORATORY',
     titular: 'Effluent within limits. Without stopping the plant.',
     subtitulo:
       'Coagulants, flocculants, disinfectants and degreasers manufactured in our Asunción laboratory, for meat plants, tanneries and food processors. Sanitary registration and container sizes from 5 to 1,000 liters.',

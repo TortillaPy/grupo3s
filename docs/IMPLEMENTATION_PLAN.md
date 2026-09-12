@@ -71,8 +71,8 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 
 ## Etapa 2 preparada — 2026-09-12
 
-- La portada presenta el logotipo a gran escala, centrado y sobre una superficie blanca para conservar los grises, negros y verdes originales en los modos claro y oscuro.
-- Los recursos de marca pasan de 370 × 265 px a 970 × 607 px y Astro genera variantes WebP adaptadas al ancho de pantalla.
+- La portada presenta a gran escala el logotipo metálico aportado por el cliente, centrado y recortado sobre transparencia para conservar únicamente el símbolo y las letras en los modos claro y oscuro.
+- El recurso central mide 1565 × 1005 px y Astro genera variantes WebP adaptadas al ancho de pantalla. Los logotipos generales también pasan de 370 × 265 px a 970 × 607 px.
 - El CTA principal abre la sección única `#presupuesto`, correspondiente al formulario “Solicitá tu presupuesto”; el bloque de precios usa `#precios` para evitar identificadores duplicados.
 - La portada fue revisada en escritorio y a 390 × 844 px. Los dos CTA, el cambio de tema y las versiones ES/PT/EN conservan su destino y contenido.
 - La animación de entrada queda desactivada con `prefers-reduced-motion: reduce`.

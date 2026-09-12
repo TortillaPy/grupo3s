@@ -277,8 +277,6 @@ export interface Contenido {
   };
 
   readonly hero: {
-    readonly marcaRazonSocial: string;
-    readonly marcaActividad: string;
     readonly titular: string;
     readonly subtitulo: string;
     readonly ctaPrimario: string;
