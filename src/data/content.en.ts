@@ -109,6 +109,42 @@ export const contenidoEn: Contenido = {
     },
   },
 
+  recorrido: {
+    volanta: 'The 3S circuit',
+    titulo: 'Four stages working in sequence',
+    bajada:
+      'The product line supports the journey from cleaning the process area through effluent treatment and odor control.',
+    aviso:
+      'This order represents the general workflow. Exact product selection and application depend on each plant\'s process.',
+    verProductos: 'View products for this stage',
+    items: [
+      {
+        id: 'desengrasa',
+        titulo: 'Degrease',
+        texto:
+          'Remove grease and adhered residue from equipment, floors and surfaces before sanitizing.',
+      },
+      {
+        id: 'desinfecta',
+        titulo: 'Disinfect',
+        texto:
+          'Reduce the microbiological load on process areas and surfaces after cleaning.',
+      },
+      {
+        id: 'coagulacion-floculacion',
+        titulo: 'Coagulation and Flocculation',
+        texto:
+          'Support solids separation and clarification during effluent treatment.',
+      },
+      {
+        id: 'control-olor',
+        titulo: 'Odor control',
+        texto:
+          'Complete the journey with solutions that prevent, neutralize and reduce unwanted odors.',
+      },
+    ],
+  },
+
   beneficios: {
     titulo: 'Why plants choose us',
     bajada:
@@ -474,6 +510,8 @@ export const contenidoEn: Contenido = {
     conteoSingular: '1 product',
     verFicha: 'View spec sheet',
     sinResultados: 'No products in this family.',
+    etapaActiva: 'Workflow stage: {etapa}',
+    quitarEtapa: 'View the complete line',
   },
 
   ficha: {

@@ -67,6 +67,7 @@ export type {
   MetaPagina,
   Moneda,
   Paso,
+  PasoRecorrido,
   Precio,
   Presentacion,
   Pregunta,

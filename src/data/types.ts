@@ -212,6 +212,12 @@ export interface Paso {
   readonly texto: string;
 }
 
+export interface PasoRecorrido {
+  readonly id: EtapaFlujoId;
+  readonly titulo: string;
+  readonly texto: string;
+}
+
 export interface Pregunta {
   readonly pregunta: string;
   readonly respuesta: string;
@@ -294,6 +300,15 @@ export interface Contenido {
     readonly titulo: string;
     readonly problema: { readonly titulo: string; readonly texto: string };
     readonly solucion: { readonly titulo: string; readonly texto: string };
+  };
+
+  readonly recorrido: {
+    readonly volanta: string;
+    readonly titulo: string;
+    readonly bajada: string;
+    readonly aviso: string;
+    readonly verProductos: string;
+    readonly items: readonly PasoRecorrido[];
   };
 
   readonly beneficios: {
@@ -430,6 +445,9 @@ export interface Contenido {
     readonly conteoSingular: string;
     readonly verFicha: string;
     readonly sinResultados: string;
+    /** Usa el marcador {etapa}. */
+    readonly etapaActiva: string;
+    readonly quitarEtapa: string;
   };
 
   readonly ficha: {

@@ -78,3 +78,12 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - La animación de entrada queda desactivada con `prefers-reduced-motion: reduce`.
 - El primer viewport adapta el tamaño del logo y el espaciado según ancho y alto para mostrar juntos la marca, la propuesta, la descripción y ambos CTA en escritorio y móvil; las señales de confianza comienzan después de ese plano inicial.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; sin errores de consola en la portada local.
+
+## Etapa 3 preparada — 2026-09-12
+
+- La portada incorpora el recorrido Desengrasa → Desinfecta → Coagulación y Floculación → Control de olor inmediatamente después del bloque de problema y solución.
+- El recorrido se presenta horizontalmente en escritorio y verticalmente en móvil, con conectores, numeración e iconografía que mantienen visible la secuencia.
+- Cada etapa enlaza a una URL compartible del catálogo mediante `?etapa=...`; el catálogo muestra solo los productos que declaran esa función, incluso cuando un producto participa en más de una etapa.
+- El estado filtrado identifica la etapa activa y ofrece volver a la línea completa. Al usar el filtro existente por categoría se elimina el parámetro de etapa para evitar estados contradictorios.
+- Los textos están disponibles en español, portugués e inglés. Una nota visible aclara que el recorrido es general y que la selección y aplicación exactas dependen del proceso de cada planta.
+- Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; revisión a 1280 × 720 y 390 × 844 en claro y oscuro, sin desbordamiento horizontal ni errores de consola.
