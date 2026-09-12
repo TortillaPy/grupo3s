@@ -26,7 +26,7 @@ export const contenidoPt: Contenido = {
     productos: {
       titulo: 'Catálogo de produtos químicos industriais | 3S Grupo Industrial',
       descripcion:
-        'Os 18 produtos da 3S Grupo Industrial: coagulantes e floculantes para efluentes, desinfetantes, desengraxantes, detergentes, lavanderia e higiene das mãos. Com a ficha de cada um.',
+        'Os 19 produtos da 3S Grupo Industrial: coagulantes e floculantes para efluentes, desinfetantes, desengraxantes, detergentes, lavanderia e higiene das mãos. Com a ficha de cada um.',
     },
     gracias: {
       titulo: 'Recebemos a sua solicitação | 3S Grupo Industrial',
@@ -263,7 +263,7 @@ export const contenidoPt: Contenido = {
   especificaciones: {
     titulo: 'A linha completa',
     bajada:
-      'Os dezoito produtos do catálogo com o seu tipo, as suas embalagens e o seu registro. Os dados que a sua área de qualidade precisa antes de aprovar um fornecedor.',
+      'Os dezenove produtos do catálogo com o seu tipo, as suas embalagens e o seu registro. Os dados que a sua área de qualidade precisa antes de aprovar um fornecedor.',
     columnas: {
       producto: 'Produto',
       tipo: 'O que é',
@@ -763,6 +763,20 @@ export const contenidoPt: Contenido = {
         'Fornos, chapas e fritadeiras',
         'Utensílios com gordura de difícil eliminação',
         'Lavagem de caixas e bandejas',
+      ],
+    },
+    desinox: {
+      resumen:
+        'Remove ferrugem e incrustações calcárias e condiciona metais antes da pintura.',
+      accion:
+        'É um líquido ácido concentrado, aditivado com tensoativos, inibidores de corrosão, solventes orgânicos e condicionadores para todo tipo de metal. Elimina formações de ferrugem, exerce uma fosfatização leve que favorece a aderência e prolonga a duração das tintas, melhora a resistência à corrosão, remove resíduos calcários em caldeiras, tubulações, condensadores e outras instalações, e limpa superfícies inoxidáveis.',
+      aplicacion:
+        'Como regra geral, diluir 1 litro de Desinox em 10 litros de água. Aplicar sobre a superfície, deixar agir durante 10 minutos e depois enxaguar com água.',
+      sectores: [
+        'Caldeiras, tubulações e condensadores',
+        'Equipamentos e superfícies de aço inoxidável',
+        'Metais antes da pintura',
+        'Instalações industriais com incrustações calcárias',
       ],
     },
     madox: {

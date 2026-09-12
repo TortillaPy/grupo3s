@@ -101,6 +101,6 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El catálogo permite combinar la familia institucional y la etapa del proceso. Ambos estados se reflejan en `familia` y `etapa`, por lo que cada resultado puede compartirse mediante su URL.
 - Los filtros inválidos se descartan, el conteo se actualiza en vivo, las combinaciones vacías muestran un estado explícito y un único control restablece la línea completa.
 - Las familias mantienen el orden Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales; las etapas mantienen Desengrasa → Desinfecta → Coagulación y Floculación → Control de olor.
-- El selector del formulario se agrupa por las tres familias y conserva el orden canónico de los 18 productos. Las fichas muestran su familia, enlazan sus etapas y recomiendan productos de la misma familia.
+- El selector del formulario se agrupa por las tres familias y conserva el orden canónico de los 19 productos. Las fichas muestran su familia, enlazan sus etapas y recomiendan productos de la misma familia.
 - `ItemList`, grillas, selectores y relacionados parten del mismo arreglo ordenado de productos. No se cambian slugs ni rutas publicadas.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; filtros combinados, URL, estado vacío, limpieza, selector y fichas comprobados en navegador; vista móvil a 390 × 844 sin desbordamiento ni errores de consola.

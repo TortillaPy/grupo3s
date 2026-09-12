@@ -269,7 +269,7 @@ export interface Contenido {
      * Plantillas para las fichas de producto. Usan los marcadores
      * {producto} y {resumen}, que se reemplazan con los datos de cada
      * uno: así cada ficha tiene título y descripción propios sin
-     * escribir dieciocho pares a mano.
+     * escribir diecinueve pares a mano.
      */
     readonly ficha: {
       readonly tituloPlantilla: string;
