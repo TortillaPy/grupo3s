@@ -240,22 +240,22 @@ export const contenidoPt: Contenido = {
   comoComprar: {
     titulo: 'Como trabalhamos',
     bajada:
-      'Três passos do diagnóstico da sua necessidade até a aplicação na planta.',
+      'Três passos da sua consulta até o produto trabalhando na sua planta.',
     pasos: [
       {
-        titulo: 'Avaliamos a sua necessidade',
+        titulo: 'Conte o que você trata',
         texto:
-          'Conte o seu setor, o que precisa resolver e em que ponto do processo isso ocorre. Com esses dados iniciamos o diagnóstico.',
+          'Escreva pelo WhatsApp ou deixe seus dados no formulário. Com o ramo e o problema que você quer resolver já dá para começar.',
       },
       {
-        titulo: 'Definimos e orçamos a solução',
+        titulo: 'Recomendamos e orçamos',
         texto:
-          'Indicamos o produto, a dosagem e a embalagem adequados, e preparamos o orçamento com o frete calculado conforme o destino.',
+          'Indicamos o produto e a embalagem que correspondem ao seu processo, e enviamos o orçamento com o frete incluído.',
       },
       {
-        titulo: 'Entregamos e acompanhamos',
+        titulo: 'Entregamos na sua planta',
         texto:
-          'Despachamos para qualquer ponto do Paraguai e orientamos a aplicação e os ajustes necessários para a solução funcionar corretamente.',
+          'Despachamos para qualquer ponto do Paraguai, na embalagem que você escolher, da bombona de 5 litros ao contêiner IBC de 1000.',
       },
     ],
   },

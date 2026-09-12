@@ -249,22 +249,22 @@ export const contenidoEs: Contenido = {
   comoComprar: {
     titulo: 'Cómo trabajamos',
     bajada:
-      'Tres pasos desde el diagnóstico de tu necesidad hasta la aplicación en planta.',
+      'Tres pasos desde tu consulta hasta el producto trabajando en tu planta.',
     pasos: [
       {
-        titulo: 'Relevamos tu necesidad',
+        titulo: 'Contanos qué tratás',
         texto:
-          'Contanos tu rubro, qué necesitás resolver y en qué punto del proceso ocurre. Con esos datos iniciamos el diagnóstico.',
+          'Escribinos por WhatsApp o dejá tus datos en el formulario. Con el rubro y el problema que querés resolver alcanza para arrancar.',
       },
       {
-        titulo: 'Definimos y cotizamos la solución',
+        titulo: 'Te recomendamos y cotizamos',
         texto:
-          'Te indicamos el producto, la dosis y la presentación adecuados, y preparamos el presupuesto con el flete calculado según el destino.',
+          'Te recomendamos el producto y la presentación que corresponden a tu proceso, y te pasamos el presupuesto con el flete incluido.',
       },
       {
-        titulo: 'Entregamos y acompañamos',
+        titulo: 'Entregamos en tu planta',
         texto:
-          'Despachamos a tu planta en cualquier punto del país y te orientamos para aplicar y ajustar correctamente la solución.',
+          'Despachamos a tu planta en cualquier punto del país, en la presentación que elijas, desde el bidón de 5 litros hasta el contenedor de 1000.',
       },
     ],
   },

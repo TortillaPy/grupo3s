@@ -17,7 +17,7 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
 
 <Section
   id="como-comprar"
-  volanta={comoComprar.titulo}
+  volanta="Cómo trabajamos"
   titulo={comoComprar.titulo}
   bajada={comoComprar.bajada}
   fondo="blanco"
@@ -27,15 +27,6 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
     el número le dice al lector dónde está del proceso.
   -->
   <ol class="relative grid gap-8 sm:grid-cols-3 sm:gap-6 lg:gap-10">
-    <!--
-      Línea que une los tres pasos. Existe solo desde `sm`, que es
-      donde los pasos van en fila y la línea significa "esto sigue a
-      esto"; apilados en móvil no aportaría nada.
-    -->
-    <span
-      class="absolute top-6 right-[16.67%] left-[16.67%] hidden h-px bg-gris-claro sm:block"
-      aria-hidden="true"></span>
-
     {
       comoComprar.pasos.map((paso, indice) => (
         <li
@@ -54,6 +45,12 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
           >
             {String(indice + 1).padStart(2, '0')}
           </span>
+          {indice < comoComprar.pasos.length - 1 && (
+            <span
+              class="absolute top-6 -right-6 left-12 hidden h-px bg-gris-claro sm:block lg:-right-10"
+              aria-hidden="true"
+            />
+          )}
           <h3 class="mt-5 font-display text-[1.15rem] font-bold text-negro">
             {paso.titulo}
           </h3>
