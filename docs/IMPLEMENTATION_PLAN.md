@@ -33,12 +33,13 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - No existe .github en la base. wrangler.jsonc sirve dist con nombre grupo3s. npm run deploy ejecuta build y wrangler deploy.
 - No se ejecutó deploy.
 - GitHub informa un status Vercel exitoso para origin/main. Esto no demuestra que sea el despliegue productivo actual ni confirma su filtro de ramas.
-- Pendientes: verificar y corregir las políticas remotas de ramas; crear el proyecto productivo independiente en Cloudflare; crear tag de respaldo; publicar development y rama de etapa; abrir PR sin merge.
+- Pendientes: verificar y corregir las políticas remotas de ramas y preparar el proyecto productivo independiente en Cloudflare.
 - Build base ejecutado con éxito: 67 páginas; Astro check: 0 errores, 0 warnings, 0 hints.
 - Aclaración del usuario: Vercel será desarrollo y Cloudflare producción. La configuración remota aún no está verificada ni modificada.
 - El conector Vercel reconoce el equipo team_ioP9MpejBnkRtWvhJ5vMsiEF, pero list_projects devuelve una lista vacía y grupo3s devuelve 404. El status histórico de GitHub no demuestra acceso actual al proyecto.
-- development se mantiene local sin upstream a main para evitar pushes/pulls ambiguos. No se publicó ninguna rama ni tag; no se creó PR ni se mergeó.
-- La etapa 0 está preparada localmente, pendiente de corregir la separación real de hosting.
+- development se publicó desde `47ac11b` sin upstream a main para evitar pushes/pulls ambiguos. También se publicó el tag anotado `production-2026-09-12` como respaldo de la producción inicial.
+- La rama `codex/00-reglas-desarrollo` se publicó y abrió el PR #1 hacia development. No se mergeó.
+- La etapa 0 está preparada y publicada, pendiente de aprobar el PR y de completar la separación real de hosting.
 
 ## Segunda verificación de hosting — 2026-09-12
 
@@ -47,7 +48,7 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - La consulta Pages project list terminó correctamente sin proyectos listados.
 - Vercel list_teams sigue mostrando tortillapys-projects y list_projects sigue devolviendo una lista vacía.
 - No existe vínculo local .vercel/project.json. La configuración local de Wrangler sigue apuntando a grupo3s y dist.
-- Falta identificar los proyectos remotos reales mediante sus URLs de dashboard o acceso a las cuentas correspondientes. No se puede verificar el commit desplegado ni los filtros de ramas todavía.
+- El acceso al panel web confirmó que el proyecto de Vercel se llama `grupo3s` y está conectado a `TortillaPy/grupo3s`.
 - No se cambiaron configuraciones de hosting, ni se publicó, mergeó o desplegó ningún cambio.
 
 ## Verificación por dominios públicos — 2026-09-12
@@ -59,3 +60,11 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El dominio productivo usa la red de Cloudflare, pero no corresponde a un proyecto Workers/Pages accesible en la cuenta autenticada. La evidencia indica que Cloudflare está actuando como proxy/CDN delante del despliegue de Vercel.
 - Estado actual: Vercel y Cloudflare muestran el mismo build. La arquitectura solicitada —Vercel para desarrollo y un despliegue independiente en Cloudflare para producción— todavía no existe.
 - No se modificará DNS ni se creará el Worker productivo durante las etapas. Esa migración se preparará y verificará en preview, y requerirá aprobación final antes del cambio de producción.
+
+## Verificación del panel de Vercel — 2026-09-12
+
+- El panel de despliegues identifica `main` en `47ac11b` como el despliegue **Production** que alimenta `grupo3s.vercel.app`.
+- El PR #1 y su rama `codex/00-reglas-desarrollo` se construyeron correctamente como **Preview**. Las ramas `feat/logo-alta-resolucion` y `fix/correcciones-pendientes` también conservan previews independientes.
+- La integración Git crea previews automáticamente para ramas y pull requests. No hay checks de despliegue ni deploy hooks configurados.
+- En el plan Hobby solo están disponibles los entornos estándar. Para que `grupo3s.vercel.app` represente desarrollo, la rama de producción del proyecto deberá cambiar de `main` a `development`.
+- Ese cambio moverá el alias estable de Vercel a los builds de `development`; debe hacerse como una modificación explícita de infraestructura y verificarse después con un commit identificable.
