@@ -60,7 +60,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Piletas de tratamiento de efluentes industriales en operación.',
     },
     especificaciones: [
-      { clave: 'Tipo', valor: 'Coagulante inorgánico polimerizado' },
+      { clave: 'Tipo', valor: 'Coagulante en solución' },
       { clave: 'Función', valor: 'Remoción de color y materia coloidal' },
       {
         clave: 'Reemplaza a',

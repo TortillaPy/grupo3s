@@ -68,7 +68,7 @@ export const contenidoPt: Contenido = {
   hero: {
     titular: 'Seu processo limpo. Seu efluente dentro da norma. Sua planta em operação.',
     subtitulo:
-      'Elaboramos em Assunção uma gama de produtos para cada etapa: desengraxe, desinfecção, coagulação e floculação, e controle de odor. Para frigoríficos, curtumes e plantas de alimentos, em embalagens de 5 a 1000 litros e com produtos que contam com registro sanitário.',
+      'Elaboramos uma gama de produtos em Assunção para cada etapa: desengraxe, desinfecção, coagulação e floculação, e controle de odor. Para frigoríficos, curtumes e plantas de alimentos, em embalagens de 5 a 1000 litros e com produtos que contam com registro sanitário.',
     ctaPrimario: 'Solicitar orçamento',
     ctaSecundario: 'Ver os produtos',
     imagen: {
@@ -105,7 +105,7 @@ export const contenidoPt: Contenido = {
     solucion: {
       titulo: 'Como muda com a 3S',
       texto:
-        'Fabricamos aqui, em Assunção, a linha completa de que a sua planta precisa: o coagulante e o floculante que clarificam o efluente, o desengraxante que retira a carga orgânica antes que ela chegue à água, o desinfetante da área de processo e o neutralizador do odor. Um único fornecedor, com registro sanitário, embalagens de 5 a 1000 litros e reposição sem depender de importação.',
+        'Elaboramos uma gama de produtos em Assunção que acompanha as principais etapas da sua planta: desengraxe, desinfecção, coagulação e floculação do efluente, e controle de odor. Um único fornecedor, com embalagens de 5 a 1000 litros, produtos que contam com registro sanitário e reposição local sem depender de importação.',
     },
   },
 
@@ -160,7 +160,7 @@ export const contenidoPt: Contenido = {
         icono: 'flask-conical',
         titulo: 'A linha completa',
         texto:
-          'Coagulação, floculação, desengraxe, desinfecção e controle de odor. Um fornecedor em vez de cinco.',
+          'Desengraxe, desinfecção, coagulação e floculação, e controle de odor. Um fornecedor em vez de cinco.',
       },
       {
         icono: 'gauge',
