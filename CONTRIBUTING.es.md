@@ -135,18 +135,16 @@ descripción del PR.
 
 ## Flujo de git
 
-- Ramificá desde `main`: `tipo/descripcion-corta`, por ejemplo
-  `fix/logo-footer-oscuro`, `feat/productos-relacionados`.
-- Los mensajes de commit siguen el patrón que ya tiene el historial —
-  `tipo: resumen corto en imperativo`, en español o inglés (según el
-  idioma del resto de tu PR): `feat:`, `fix:`, `update:`, `docs:`,
-  `refactor:`. Explicá el *por qué* en el cuerpo si no es obvio desde
-  el resumen.
-- Mantené los PR acotados. Una corrección de contenido, un componente
-  nuevo y un refactor sin relación son tres PR, no uno.
-- Abrí un PR contra `main` en vez de pushear directo, aunque el cambio
-  sea chico — le da al cambio un lugar donde revisarse y deja
-  registrado el porqué.
+- Hosting: Vercel es desarrollo (rama de integración y previews); Cloudflare es producción (solo main después de aprobación final). Verificar estos ajustes en cada proveedor.
+- `main` es producción; `development` es la rama de integración (también llamada “dev”).
+- Crear cada etapa desde `development` actualizado, con nombre `codex/NN-descripcion`.
+- Nunca commitear directamente en `main` ni en `development`. Abrir un PR acotado por etapa con destino a `development`.
+- Presentar cambios y verificaciones, y esperar aprobación explícita antes de mergear cada etapa. Crear la siguiente rama desde `development` actualizado después del merge aprobado.
+- Usar mensajes de commit como `feat:`, `fix:`, `docs:` o `refactor:` con un resumen claro.
+- Verificar las ramas configuradas en el hosting antes de pushear. Los previews deben estar separados de producción; no ejecutar `npm run deploy` durante las etapas.
+- Tras la revisión integral y aprobación final, abrir el PR de release de `development` a `main`, mergear y desplegar. Aprobar una etapa no autoriza publicar producción.
+- Verificar el commit desplegado y crear un tag de respaldo al comenzar. Preservar ramas existentes y cambios sin commitear.
+- Consultar [CLAUDE.md](CLAUDE.md) y el [plan de implementación](docs/IMPLEMENTATION_PLAN.md).
 
 ## Antes de abrir un PR
 
