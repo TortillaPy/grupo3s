@@ -89,6 +89,11 @@ export const FAMILIAS_CATALOGO = [
 ] as const;
 export type FamiliaCatalogoId = (typeof FAMILIAS_CATALOGO)[number];
 
+export interface FamiliaCatalogo {
+  readonly id: FamiliaCatalogoId;
+  readonly nombre: string;
+}
+
 /** Momentos del recorrido de trabajo, independientes de la familia. */
 export const ETAPAS_FLUJO = [
   'desengrasa',
@@ -439,15 +444,14 @@ export interface Contenido {
     readonly titulo: string;
     readonly bajada: string;
     readonly filtrarPor: string;
+    readonly filtrarPorEtapa: string;
     readonly todos: string;
+    readonly limpiarFiltros: string;
     /** Usa el marcador {n}. */
     readonly conteo: string;
     readonly conteoSingular: string;
     readonly verFicha: string;
     readonly sinResultados: string;
-    /** Usa el marcador {etapa}. */
-    readonly etapaActiva: string;
-    readonly quitarEtapa: string;
   };
 
   readonly ficha: {
@@ -472,6 +476,7 @@ export interface Contenido {
     readonly fuente: string;
   };
 
+  readonly familias: readonly FamiliaCatalogo[];
   readonly categorias: readonly Categoria[];
   readonly productos: Readonly<Record<string, CopyProducto>>;
 

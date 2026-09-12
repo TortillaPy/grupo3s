@@ -240,22 +240,22 @@ export const contenidoEn: Contenido = {
   comoComprar: {
     titulo: 'How we work',
     bajada:
-      'Three steps from diagnosing your need to application at your plant.',
+      'Three steps from your inquiry to the product working in your plant.',
     pasos: [
       {
-        titulo: 'We assess your needs',
+        titulo: 'Tell us what you treat',
         texto:
-          'Tell us your industry, what you need to solve and where it occurs in the process. We use that information to begin the assessment.',
+          'Message us on WhatsApp or leave your details in the form. Your industry and the problem you need to solve are enough to start.',
       },
       {
-        titulo: 'We define and quote the solution',
+        titulo: 'We recommend and quote',
         texto:
-          'We specify the right product, dosage and container size, then prepare a quote with freight calculated for the destination.',
+          'We tell you which product and container size fit your process, and send the quote with freight included.',
       },
       {
-        titulo: 'We deliver and support you',
+        titulo: 'We deliver to your plant',
         texto:
-          'We ship anywhere in Paraguay and guide your team through correct application and any adjustments the solution requires.',
+          'We ship anywhere in Paraguay, in the size you choose, from the 5-liter jug to the 1,000-liter IBC tote.',
       },
     ],
   },
@@ -505,14 +505,23 @@ export const contenidoEn: Contenido = {
     bajada:
       'Eighteen products manufactured in our Asunción laboratory, from effluent treatment to hand hygiene for your crew. Filter by family or browse the whole line.',
     filtrarPor: 'Filter by family',
+    filtrarPorEtapa: 'Filter by process stage',
     todos: 'All',
+    limpiarFiltros: 'Clear filters',
     conteo: '{n} products',
     conteoSingular: '1 product',
     verFicha: 'View spec sheet',
-    sinResultados: 'No products in this family.',
-    etapaActiva: 'Workflow stage: {etapa}',
-    quitarEtapa: 'View the complete line',
+    sinResultados: 'No products match both filters.',
   },
+
+  familias: [
+    { id: 'limpieza-industrial', nombre: 'Industrial cleaning' },
+    { id: 'desinfeccion-industrial', nombre: 'Industrial disinfection' },
+    {
+      id: 'efluentes-aguas-residuales',
+      nombre: 'Effluent and wastewater treatment',
+    },
+  ],
 
   ficha: {
     migaInicio: 'Home',

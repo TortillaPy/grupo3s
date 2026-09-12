@@ -59,6 +59,7 @@ export default defineConfig({
           'sun',
           'moon',
           'wind',
+          'workflow',
           'info',
         ],
         'simple-icons': ['whatsapp'],

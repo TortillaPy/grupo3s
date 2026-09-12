@@ -41,6 +41,7 @@ const modulo = resolverImagen(producto.imagen.src);
 <article
   class="tarjeta tarjeta-viva group relative flex h-full flex-col overflow-hidden"
   data-producto
+  data-familia={producto.familia}
   data-categoria={producto.categoria}
   data-etapas={producto.etapas.join(' ')}
   data-revelar
