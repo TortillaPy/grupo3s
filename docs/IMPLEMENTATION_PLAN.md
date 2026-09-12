@@ -76,4 +76,5 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El CTA principal abre la sección única `#presupuesto`, correspondiente al formulario “Solicitá tu presupuesto”; el bloque de precios usa `#precios` para evitar identificadores duplicados.
 - La portada fue revisada en escritorio y a 390 × 844 px. Los dos CTA, el cambio de tema y las versiones ES/PT/EN conservan su destino y contenido.
 - La animación de entrada queda desactivada con `prefers-reduced-motion: reduce`.
+- El primer viewport adapta el tamaño del logo y el espaciado según ancho y alto para mostrar juntos la marca, la propuesta, la descripción y ambos CTA en escritorio y móvil; las señales de confianza comienzan después de ese plano inicial.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; sin errores de consola en la portada local.

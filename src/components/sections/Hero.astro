@@ -35,13 +35,13 @@ const { hero } = obtenerContenido(locale);
   >
   </div>
 
-  <div class="contenedor relative flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center pt-28 pb-14 text-center sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20">
-    <div class="marca-portada w-full max-w-[58rem]" data-revelar>
+  <div class="hero-primer-plano contenedor relative flex min-h-[100svh] flex-col items-center justify-center pt-20 pb-6 text-center sm:pt-24 sm:pb-8">
+    <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]" data-revelar>
       <Image
         src={logoMarca}
         alt="3S Grupo Industrial S.R.L."
         widths={[480, 960, 1565]}
-        sizes="(min-width: 1024px) 54rem, (min-width: 640px) 82vw, 94vw"
+        sizes="(min-width: 1024px) 38rem, (min-width: 640px) 28rem, 19rem"
         loading="eager"
         fetchpriority="high"
         format="webp"
@@ -50,20 +50,24 @@ const { hero } = obtenerContenido(locale);
       />
     </div>
 
-    <div class="mt-9 max-w-[54rem] sm:mt-11" data-revelar data-revelar-retraso="100">
+    <div class="hero-mensaje mt-4 max-w-[54rem] sm:mt-6" data-revelar data-revelar-retraso="100">
       <h1
         id="hero-titulo"
-        class="text-[clamp(2rem,1.3rem+2.4vw,3.5rem)] leading-[1.08] font-black tracking-[-0.025em] text-white"
+        class="text-[clamp(1.75rem,1.25rem+2vw,3rem)] leading-[1.06] font-black tracking-[-0.025em] text-white"
       >
         {hero.titular}
       </h1>
 
-      <p class="mx-auto mt-5 max-w-[46rem] text-base leading-relaxed text-white/72 sm:text-lg">
+      <p class="mx-auto mt-3 max-w-[46rem] text-[0.9rem] leading-[1.5] text-white/72 sm:mt-4 sm:text-[1.05rem]">
         {hero.subtitulo}
       </p>
 
-      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
-        <Button href={rutaLocal('/#presupuesto', locale)} tamano="grande">
+      <div class="mt-5 flex flex-col justify-center gap-3 sm:mt-6 sm:flex-row sm:items-center">
+        <Button
+          href={rutaLocal('/#presupuesto', locale)}
+          tamano="grande"
+          class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
+        >
           {hero.ctaPrimario}
           <Icon name="lucide:mail" class="size-5" aria-hidden="true" />
         </Button>
@@ -72,6 +76,7 @@ const { hero } = obtenerContenido(locale);
           href={rutaLocal('/productos', locale)}
           variante="fantasma"
           tamano="grande"
+          class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
         >
           {hero.ctaSecundario}
           <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
@@ -124,6 +129,27 @@ const { hero } = obtenerContenido(locale);
   @media (prefers-reduced-motion: reduce) {
     .marca-portada {
       animation: none;
+    }
+  }
+
+  @media (width < 40rem) and (height < 46.25rem) {
+    .hero-primer-plano {
+      padding-top: 5rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .marca-portada {
+      max-width: 16.5rem;
+    }
+
+    .hero-mensaje {
+      margin-top: 0.75rem;
+    }
+  }
+
+  @media (width >= 64rem) and (height >= 56.25rem) {
+    .marca-portada {
+      max-width: 38rem;
     }
   }
 </style>
