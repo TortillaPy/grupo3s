@@ -39,3 +39,13 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El conector Vercel reconoce el equipo team_ioP9MpejBnkRtWvhJ5vMsiEF, pero list_projects devuelve una lista vacía y grupo3s devuelve 404. El status histórico de GitHub no demuestra acceso actual al proyecto.
 - development se mantiene local sin upstream a main para evitar pushes/pulls ambiguos. No se publicó ninguna rama ni tag; no se creó PR ni se mergeó.
 - La etapa 0 está preparada localmente, pendiente de resolver acceso a hosting y confirmar producción.
+
+## Segunda verificación de hosting — 2026-09-12
+
+- Cloudflare ya está autenticado mediante OAuth como marcoantonsson@gmail.com, cuenta d36de7e06c8009c38013b9346396db86.
+- Consultar deployments de grupo3s devuelve error 10007: el Worker no existe en esa cuenta. Esto no prueba que no exista bajo otro nombre o cuenta.
+- La consulta Pages project list terminó correctamente sin proyectos listados.
+- Vercel list_teams sigue mostrando tortillapys-projects y list_projects sigue devolviendo una lista vacía.
+- No existe vínculo local .vercel/project.json. La configuración local de Wrangler sigue apuntando a grupo3s y dist.
+- Falta identificar los proyectos remotos reales mediante sus URLs de dashboard o acceso a las cuentas correspondientes. No se puede verificar el commit desplegado ni los filtros de ramas todavía.
+- No se cambiaron configuraciones de hosting, ni se publicó, mergeó o desplegó ningún cambio.
