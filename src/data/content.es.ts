@@ -83,7 +83,7 @@ export const contenidoEs: Contenido = {
     titular: 'Tu efluente, dentro de norma. Sin frenar la planta.',
     subtitulo:
       'Coagulantes, floculantes, desinfectantes y desengrasantes formulados en nuestro laboratorio en Asunción, para frigoríficos, curtiembres y plantas de alimentos. Con registro sanitario y presentaciones de 5 a 1000 litros.',
-    ctaPrimario: 'Hablar con un técnico',
+    ctaPrimario: 'Solicitar presupuesto',
     ctaSecundario: 'Ver los productos',
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',

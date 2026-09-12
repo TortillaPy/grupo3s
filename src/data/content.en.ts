@@ -69,7 +69,7 @@ export const contenidoEn: Contenido = {
     titular: 'Effluent within limits. Without stopping the plant.',
     subtitulo:
       'Coagulants, flocculants, disinfectants and degreasers manufactured in our Asunción laboratory, for meat plants, tanneries and food processors. Sanitary registration and container sizes from 5 to 1,000 liters.',
-    ctaPrimario: 'Talk to a technician',
+    ctaPrimario: 'Request a quote',
     ctaSecundario: 'See the products',
     imagen: {
       src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
