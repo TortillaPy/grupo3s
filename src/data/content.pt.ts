@@ -109,6 +109,42 @@ export const contenidoPt: Contenido = {
     },
   },
 
+  recorrido: {
+    volanta: 'O circuito 3S',
+    titulo: 'Quatro etapas que trabalham em sequência',
+    bajada:
+      'A linha acompanha o percurso desde a limpeza da área de processo até o tratamento do efluente e o controle de odores.',
+    aviso:
+      'A ordem representa o ciclo geral de trabalho. A seleção e a aplicação exatas são definidas conforme o processo de cada planta.',
+    verProductos: 'Ver produtos desta etapa',
+    items: [
+      {
+        id: 'desengrasa',
+        titulo: 'Desengraxa',
+        texto:
+          'Remove gordura e resíduos aderidos de equipamentos, pisos e superfícies antes da sanitização.',
+      },
+      {
+        id: 'desinfecta',
+        titulo: 'Desinfeta',
+        texto:
+          'Reduz a carga microbiológica nas áreas e superfícies do processo depois da limpeza.',
+      },
+      {
+        id: 'coagulacion-floculacion',
+        titulo: 'Coagulação e Floculação',
+        texto:
+          'Favorece a separação de sólidos e a clarificação durante o tratamento do efluente.',
+      },
+      {
+        id: 'control-olor',
+        titulo: 'Controle de odor',
+        texto:
+          'Completa o percurso com soluções para prevenir, neutralizar e reduzir odores indesejados.',
+      },
+    ],
+  },
+
   beneficios: {
     titulo: 'Por que as plantas nos escolhem',
     bajada:
@@ -474,6 +510,8 @@ export const contenidoPt: Contenido = {
     conteoSingular: '1 produto',
     verFicha: 'Ver ficha',
     sinResultados: 'Não há produtos nesta família.',
+    etapaActiva: 'Etapa do percurso: {etapa}',
+    quitarEtapa: 'Ver a linha completa',
   },
 
   ficha: {

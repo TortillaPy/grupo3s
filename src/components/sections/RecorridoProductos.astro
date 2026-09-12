@@ -1,0 +1,100 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import Section from '../ui/Section.astro';
+import { config, obtenerContenido, rutaLocal } from '@data/site';
+import type { EtapaFlujoId, Locale } from '@data/site';
+
+interface Props {
+  readonly locale?: Locale;
+}
+
+const { locale = config.localePorDefecto } = Astro.props;
+const { recorrido } = obtenerContenido(locale);
+
+const iconos: Readonly<Record<EtapaFlujoId, string>> = {
+  desengrasa: 'lucide:sparkles',
+  desinfecta: 'lucide:shield-check',
+  'coagulacion-floculacion': 'lucide:droplets',
+  'control-olor': 'lucide:wind',
+};
+---
+
+<Section
+  id="recorrido"
+  volanta={recorrido.volanta}
+  titulo={recorrido.titulo}
+  bajada={recorrido.bajada}
+  fondo="hueso"
+>
+  <ol class="grid gap-4 lg:grid-cols-4" aria-label={recorrido.titulo}>
+    {
+      recorrido.items.map((paso, indice) => (
+        <li
+          class="paso-recorrido relative flex"
+          data-revelar
+          data-revelar-retraso={String(indice * 90)}
+        >
+          <article class="tarjeta tarjeta-viva relative z-10 flex w-full flex-col p-5 sm:p-6">
+            <div class="flex items-center justify-between gap-4">
+              <span class="flex size-12 items-center justify-center rounded-full bg-verde-profundo text-lg font-bold text-white dark:bg-[#1e5a22]">
+                {String(indice + 1).padStart(2, '0')}
+              </span>
+              <Icon
+                name={iconos[paso.id]}
+                class="size-7 text-verde-oscuro"
+                aria-hidden="true"
+              />
+            </div>
+
+            <h3 class="mt-5 font-display text-xl font-bold text-negro">
+              {paso.titulo}
+            </h3>
+            <p class="mt-2 text-[0.95rem] text-grafito/85">{paso.texto}</p>
+
+            <a
+              href={`${rutaLocal('/productos', locale)}?etapa=${paso.id}`}
+              class="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-verde-oscuro hover:underline"
+            >
+              {recorrido.verProductos}
+              <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+            </a>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+
+  <p class="mt-6 flex max-w-3xl items-start gap-3 text-sm text-grafito/80">
+    <Icon
+      name="lucide:info"
+      class="mt-0.5 size-4 shrink-0 text-verde-oscuro"
+      aria-hidden="true"
+    />
+    <span>{recorrido.aviso}</span>
+  </p>
+</Section>
+
+<style>
+  .paso-recorrido:not(:last-child)::after {
+    position: absolute;
+    bottom: -1rem;
+    left: 1.5rem;
+    z-index: 0;
+    width: 2px;
+    height: 1rem;
+    content: '';
+    background: var(--color-verde);
+  }
+
+  @media (min-width: 64rem) {
+    .paso-recorrido:not(:last-child)::after {
+      top: 1.5rem;
+      right: -1rem;
+      bottom: auto;
+      left: auto;
+      width: 1rem;
+      height: 2px;
+    }
+  }
+</style>

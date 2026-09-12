@@ -126,6 +126,31 @@ const schemaMigas = {
         >
           {catalogo.conteo.replace('{n}', String(productos.length))}
         </p>
+
+        <div
+          class="mt-4 hidden items-center justify-between gap-4 rounded-card border border-verde-oscuro/30 bg-verde-suave px-4 py-3 text-sm"
+          data-etapa-estado
+          data-plantilla={catalogo.etapaActiva}
+        >
+          <p class="font-semibold text-verde-profundo">
+            <span data-etapa-texto></span>
+          </p>
+          <a
+            href={rutaLocal('/productos', locale)}
+            class="shrink-0 font-semibold text-verde-oscuro hover:underline"
+            data-quitar-etapa
+          >
+            {catalogo.quitarEtapa}
+          </a>
+        </div>
+
+        <div hidden aria-hidden="true">
+          {
+            contenido.recorrido.items.map((etapa) => (
+              <span data-etapa-etiqueta={etapa.id}>{etapa.titulo}</span>
+            ))
+          }
+        </div>
       </div>
 
       <div class="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
@@ -158,6 +183,8 @@ const schemaMigas = {
   );
   const conteo = document.querySelector<HTMLElement>('[data-conteo]');
   const sinResultados = document.querySelector<HTMLElement>('[data-sin-resultados]');
+  const estadoEtapa = document.querySelector<HTMLElement>('[data-etapa-estado]');
+  const textoEtapa = document.querySelector<HTMLElement>('[data-etapa-texto]');
 
   if (contenedorFiltro !== null && tarjetas.length > 0) {
     const botones = Array.from(
@@ -169,17 +196,31 @@ const schemaMigas = {
     const plural = conteo?.dataset.plural ?? '{n} productos';
     const singular = conteo?.dataset.singular ?? '1 producto';
 
-    const aplicar = (valor: string): void => {
+    const etiquetasEtapa = new Map(
+      Array.from(document.querySelectorAll<HTMLElement>('[data-etapa-etiqueta]')).map(
+        (elemento) => [elemento.dataset.etapaEtiqueta ?? '', elemento.textContent ?? ''],
+      ),
+    );
+
+    const aplicar = (valor: string, tipo: 'categoria' | 'etapa' = 'categoria'): void => {
       let visibles = 0;
 
       tarjetas.forEach((tarjeta) => {
-        const coincide = valor === 'todos' || tarjeta.dataset.categoria === valor;
+        const etapas = tarjeta.dataset.etapas?.split(' ') ?? [];
+        const coincide =
+          valor === 'todos' ||
+          (tipo === 'etapa'
+            ? etapas.includes(valor)
+            : tarjeta.dataset.categoria === valor);
         tarjeta.classList.toggle('hidden', !coincide);
         if (coincide) visibles += 1;
       });
 
       botones.forEach((boton) => {
-        boton.setAttribute('aria-pressed', String(boton.dataset.valor === valor));
+        boton.setAttribute(
+          'aria-pressed',
+          String(tipo === 'categoria' && boton.dataset.valor === valor),
+        );
       });
 
       if (conteo !== null) {
@@ -192,8 +233,30 @@ const schemaMigas = {
 
     botones.forEach((boton) => {
       boton.addEventListener('click', () => {
+        estadoEtapa?.classList.add('hidden');
+        estadoEtapa?.classList.remove('flex');
+
+        const url = new URL(window.location.href);
+        url.searchParams.delete('etapa');
+        window.history.replaceState({}, '', url);
+
         aplicar(boton.dataset.valor ?? 'todos');
       });
     });
+
+    const etapaSolicitada = new URLSearchParams(window.location.search).get('etapa');
+    if (etapaSolicitada !== null && etiquetasEtapa.has(etapaSolicitada)) {
+      aplicar(etapaSolicitada, 'etapa');
+
+      if (estadoEtapa !== null && textoEtapa !== null) {
+        const plantilla = estadoEtapa.dataset.plantilla ?? '{etapa}';
+        textoEtapa.textContent = plantilla.replace(
+          '{etapa}',
+          etiquetasEtapa.get(etapaSolicitada) ?? etapaSolicitada,
+        );
+        estadoEtapa.classList.remove('hidden');
+        estadoEtapa.classList.add('flex');
+      }
+    }
   }
 </script>
