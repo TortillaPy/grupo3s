@@ -240,22 +240,22 @@ export const contenidoEn: Contenido = {
   comoComprar: {
     titulo: 'How we work',
     bajada:
-      'Three steps from your inquiry to the product working in your plant.',
+      'Three steps from diagnosing your need to application at your plant.',
     pasos: [
       {
-        titulo: 'Tell us what you treat',
+        titulo: 'We assess your needs',
         texto:
-          'Message us on WhatsApp or leave your details in the form. Your industry and the problem you need to solve are enough to start.',
+          'Tell us your industry, what you need to solve and where it occurs in the process. We use that information to begin the assessment.',
       },
       {
-        titulo: 'We recommend and quote',
+        titulo: 'We define and quote the solution',
         texto:
-          'We tell you which product and container size fit your process, and send the quote with freight included.',
+          'We specify the right product, dosage and container size, then prepare a quote with freight calculated for the destination.',
       },
       {
-        titulo: 'We deliver to your plant',
+        titulo: 'We deliver and support you',
         texto:
-          'We ship anywhere in Paraguay, in the size you choose, from the 5-liter jug to the 1,000-liter IBC tote.',
+          'We ship anywhere in Paraguay and guide your team through correct application and any adjustments the solution requires.',
       },
     ],
   },
