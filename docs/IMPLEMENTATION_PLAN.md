@@ -19,6 +19,8 @@ Una rama por etapa desde development actualizado, PR a development, aprobación 
 | 8 | codex/08-seo-google | Auditoría SEO: indexación, metadatos, datos estructurados, SEO local, rendimiento y accesibilidad; guía de Google | Sin duplicados ni rutas rotas; schema alineado con lo visible; tres idiomas; diseño intacto |
 | 9 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
 
+**Pendiente para la etapa 9 — historial de `main`.** `main` contiene el merge del PR #3 (`1c61572`), su revert (`bf77829`) y el hotfix #5 (`04e633d`). Su contenido coincide con `production-2026-09-12`. Por ese revert, cualquier merge hacia `main` entra en conflicto (`IMPLEMENTATION_PLAN.md`, `site.ts`, `types.ts`), y `products.ts` se combina sin marcar conflicto, con riesgo de perder cambios de la etapa 01 en silencio. Antes del release, y con aprobación explícita, preparar desde `main` una rama que revierta `bf77829`, verificar que `development` → `main` quede limpio y comparar el árbol resultante con `development`. Nunca traer `main` hacia `development` ni hacia ramas de etapa.
+
 Familias: Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales.
 
 Recorrido: Desengrasa → Desinfecta → Coagulación y Floculación → Control de olor.

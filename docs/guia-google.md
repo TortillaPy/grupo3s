@@ -21,6 +21,53 @@ Usá **exactamente** estos datos en todos lados: Google, redes, directorios. Las
 
 Si alguno de estos datos cambia, se actualiza primero en `src/data/config.ts` (y el horario visible en `footer.horario` de `src/data/content.*.ts`) y después en cada servicio externo.
 
+## Cuentas y roles
+
+Una misma cuenta de Google puede administrar el SEO de muchos clientes. La regla es que **cada empresa sea dueña de sus propias cuentas** y el asesor entre como invitado con permisos de administración.
+
+**Por qué el cliente tiene que ser el dueño**
+
+- **Continuidad:** si la relación con el asesor termina, la empresa conserva su ficha, sus reseñas y su historial de Search Console.
+- **Riesgo repartido:** si la cuenta del asesor se suspende o se bloquea, no se pierde el acceso a todos los clientes a la vez.
+- **Seguridad:** nunca se comparten contraseñas. Cada persona entra con su cuenta y la empresa puede quitar accesos cuando quiera.
+
+### Google Business Profile
+
+| Rol | Puede | No puede |
+| --- | --- | --- |
+| **Propietario principal** | Todo: editar, responder reseñas, gestionar usuarios, transferir la propiedad o eliminar la ficha | — (hay uno solo por ficha) |
+| **Propietario** | Casi todo, incluso agregar y quitar usuarios | Transferir la propiedad principal |
+| **Administrador** | Editar datos, fotos y publicaciones; responder reseñas | Gestionar usuarios, eliminar la ficha |
+
+Para agregar a alguien: con la cuenta propietaria, abrí la ficha → menú ⋮ → **Configuración del perfil** → **Personas y acceso** → **Agregar**, escribí el correo y elegí el rol. La persona acepta la invitación desde su correo.
+
+### Google Search Console
+
+| Rol | Puede | No puede |
+| --- | --- | --- |
+| **Propietario verificado** | Todo; es quien verificó el dominio (registro TXT) | — |
+| **Propietario delegado** | Lo mismo que el verificado, incluso gestionar usuarios | — (pierde el acceso si se elimina la verificación que lo respalda) |
+| **Usuario completo** | Ver todos los informes, enviar sitemaps, pedir indexación | Gestionar usuarios ni propietarios |
+| **Usuario restringido** | Ver la mayoría de los informes | Hacer acciones sobre la propiedad |
+
+Para agregar a alguien: **Configuración** → **Usuarios y permisos** → **Agregar usuario**, con permiso **Propietario** o **Completo**.
+
+### Configuración recomendada para 3S
+
+| Servicio | Empresa (`3sgrupoindustrial@gmail.com`) | Asesor (cuenta de trabajo) |
+| --- | --- | --- |
+| Business Profile | Propietario principal | Propietario (o Administrador) |
+| Search Console | Propietario verificado | Propietario delegado (o Completo) |
+
+Buenas prácticas para quien administra varios clientes:
+
+- Usar una **cuenta de Google de trabajo**, separada del Gmail personal.
+- Activar la **verificación en dos pasos**, idealmente con llave de seguridad o app autenticadora, en la cuenta del asesor y en la de cada empresa.
+- Llevar un registro por cliente con quién es el propietario principal, qué roles tiene cada persona y cuándo se otorgaron.
+- Al terminar un servicio, pedir al cliente que quite el acceso o quitarlo uno mismo. Nunca transferir la propiedad principal a la cuenta del asesor.
+
+Para el cliente hay una guía paso a paso lista para enviar, en PDF, fuera del repositorio: `output/pdf/guia-google-business-search-console-3s.pdf`.
+
 ---
 
 ## 1. Google Business Profile (prioridad máxima)
