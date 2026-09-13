@@ -133,23 +133,33 @@ const jsonLd = {
 
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
-    <link rel="canonical" href={canonica} />
+    {/*
+      Una página `noindex` no declara canónica ni alternativas: la 404
+      apuntaba a /pt/404 y /en/404, que no existen, y las confirmaciones
+      no tienen versiones que convenga relacionar para buscadores.
+    */}
     {noIndexar && <meta name="robots" content="noindex, follow" />}
+    {!noIndexar && <link rel="canonical" href={canonica} />}
 
     {
-      localesDisponibles.map((disponible) => (
+      !noIndexar &&
+        localesDisponibles.map((disponible) => (
+          <link
+            rel="alternate"
+            hreflang={codigosHreflang[disponible]}
+            href={new URL(rutaLocal(ruta, disponible), config.site.url).href}
+          />
+        ))
+    }
+    {
+      !noIndexar && (
         <link
           rel="alternate"
-          hreflang={codigosHreflang[disponible]}
-          href={new URL(rutaLocal(ruta, disponible), config.site.url).href}
+          hreflang="x-default"
+          href={new URL(rutaLocal(ruta, config.localePorDefecto), config.site.url).href}
         />
-      ))
+      )
     }
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={new URL(rutaLocal(ruta, config.localePorDefecto), config.site.url).href}
-    />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={config.site.nombre} />

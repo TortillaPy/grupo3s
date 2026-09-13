@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
 
-# La confirmación post-formulario no aporta nada a la búsqueda.
-Disallow: /gracias
+# Las confirmaciones post-formulario y la 404 no se bloquean acá a
+# propósito: llevan `noindex` en el HTML, y Google solo puede leerlo si
+# tiene permitido rastrear la página. También quedan fuera del sitemap.
 
 Sitemap: https://3sgrupoindustrial.com.py/sitemap-index.xml
