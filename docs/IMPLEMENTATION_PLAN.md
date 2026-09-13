@@ -16,7 +16,8 @@ Una rama por etapa desde development actualizado, PR a development, aprobación 
 | 5 | codex/05-contenido-institucional | Reescribir Fabricamos y equivalentes; metadatos y accesibilidad; tres idiomas | PO valida redacción; sin nuevas afirmaciones técnicas |
 | 6 | codex/06-deteccion-idioma | Worker mínimo para Accept-Language; entrada /; preferencia manual; q y regiones; fallback es; rutas explícitas; cache y SEO | Pruebas reales de Workers sin bucles ni contaminación de cache |
 | 7 | ramas codex/07-* si hay ajustes | Build, pruebas integrales, navegación, formulario sin envíos reales no autorizados, idiomas y recursos | Aprobación integral del preview por el PO |
-| 8 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
+| 8 | codex/08-seo-google | Auditoría SEO: indexación, metadatos, datos estructurados, SEO local, rendimiento y accesibilidad; guía de Google | Sin duplicados ni rutas rotas; schema alineado con lo visible; tres idiomas; diseño intacto |
+| 9 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
 
 Familias: Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales.
 
