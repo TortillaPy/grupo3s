@@ -6,13 +6,13 @@ Static site (Astro 7 + Tailwind 4) for **3S Grupo Industrial S.R.L.** —
 chemical and biological products for industrial wastewater treatment and
 sanitary hygiene.
 
-No backend, no database, no serverless functions. `npm run build`
-produces a `dist/` folder you upload as-is to Cloudflare Pages, Netlify,
-Vercel, or GitHub Pages.
+No database or application backend. `npm run build` produces a static
+`dist/` folder. A minimal Cloudflare Worker runs only at `/` to select a
+language from the request headers; every content page remains a static asset.
 
-> **Done: all seven phases.** 67 pages in three languages, both
-> conversion paths working, and Lighthouse mobile at 100 across all four
-> categories. What's left on the client side is tracked in `plan.md`.
+> **Current build:** 70 pages in three languages and 19 products. The
+> staged rollout and remaining acceptance work are tracked in
+> `docs/IMPLEMENTATION_PLAN.md`.
 
 Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for the
 project's setup, conventions, and PR process.
@@ -29,8 +29,10 @@ npm run dev               # http://localhost:4321
 | --- | --- |
 | `npm run dev` | Dev server with hot reload |
 | `npm run build` | Type-check + static build into `dist/` |
-| `npm run preview` | Serves `dist/` the way the host will |
+| `npm run preview` | Serves only the static `dist/` output |
 | `npm run check` | Type-check only |
+| `npm run test:locale` | Tests header and cookie language selection |
+| `npx wrangler dev` | Serves the full Cloudflare Worker locally |
 
 ## Where to change things
 
@@ -66,7 +68,7 @@ them: it generates WebP at several sizes, computes `width`/`height`,
 and emits the `srcset`. That's what prevents layout shift.
 
 These are the institutional catalog photos, cropped. There are three
-sets of 18, one per product, named by the product's `slug`:
+sets of 19, one per product, named by the product's `slug`:
 
 | Folder | What it holds |
 | --- | --- |
@@ -149,6 +151,12 @@ Product names aren't translated — they're brand names — and the
 and they declare that to each other with reciprocal `hreflang`, both in
 the `<head>` and in the sitemap.
 
+On Cloudflare, a first visit to `/` reads `Accept-Language` and redirects
+to `/pt` or `/en` when either language is preferred. Spanish is the
+fallback. A language chosen in the header is saved for one year and takes
+priority on later visits. Explicit URLs are never redirected to another
+language. Vercel previews serve the static build and do not run this Worker.
+
 ## Audit results
 
 Lighthouse mobile, measured against `npm run preview`:
@@ -194,23 +202,16 @@ The result of `npm run build` is the `dist/` folder: HTML, CSS,
 images, and nothing else. No server to maintain, no database to back
 up.
 
-### Cloudflare Pages (recommended)
+### Cloudflare Workers Static Assets (production)
 
-Unlimited bandwidth on the free plan and a South American presence,
-which is noticeable from Paraguay.
+Production is packaged by `wrangler.jsonc`: the Worker handles only `/`
+and the assets binding serves the Astro build. Run `npm run deploy` only
+after the approved `development` → `main` release. Add
+`PUBLIC_WEB3FORMS_KEY` to the production build environment; the form will
+not submit without it.
 
-1. Push the project to a GitHub or GitLab repository.
-2. In the Cloudflare dashboard: **Workers & Pages → Create → Pages →
-   Connect to Git**, and pick the repository.
-3. Build configuration:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Under **Settings → Environment variables**, add
-   `PUBLIC_WEB3FORMS_KEY` with your access key, for both Production and
-   Preview. **The form won't submit without this.**
-5. Save and deploy. Every `git push` to the main branch republishes on
-   its own.
+Vercel is the development environment. `development` feeds its stable dev
+URL and every stage branch receives an isolated preview.
 
 To connect the domain: **Custom domains → Set up a custom domain**,
 enter `3sgrupoindustrial.com.py`, and load the nameservers Cloudflare
@@ -232,7 +233,8 @@ If you'd rather not use Git: run `npm run build` on your machine and
 drag the `dist` folder into Cloudflare Pages (**Upload assets**) or
 Netlify Drop. One catch: the environment variable applies **at build
 time**, so your local `.env` needs the access key before you run
-`npm run build`.
+`npm run build`. These static-only alternatives open in Spanish and do
+not negotiate `Accept-Language`.
 
 ### The domain
 
@@ -323,8 +325,8 @@ prefix, Portuguese under `/pt`, English under `/en`.
 | Route | What it is |
 | --- | --- |
 | `/` | The full landing page, twelve sections |
-| `/productos` | Catalog of all 18, filterable by family |
-| `/productos/[slug]` | One page per product: 18 indexable URLs |
+| `/productos` | Catalog of all 19, filterable by family |
+| `/productos/[slug]` | One page per product: 19 indexable URLs |
 | `/gracias` | Confirmation after submitting the form, excluded from the index |
 | `/politica-privacidad` | Privacy policy, editable at `content.es.ts → privacidad` |
 | `/404` | Error page, excluded from Google's index |

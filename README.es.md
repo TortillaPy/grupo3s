@@ -6,14 +6,14 @@ Sitio estático (Astro 7 + Tailwind 4) para **3S Grupo Industrial S.R.L.** —
 productos químicos y biológicos para tratamiento de aguas residuales
 industriales e higiene sanitaria.
 
-Sin backend, sin base de datos, sin funciones serverless. El resultado de
-`npm run build` es una carpeta `dist/` que se sube tal cual a Cloudflare
-Pages, Netlify, Vercel o GitHub Pages.
+Sin base de datos ni backend de aplicación. `npm run build` genera una
+carpeta estática `dist/`. Un Worker mínimo de Cloudflare actúa solamente
+en `/` para elegir el idioma desde los headers; todas las páginas de
+contenido siguen siendo archivos estáticos.
 
-> **Terminado: las siete fases.** 67 páginas en tres idiomas, los dos
-> caminos de conversión funcionando y Lighthouse mobile en 100 en las
-> cuatro categorías. Lo que queda por hacer del lado del cliente está
-> en `plan.md`.
+> **Build actual:** 70 páginas en tres idiomas y 19 productos. El avance
+> por etapas y las aprobaciones pendientes están registrados en
+> `docs/IMPLEMENTATION_PLAN.md`.
 
 ¿Querés colaborar? Mirá [CONTRIBUTING.es.md](CONTRIBUTING.es.md) para
 la puesta en marcha del proyecto, las convenciones y el proceso de PR.
@@ -30,8 +30,10 @@ npm run dev              # http://localhost:4321
 | --- | --- |
 | `npm run dev` | Servidor de desarrollo con recarga en caliente |
 | `npm run build` | Chequeo de tipos + build estático en `dist/` |
-| `npm run preview` | Sirve `dist/` como lo haría el hosting |
+| `npm run preview` | Sirve solamente el resultado estático de `dist/` |
 | `npm run check` | Solo el chequeo de tipos |
+| `npm run test:locale` | Prueba la selección por header y cookie |
+| `npx wrangler dev` | Sirve localmente el Worker completo de Cloudflare |
 
 ## Dónde se cambia cada cosa
 
@@ -66,7 +68,7 @@ Van en `src/assets/images/` (no en `public/`) para que Astro las procese:
 genera WebP en varios tamaños, calcula `width` y `height` y emite el
 `srcset`. Eso es lo que evita el desplazamiento de layout.
 
-Son las del catálogo institucional, recortadas. Hay tres juegos de 18,
+Son las del catálogo institucional, recortadas. Hay tres juegos de 19,
 uno por producto, nombrados por el `slug` del producto:
 
 | Carpeta | Qué contiene |
@@ -149,6 +151,13 @@ son los mismos en los tres idiomas, así que `/productos/decuat`,
 tres idiomas y así lo declaran entre sí con `hreflang` recíproco, tanto
 en el `<head>` como en el sitemap.
 
+En Cloudflare, la primera visita a `/` lee `Accept-Language` y redirige a
+`/pt` o `/en` cuando uno de esos idiomas tiene prioridad. Español es el
+fallback. El idioma elegido en el encabezado se guarda durante un año y
+tiene prioridad en visitas posteriores. Las URLs explícitas nunca cambian
+de idioma. Los previews de Vercel sirven el build estático y no ejecutan
+este Worker.
+
 ## Resultados de la auditoría
 
 Lighthouse mobile, medido sobre `npm run preview`:
@@ -194,22 +203,16 @@ El resultado de `npm run build` es la carpeta `dist/`: HTML, CSS,
 imágenes y nada más. No hay servidor que mantener ni base de datos que
 respaldar.
 
-### Cloudflare Pages (recomendado)
+### Cloudflare Workers Static Assets (producción)
 
-Ancho de banda ilimitado en el plan gratuito y presencia en Sudamérica,
-que es lo que se nota desde Paraguay.
+Producción se empaqueta mediante `wrangler.jsonc`: el Worker atiende solo
+`/` y el binding de assets sirve el build de Astro. Ejecutá
+`npm run deploy` únicamente después del release aprobado de `development`
+a `main`. Agregá `PUBLIC_WEB3FORMS_KEY` al entorno de build de producción;
+sin esa variable el formulario no envía.
 
-1. Subí el proyecto a un repositorio de GitHub o GitLab.
-2. En el panel de Cloudflare: **Workers & Pages → Create → Pages →
-   Connect to Git**, y elegí el repositorio.
-3. Configuración de build:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-4. En **Settings → Environment variables**, agregá
-   `PUBLIC_WEB3FORMS_KEY` con tu access key, para Production y para
-   Preview. **Sin esto el formulario no envía.**
-5. Guardá y desplegá. Cada `git push` a la rama principal republica solo.
+Vercel es el entorno de desarrollo. `development` alimenta su URL estable
+de desarrollo y cada rama de etapa recibe un preview aislado.
 
 Para conectar el dominio: **Custom domains → Set up a custom domain**,
 escribí `3sgrupoindustrial.com.py`, y cargá en NIC.py los servidores de
@@ -231,7 +234,8 @@ Si preferís no usar Git: corré `npm run build` en tu máquina y arrastrá
 la carpeta `dist` a Cloudflare Pages (**Upload assets**) o a Netlify
 Drop. Ojo con esto: la variable de entorno se aplica **en el build**,
 así que el `.env` local tiene que tener la access key antes de correr
-`npm run build`.
+`npm run build`. Estas alternativas puramente estáticas abren en español
+y no negocian `Accept-Language`.
 
 ### El dominio
 
@@ -323,8 +327,8 @@ portugués bajo `/pt` e inglés bajo `/en`.
 | Ruta | Qué es |
 | --- | --- |
 | `/` | La landing completa, doce secciones |
-| `/productos` | Catálogo de los 18, con filtro por familia |
-| `/productos/[slug]` | Una ficha por producto: 18 URLs indexables |
+| `/productos` | Catálogo de los 19, con filtro por familia |
+| `/productos/[slug]` | Una ficha por producto: 19 URLs indexables |
 | `/gracias` | Confirmación después de enviar el formulario, fuera del índice |
 | `/politica-privacidad` | Política de privacidad, editable en `content.es.ts → privacidad` |
 | `/404` | Página de error, fuera del índice de Google |
