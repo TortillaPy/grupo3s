@@ -266,10 +266,10 @@ export interface Contenido {
     readonly privacidad: MetaPagina;
     readonly noEncontrado: MetaPagina;
     /**
-     * Plantillas para las fichas de producto. Usan los marcadores
-     * {producto} y {resumen}, que se reemplazan con los datos de cada
-     * uno: así cada ficha tiene título y descripción propios sin
-     * escribir diecinueve pares a mano.
+     * Plantillas para las fichas de producto. El título usa {producto}
+     * y {familia}; la descripción, {resumen} y {presentaciones}. Se
+     * reemplazan con los datos de cada uno: así cada ficha tiene título y
+     * descripción propios sin escribir diecinueve pares a mano.
      */
     readonly ficha: {
       readonly tituloPlantilla: string;
@@ -291,6 +291,8 @@ export interface Contenido {
   };
 
   readonly hero: {
+    /** Identidad legal y ubicación sobre el titular: refuerza la marca. */
+    readonly volanta: string;
     readonly titular: string;
     readonly subtitulo: string;
     readonly ctaPrimario: string;

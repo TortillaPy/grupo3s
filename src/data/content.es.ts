@@ -32,9 +32,9 @@ export const contenidoEs: Contenido = {
   meta: {
     inicio: {
       titulo:
-        'Tratamiento de efluentes industriales en Paraguay | 3S Grupo Industrial',
+        '3S Grupo Industrial | Químicos y tratamiento de efluentes en Paraguay',
       descripcion:
-        'Productos para desengrase, desinfección, coagulación y floculación, y control de olor, elaborados en Asunción para frigoríficos, curtiembres y plantas de alimentos.',
+        'Elaboramos una gama de productos en Asunción para desengrase, desinfección, coagulación y floculación, y control de olor en frigoríficos, curtiembres y plantas de alimentos.',
     },
     productos: {
       titulo:
@@ -57,7 +57,7 @@ export const contenidoEs: Contenido = {
       descripcion: 'La página que buscabas no existe o cambió de dirección.',
     },
     ficha: {
-      tituloPlantilla: '{producto} | 3S Grupo Industrial',
+      tituloPlantilla: '{producto} · {familia} | 3S Grupo Industrial',
       descripcionPlantilla:
         '{resumen} Presentaciones de {presentaciones}. Forma parte de la gama de productos que elaboramos en Asunción, con envío a todo el Paraguay.',
     },
@@ -83,6 +83,7 @@ export const contenidoEs: Contenido = {
   },
 
   hero: {
+    volanta: '3S Grupo Industrial S.R.L. · Asunción, Paraguay',
     titular: 'Tu proceso limpio. Tu efluente dentro de norma. Tu planta en marcha.',
     subtitulo:
       'Elaboramos una gama de productos en Asunción para cada etapa: desengrase, desinfección, coagulación y floculación, y control de olor. Para frigoríficos, curtiembres y plantas de alimentos, en presentaciones de 5 a 1000 litros y con productos que cuentan con registro sanitario.',

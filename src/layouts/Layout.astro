@@ -164,6 +164,13 @@ const jsonLd = {
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={config.site.nombre} />
     <meta property="og:locale" content={contenido.htmlLang.replace('-', '_')} />
+    {
+      localesDisponibles
+        .filter((disponible) => disponible !== locale)
+        .map((disponible) => (
+          <meta property="og:locale:alternate" content={codigosHreflang[disponible].replace('-', '_')} />
+        ))
+    }
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
     <meta property="og:url" content={canonica} />

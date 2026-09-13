@@ -51,6 +51,15 @@ const { hero } = obtenerContenido(locale);
     </div>
 
     <div class="hero-mensaje mt-4 max-w-[54rem] sm:mt-6" data-revelar data-revelar-retraso="100">
+      {/*
+        Identidad legal y ubicación visibles junto al titular: el eslogan
+        no nombra la empresa, y esta línea es la que conecta la marca con
+        Asunción para quien busca "3S" en Paraguay. Verde claro fijo
+        porque el panel del hero es siempre oscuro.
+      */}
+      <p class="volanta mb-3 justify-center text-[0.68rem] text-[#8fd18f] sm:mb-4 sm:text-xs">
+        {hero.volanta}
+      </p>
       <h1
         id="hero-titulo"
         class="text-[clamp(1.75rem,1.25rem+2vw,3rem)] leading-[1.06] font-black tracking-[-0.025em] text-white"
