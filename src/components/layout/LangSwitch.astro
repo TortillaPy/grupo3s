@@ -23,6 +23,10 @@ const NOMBRES: Readonly<Record<Locale, { corto: string; largo: string }>> = {
  */
 function rutaBase(pathname: string): string {
   const limpia = pathname.replace(/\/+$/, '') || '/';
+  // La página 404 solo existe como documento global. Desde ella, cambiar
+  // el idioma lleva a la portada equivalente en vez de construir rutas
+  // inexistentes como `/pt/404` o `/en/404`.
+  if (limpia === '/404') return '/';
   for (const disponible of localesDisponibles) {
     if (disponible === config.localePorDefecto) continue;
     if (limpia === `/${disponible}`) return '/';

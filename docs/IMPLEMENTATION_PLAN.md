@@ -121,3 +121,13 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - Las redirecciones conservan parámetros, son temporales, declaran `Cache-Control: private, no-store` y varían por `Accept-Language` y `Cookie`. Las rutas explícitas no cambian de idioma ni agregan una redirección de barra.
 - Validación: pruebas unitarias y solicitudes HTTP contra los runtimes local y remoto temporal de Wrangler; `npm run build` genera 70 páginas sin errores, warnings ni hints; `wrangler deploy --dry-run` empaqueta el Worker y el binding de assets.
 - La cuenta tiene registrado `marcobacchetta95.workers.dev` y usa el patrón temporal `*-grupo3s.marcobacchetta95.workers.dev` para previews. La sesión remota confirmó en Cloudflare las redirecciones por idioma, el fallback, la preferencia manual, la conservación de parámetros y las rutas explícitas. No se ejecutó un despliegue persistente ni se modificó producción.
+
+## Etapa 7 preparada — 2026-09-12
+
+- La revisión integral cubre portada, navegación, catálogo, filtros combinados, estado vacío, fichas, formulario sin envío, idiomas ES/PT/EN, temas claro y oscuro, y vistas de 1440 × 900 y 390 × 844.
+- El primer viewport muestra juntos el logotipo central, la propuesta de valor, la descripción y ambos CTA, sin desbordamiento horizontal en escritorio ni móvil.
+- Se corrigió el menú móvil para que también se cierre al usar el CTA, los enlaces de idioma y cualquier otro destino dentro del panel.
+- Se eliminó el conector horizontal que todavía unía los números de “Cómo trabajamos”.
+- En la página 404, el selector de idioma ahora lleva a la portada correspondiente y no construye rutas inexistentes como `/pt/404` o `/en/404`.
+- Se verificaron los 19 productos, el orden del recorrido, “Coagulante en solución”, Desinox, el correo `3sgrupoindustrial@gmail.com`, los logos de header y footer en ambos temas y la acción del CTA hacia `#presupuesto`.
+- Validación: 70 páginas; Astro check con 0 errores, 0 warnings y 0 hints; 3 pruebas del Worker aprobadas; 3.598 referencias internas, anclas y recursos estáticos revisados sin faltantes; sin errores ni warnings de consola en las rutas inspeccionadas.

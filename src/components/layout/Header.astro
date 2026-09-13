@@ -252,8 +252,8 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
       alternar(boton.getAttribute('aria-expanded') !== 'true');
     });
 
-    // Al elegir un destino, el menú se cierra solo.
-    menu.querySelectorAll('[data-enlace-movil]').forEach((enlace) => {
+    // Al elegir cualquier destino, incluido idioma y CTA, el menú se cierra solo.
+    menu.querySelectorAll('a').forEach((enlace) => {
       enlace.addEventListener('click', () => alternar(false));
     });
 
