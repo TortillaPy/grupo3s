@@ -288,6 +288,8 @@ export interface Contenido {
     readonly irAlInicio: string;
     readonly navegacionPrincipal: string;
     readonly navegacionMovil: string;
+    /** Nombre accesible del selector de idioma. */
+    readonly idioma: string;
   };
 
   readonly hero: {
@@ -322,12 +324,14 @@ export interface Contenido {
   };
 
   readonly beneficios: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly items: readonly Beneficio[];
   };
 
   readonly galeria: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly cerrar: string;
@@ -338,12 +342,14 @@ export interface Contenido {
   };
 
   readonly comoComprar: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly pasos: readonly Paso[];
   };
 
   readonly especificaciones: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly columnas: {
@@ -357,6 +363,7 @@ export interface Contenido {
   };
 
   readonly precio: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly etiquetaPresentaciones: string;
@@ -397,6 +404,7 @@ export interface Contenido {
   };
 
   readonly testimonios: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly avisoPlaceholder: string;
     readonly items: readonly Testimonio[];
@@ -416,6 +424,11 @@ export interface Contenido {
   };
 
   readonly footer: {
+    /** Horario visible; debe coincidir con `config.contacto.horarioSchema`. */
+    readonly horario: string;
+    readonly cobertura: string;
+    readonly tituloFamilias: string;
+    readonly tituloEtapas: string;
     readonly descripcion: string;
     readonly tituloContacto: string;
     readonly tituloEnlaces: string;

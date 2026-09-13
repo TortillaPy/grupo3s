@@ -80,6 +80,7 @@ export const contenidoEs: Contenido = {
     irAlInicio: 'Ir al inicio',
     navegacionPrincipal: 'Navegación principal',
     navegacionMovil: 'Navegación principal en móvil',
+    idioma: 'Idioma',
   },
 
   hero: {
@@ -164,6 +165,7 @@ export const contenidoEs: Contenido = {
   },
 
   beneficios: {
+    volanta: 'Por qué 3S',
     titulo: 'Por qué las plantas nos eligen',
     bajada:
       'Diecinueve productos que cubren el circuito completo: del desengrase de la línea a la descarga del efluente.',
@@ -208,6 +210,7 @@ export const contenidoEs: Contenido = {
   },
 
   galeria: {
+    volanta: 'En planta',
     titulo: 'Los productos, trabajando',
     bajada:
       'Nuestros productos aplicados en planta, en frigoríficos, plantas de alimentos y estaciones de tratamiento. Tocá una imagen para verla en grande.',
@@ -251,6 +254,7 @@ export const contenidoEs: Contenido = {
   },
 
   comoComprar: {
+    volanta: 'Cómo trabajamos',
     titulo: 'Cómo trabajamos',
     bajada:
       'Tres pasos desde tu consulta hasta el producto trabajando en tu planta.',
@@ -274,6 +278,7 @@ export const contenidoEs: Contenido = {
   },
 
   especificaciones: {
+    volanta: 'Catálogo',
     titulo: 'La línea completa',
     bajada:
       'Los diecinueve productos del catálogo con su tipo, sus presentaciones y su registro. Los datos que tu área de calidad necesita antes de aprobar un proveedor.',
@@ -288,6 +293,7 @@ export const contenidoEs: Contenido = {
   },
 
   precio: {
+    volanta: 'Precio y presentaciones',
     titulo: 'Presupuesto por presentación',
     bajada:
       'No publicamos precios de lista porque el costo por litro cambia según el volumen y el destino del flete. Elegí la presentación que te sirve y te pasamos el número por WhatsApp en el día.',
@@ -332,6 +338,7 @@ export const contenidoEs: Contenido = {
   },
 
   testimonios: {
+    volanta: 'Prueba social',
     titulo: 'Lo que dicen nuestros clientes',
     // ⚠ NO PUBLICAR RESEÑAS INVENTADAS.
     // Estos tres bloques son de ejemplo y se muestran marcados como tales.
@@ -425,6 +432,10 @@ export const contenidoEs: Contenido = {
   },
 
   footer: {
+    horario: 'Lunes a viernes, de 07:30 a 17:00',
+    cobertura: 'Envío a todo el Paraguay',
+    tituloFamilias: 'Familias de productos',
+    tituloEtapas: 'Etapas del proceso',
     descripcion:
       'Laboratorio paraguayo de productos químicos para el tratamiento de aguas residuales industriales, la higiene sanitaria y la limpieza profesional.',
     tituloContacto: 'Contacto',

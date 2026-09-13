@@ -66,6 +66,7 @@ export const contenidoPt: Contenido = {
     irAlInicio: 'Ir para o início',
     navegacionPrincipal: 'Navegação principal',
     navegacionMovil: 'Navegação principal no celular',
+    idioma: 'Idioma',
   },
 
   hero: {
@@ -150,6 +151,7 @@ export const contenidoPt: Contenido = {
   },
 
   beneficios: {
+    volanta: 'Por que a 3S',
     titulo: 'Por que as plantas nos escolhem',
     bajada:
       'Dezenove produtos que cobrem o circuito inteiro: do desengraxe da linha até a descarga do efluente.',
@@ -194,6 +196,7 @@ export const contenidoPt: Contenido = {
   },
 
   galeria: {
+    volanta: 'Na planta',
     titulo: 'Os produtos, trabalhando',
     bajada:
       'Nossos produtos aplicados em planta, em frigoríficos, plantas de alimentos e estações de tratamento. Toque em uma imagem para vê-la ampliada.',
@@ -242,6 +245,7 @@ export const contenidoPt: Contenido = {
   },
 
   comoComprar: {
+    volanta: 'Como trabalhamos',
     titulo: 'Como trabalhamos',
     bajada:
       'Três passos da sua consulta até o produto trabalhando na sua planta.',
@@ -265,6 +269,7 @@ export const contenidoPt: Contenido = {
   },
 
   especificaciones: {
+    volanta: 'Catálogo',
     titulo: 'A linha completa',
     bajada:
       'Os dezenove produtos do catálogo com o seu tipo, as suas embalagens e o seu registro. Os dados que a sua área de qualidade precisa antes de aprovar um fornecedor.',
@@ -279,6 +284,7 @@ export const contenidoPt: Contenido = {
   },
 
   precio: {
+    volanta: 'Preço e embalagens',
     titulo: 'Orçamento por embalagem',
     bajada:
       'Não publicamos tabela de preços porque o custo por litro muda conforme o volume e o destino do frete. Escolha a embalagem que serve e enviamos o número pelo WhatsApp no mesmo dia.',
@@ -323,6 +329,7 @@ export const contenidoPt: Contenido = {
   },
 
   testimonios: {
+    volanta: 'Prova social',
     titulo: 'O que dizem nossos clientes',
     avisoPlaceholder:
       'Conteúdo de exemplo. Esta seção será preenchida com avaliações reais e autorizadas antes da publicação do site.',
@@ -410,6 +417,10 @@ export const contenidoPt: Contenido = {
   },
 
   footer: {
+    horario: 'Segunda a sexta, das 07:30 às 17:00',
+    cobertura: 'Entrega em todo o Paraguai',
+    tituloFamilias: 'Famílias de produtos',
+    tituloEtapas: 'Etapas do processo',
     descripcion:
       'Laboratório paraguaio de produtos químicos para o tratamento de águas residuais industriais, a higiene sanitária e a limpeza profissional.',
     tituloContacto: 'Contato',

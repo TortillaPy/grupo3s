@@ -66,6 +66,7 @@ export const contenidoEn: Contenido = {
     irAlInicio: 'Go to the home page',
     navegacionPrincipal: 'Main navigation',
     navegacionMovil: 'Main navigation on mobile',
+    idioma: 'Language',
   },
 
   hero: {
@@ -150,6 +151,7 @@ export const contenidoEn: Contenido = {
   },
 
   beneficios: {
+    volanta: 'Why 3S',
     titulo: 'Why plants choose us',
     bajada:
       'Nineteen products covering the whole circuit: from degreasing the line to discharging the effluent.',
@@ -194,6 +196,7 @@ export const contenidoEn: Contenido = {
   },
 
   galeria: {
+    volanta: 'On site',
     titulo: 'The products at work',
     bajada:
       'Our products applied on site, at meat plants, food processors and treatment stations. Tap an image to see it full size.',
@@ -242,6 +245,7 @@ export const contenidoEn: Contenido = {
   },
 
   comoComprar: {
+    volanta: 'How we work',
     titulo: 'How we work',
     bajada:
       'Three steps from your inquiry to the product working in your plant.',
@@ -265,6 +269,7 @@ export const contenidoEn: Contenido = {
   },
 
   especificaciones: {
+    volanta: 'Catalog',
     titulo: 'The complete line',
     bajada:
       'All nineteen catalog products with their type, container sizes and registration. The data your quality department needs before approving a supplier.',
@@ -279,6 +284,7 @@ export const contenidoEn: Contenido = {
   },
 
   precio: {
+    volanta: 'Pricing and sizes',
     titulo: 'Quote by container size',
     bajada:
       'We do not publish list prices because cost per liter changes with volume and freight destination. Pick the size you need and we will send the number over WhatsApp the same day.',
@@ -323,6 +329,7 @@ export const contenidoEn: Contenido = {
   },
 
   testimonios: {
+    volanta: 'Social proof',
     titulo: 'What our customers say',
     avisoPlaceholder:
       'Example content. This section will be filled with real, authorized reviews before the site goes live.',
@@ -410,6 +417,10 @@ export const contenidoEn: Contenido = {
   },
 
   footer: {
+    horario: 'Monday to Friday, 7:30 a.m. to 5:00 p.m.',
+    cobertura: 'Delivery across Paraguay',
+    tituloFamilias: 'Product families',
+    tituloEtapas: 'Process stages',
     descripcion:
       'Paraguayan chemical laboratory for industrial wastewater treatment, sanitary hygiene and professional cleaning.',
     tituloContacto: 'Contact',

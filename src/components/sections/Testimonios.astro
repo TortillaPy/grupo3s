@@ -15,20 +15,23 @@ const { testimonios } = obtenerContenido(locale);
  * ⚠ NO PUBLICAR RESEÑAS INVENTADAS.
  *
  * Mientras haya al menos un testimonio con `esPlaceholder: true`, la
- * sección muestra un aviso visible de que es contenido de ejemplo y NO
- * emite marcado `Review` ni `AggregateRating` para buscadores. Publicar
- * reseñas falsas —y más aún marcarlas para Google— es motivo de acción
- * manual sobre el dominio, además de ser deshonesto con el cliente.
+ * sección NO se renderiza: el texto de ejemplo visible en producción
+ * restaba credibilidad y Google lo trata como contenido de relleno. Nunca
+ * se emite marcado `Review` ni `AggregateRating` para buscadores.
+ * Publicar reseñas falsas —y más aún marcarlas para Google— es motivo de
+ * acción manual sobre el dominio, además de ser deshonesto con el cliente.
  *
  * Al recibir reseñas reales con autorización escrita: reemplazar el
- * texto en content.es.ts y poner `esPlaceholder: false` en cada una.
+ * texto en content.es.ts (y sus traducciones) y poner
+ * `esPlaceholder: false` en cada una. La sección vuelve a aparecer sola.
  */
 const hayPlaceholders = testimonios.items.some((item) => item.esPlaceholder);
 ---
 
+{!hayPlaceholders && (
 <Section
   id="testimonios"
-  volanta="Prueba social"
+  volanta={testimonios.volanta}
   titulo={testimonios.titulo}
   fondo="hueso"
 >
@@ -77,3 +80,4 @@ const hayPlaceholders = testimonios.items.some((item) => item.esPlaceholder);
     }
   </ul>
 </Section>
+)}
