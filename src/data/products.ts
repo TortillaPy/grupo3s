@@ -9,7 +9,7 @@ import {
  *  CATÁLOGO 3S — datos duros del producto (no se traducen)
  * ════════════════════════════════════════════════════════════════════════
  *
- *  Los 18 productos del catálogo impreso, páginas 2 a 19. Nombres,
+ *  Los 19 productos del catálogo impreso, páginas 2 a 20. Nombres,
  *  presentaciones y registro sanitario están transcritos tal como
  *  figuran ahí.
  *
@@ -598,6 +598,50 @@ const productosSinOrdenar: readonly Producto[] = [
       { clave: 'Aplicación', valor: 'Manual' },
       { clave: 'Presentaciones', valor: '1000 L · 200 L · 65 L · 30 L' },
       { clave: 'Registro', valor: 'Posee registro sanitario' },
+    ],
+  },
+  {
+    slug: 'desinox',
+    nombre: 'Desinox',
+    familia: 'limpieza-industrial',
+    etapas: ['desengrasa'],
+    etapaPrincipal: 'desengrasa',
+    categoria: 'desengrasantes',
+    destacado: false,
+    usoProfesional: false,
+    paginaCatalogo: 7,
+    presentaciones: [
+      { etiqueta: '10 L', cantidad: 10, unidad: 'L' },
+      { etiqueta: '5 L', cantidad: 5, unidad: 'L' },
+    ],
+    imagen: {
+      src: '/src/assets/images/productos/desinox.png',
+      alt: 'Presentaciones de Desinox en bidones de 10 y 5 litros.',
+    },
+    marca: {
+      src: '/src/assets/images/marcas/desinox.png',
+      alt: 'Desinox, desincrustante, desoxidante y fosfatante.',
+    },
+    aplicacion: {
+      src: '/src/assets/images/aplicaciones/desinox.png',
+      alt: 'Limpieza y acondicionamiento de equipos metálicos industriales.',
+    },
+    especificaciones: [
+      {
+        clave: 'Tipo',
+        valor: 'Desincrustante, desoxidante y fosfatante',
+      },
+      {
+        clave: 'Base',
+        valor: 'Ácido concentrado con tensioactivos e inhibidores de corrosión',
+      },
+      {
+        clave: 'Función',
+        valor: 'Remoción de óxido e incrustaciones calcáreas',
+      },
+      { clave: 'Dilución general', valor: '1 L en 10 L de agua' },
+      { clave: 'Tiempo de acción', valor: '10 minutos; luego enjuagar' },
+      { clave: 'Presentaciones', valor: '10 L · 5 L' },
     ],
   },
 

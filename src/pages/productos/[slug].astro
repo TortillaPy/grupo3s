@@ -5,7 +5,7 @@ import FichaProducto from '@components/paginas/FichaProducto.astro';
 import { productos } from '@data/site';
 import type { Producto } from '@data/site';
 
-/** Una página estática por producto: dieciocho URLs indexables. */
+/** Una página estática por producto: diecinueve URLs indexables. */
 export const getStaticPaths = (() =>
   productos.map((producto) => ({
     params: { slug: producto.slug },

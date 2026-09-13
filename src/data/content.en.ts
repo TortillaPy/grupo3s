@@ -26,7 +26,7 @@ export const contenidoEn: Contenido = {
     productos: {
       titulo: 'Industrial chemical product catalog | 3S Grupo Industrial',
       descripcion:
-        'All 18 products from 3S Grupo Industrial: coagulants and flocculants for effluent, disinfectants, degreasers, detergents, laundry and hand hygiene. With a spec sheet for each one.',
+        'All 19 products from 3S Grupo Industrial: coagulants and flocculants for effluent, disinfectants, degreasers, detergents, laundry and hand hygiene. With a spec sheet for each one.',
     },
     gracias: {
       titulo: 'We received your request | 3S Grupo Industrial',
@@ -263,7 +263,7 @@ export const contenidoEn: Contenido = {
   especificaciones: {
     titulo: 'The complete line',
     bajada:
-      'All eighteen catalog products with their type, container sizes and registration. The data your quality department needs before approving a supplier.',
+      'All nineteen catalog products with their type, container sizes and registration. The data your quality department needs before approving a supplier.',
     columnas: {
       producto: 'Product',
       tipo: 'What it is',
@@ -760,6 +760,20 @@ export const contenidoEn: Contenido = {
         'Ovens, griddles and fryers',
         'Utensils with hard-to-remove grease',
         'Crate and tray washing',
+      ],
+    },
+    desinox: {
+      resumen:
+        'Removes rust and scale while conditioning metal before painting.',
+      accion:
+        'A concentrated acidic liquid enhanced with surfactants, corrosion inhibitors, organic solvents and conditioners for all types of metal. It removes rust, provides light phosphating that improves paint adhesion and durability, increases corrosion resistance, removes scale from boilers, pipes, condensers and other installations, and cleans stainless steel surfaces.',
+      aplicacion:
+        'As a general rule, dilute 1 liter of Desinox in 10 liters of water. Apply to the surface, leave it to act for 10 minutes and then rinse with water.',
+      sectores: [
+        'Boilers, pipes and condensers',
+        'Stainless steel equipment and surfaces',
+        'Metal before painting',
+        'Industrial installations with mineral scale',
       ],
     },
     madox: {
