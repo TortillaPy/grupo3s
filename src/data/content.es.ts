@@ -59,7 +59,7 @@ export const contenidoEs: Contenido = {
     ficha: {
       tituloPlantilla: '{producto} | 3S Grupo Industrial',
       descripcionPlantilla:
-        '{resumen} Presentaciones de {presentaciones}. Fabricado en Asunción por 3S Grupo Industrial, con envío a todo el Paraguay.',
+        '{resumen} Presentaciones de {presentaciones}. Forma parte de la gama de productos que elaboramos en Asunción, con envío a todo el Paraguay.',
     },
   },
 
@@ -77,6 +77,9 @@ export const contenidoEs: Contenido = {
     saltarAlContenido: 'Saltar al contenido principal',
     activarModoOscuro: 'Activar modo oscuro',
     activarModoClaro: 'Activar modo claro',
+    irAlInicio: 'Ir al inicio',
+    navegacionPrincipal: 'Navegación principal',
+    navegacionMovil: 'Navegación principal en móvil',
   },
 
   hero: {
@@ -99,7 +102,7 @@ export const contenidoEs: Contenido = {
       {
         icono: 'flask-conical',
         titulo: 'Laboratorio propio',
-        detalle: 'Fabricación nacional: no somos revendedores de marca importada.',
+        detalle: 'Elaboración local en nuestro laboratorio de Asunción, con reposición sin depender de una marca importada.',
       },
       {
         icono: 'file-text',
@@ -162,7 +165,7 @@ export const contenidoEs: Contenido = {
   beneficios: {
     titulo: 'Por qué las plantas nos eligen',
     bajada:
-      'Dieciocho productos que cubren el circuito completo: del desengrase de la línea a la descarga del efluente.',
+      'Diecinueve productos que cubren el circuito completo: del desengrase de la línea a la descarga del efluente.',
     items: [
       {
         icono: 'droplets',
@@ -518,7 +521,7 @@ export const contenidoEs: Contenido = {
   catalogo: {
     titulo: 'Catálogo de productos',
     bajada:
-      'Dieciocho productos fabricados en nuestro laboratorio en Asunción, del tratamiento del efluente a la higiene de manos del personal. Filtrá por familia o mirá la línea completa.',
+      'Diecinueve productos de la gama que elaboramos en nuestro laboratorio en Asunción, del tratamiento del efluente a la higiene de manos del personal. Filtrá por familia o mirá la línea completa.',
     filtrarPor: 'Filtrar por familia',
     filtrarPorEtapa: 'Filtrar por etapa del proceso',
     todos: 'Todos',
@@ -557,6 +560,7 @@ export const contenidoEs: Contenido = {
     usoProfesional: 'De uso profesional',
     conRegistro: 'Con registro sanitario',
     fuente: 'Datos tomados de la página {n} del catálogo institucional de 3S.',
+    rutaNavegacion: 'Ruta de navegación',
   },
 
   categorias: [
@@ -628,9 +632,9 @@ export const contenidoEs: Contenido = {
     },
     'sulfato-de-aluminio-3s': {
       resumen:
-        'Coagulante clásico, fabricado con materia prima libre de hierro.',
+        'Coagulante clásico, elaborado con materia prima libre de hierro.',
       accion:
-        'El sulfato de aluminio es una solución de excelente calidad, manufacturada a partir de una materia prima rica en aluminio y libre de hierro, y de ácido sulfúrico, mediante un proceso controlado que garantiza su calidad. Con el sulfato de aluminio se obtienen excelentes resultados cuando se emplea en la clarificación de aguas para consumo humano y en el tratamiento de efluentes de la industria en general.',
+        'El sulfato de aluminio es una solución de excelente calidad, elaborada a partir de una materia prima rica en aluminio y libre de hierro, y de ácido sulfúrico, mediante un proceso controlado que garantiza su calidad. Con el sulfato de aluminio se obtienen excelentes resultados cuando se emplea en la clarificación de aguas para consumo humano y en el tratamiento de efluentes de la industria en general.',
       sectores: [
         'Clarificación de agua para consumo humano',
         'Efluentes industriales en general',

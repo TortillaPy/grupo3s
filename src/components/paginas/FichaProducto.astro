@@ -152,7 +152,7 @@ const schemaMigas = {
     -->
     <section class="bg-hueso pt-8 pb-16 sm:pt-10 sm:pb-20" aria-labelledby="producto-titulo">
       <div class="contenedor">
-        <nav aria-label="Ruta de navegación" class="mb-8 text-sm text-grafito/80">
+        <nav aria-label={ficha.rutaNavegacion} class="mb-8 text-sm text-grafito/80">
           <ol class="flex flex-wrap items-center gap-2">
             <li><a href={rutaLocal('/', locale)} class="hover:text-verde-oscuro">{ficha.migaInicio}</a></li>
             <li aria-hidden="true">/</li>
@@ -279,7 +279,7 @@ const schemaMigas = {
                       )}
                       {...ATRIBUTOS_ENLACE_EXTERNO}
                       class="inline-flex items-center gap-1.5 rounded-chip border border-gris-claro bg-hueso px-3.5 py-2 text-sm font-medium tabular-nums text-grafito transition-colors hover:border-verde-oscuro hover:bg-verde-suave hover:text-verde-profundo"
-                      aria-label={`Cotizar ${producto.nombre}, presentación de ${presentacion.etiqueta}`}
+                      aria-label={`${contenido.precio.ctaVariante}: ${producto.nombre}, ${presentacion.etiqueta}`}
                     >
                       {presentacion.etiqueta}
                       <Icon name="simple-icons:whatsapp" class="size-3.5" aria-hidden="true" />

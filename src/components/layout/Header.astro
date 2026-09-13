@@ -52,7 +52,7 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     <a
       href={rutaLocal('/', locale)}
       class="flex shrink-0 items-center"
-      aria-label={`${config.site.nombre}, ir al inicio`}
+      aria-label={`${config.site.nombre}, ${nav.irAlInicio}`}
     >
       {/*
         Las dos versiones se emiten siempre y se alternan por CSS con
@@ -87,7 +87,7 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     </a>
 
     <!-- Navegación de escritorio -->
-    <nav class="hidden lg:block" aria-label="Navegación principal">
+    <nav class="hidden lg:block" aria-label={nav.navegacionPrincipal}>
       <ul class="flex items-center gap-7">
         {
           nav.enlaces.map((enlace) => (
@@ -148,7 +148,7 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     class="hidden border-t border-gris-claro bg-blanco text-grafito shadow-nivel-2 lg:hidden"
     data-menu-movil
   >
-    <nav class="contenedor py-4" aria-label="Navegación principal en móvil">
+    <nav class="contenedor py-4" aria-label={nav.navegacionMovil}>
       <ul class="flex flex-col">
         {
           nav.enlaces.map((enlace) => (

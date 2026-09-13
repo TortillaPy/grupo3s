@@ -45,7 +45,7 @@ export const contenidoEn: Contenido = {
     ficha: {
       tituloPlantilla: '{producto} | 3S Grupo Industrial',
       descripcionPlantilla:
-        '{resumen} Available in {presentaciones}. Manufactured in Asunción by 3S Grupo Industrial, with delivery throughout Paraguay.',
+        '{resumen} Available in {presentaciones}. Part of the product range we formulate in Asunción, with delivery throughout Paraguay.',
     },
   },
 
@@ -63,6 +63,9 @@ export const contenidoEn: Contenido = {
     saltarAlContenido: 'Skip to main content',
     activarModoOscuro: 'Switch to dark mode',
     activarModoClaro: 'Switch to light mode',
+    irAlInicio: 'Go to the home page',
+    navegacionPrincipal: 'Main navigation',
+    navegacionMovil: 'Main navigation on mobile',
   },
 
   hero: {
@@ -85,7 +88,7 @@ export const contenidoEn: Contenido = {
       {
         icono: 'flask-conical',
         titulo: 'Our own laboratory',
-        detalle: 'We manufacture locally: we are not resellers of an imported brand.',
+        detalle: 'Formulated locally in our Asunción laboratory, with restocking that does not depend on an imported brand.',
       },
       {
         icono: 'file-text',
@@ -148,7 +151,7 @@ export const contenidoEn: Contenido = {
   beneficios: {
     titulo: 'Why plants choose us',
     bajada:
-      'Eighteen products covering the whole circuit: from degreasing the line to discharging the effluent.',
+      'Nineteen products covering the whole circuit: from degreasing the line to discharging the effluent.',
     items: [
       {
         icono: 'droplets',
@@ -503,7 +506,7 @@ export const contenidoEn: Contenido = {
   catalogo: {
     titulo: 'Product catalog',
     bajada:
-      'Eighteen products manufactured in our Asunción laboratory, from effluent treatment to hand hygiene for your crew. Filter by family or browse the whole line.',
+      'Nineteen products from the range we formulate in our Asunción laboratory, from effluent treatment to hand hygiene for your crew. Filter by family or browse the whole line.',
     filtrarPor: 'Filter by family',
     filtrarPorEtapa: 'Filter by process stage',
     todos: 'All',
@@ -542,6 +545,7 @@ export const contenidoEn: Contenido = {
     usoProfesional: 'Professional use',
     conRegistro: 'Sanitary registration',
     fuente: 'Data taken from page {n} of the 3S product catalog.',
+    rutaNavegacion: 'Breadcrumb',
   },
 
   categorias: [
@@ -604,7 +608,7 @@ export const contenidoEn: Contenido = {
     'sulfato-de-aluminio-3s': {
       resumen: 'The classic coagulant, made from iron-free raw material.',
       accion:
-        'Aluminum sulfate is an excellent-quality solution manufactured from aluminum-rich, iron-free raw material and sulfuric acid, through a controlled process that guarantees its quality. It delivers excellent results in the clarification of drinking water and in the treatment of industrial effluent in general.',
+        'Aluminum sulfate is an excellent-quality solution formulated from aluminum-rich, iron-free raw material and sulfuric acid, through a controlled process that guarantees its quality. It delivers excellent results in the clarification of drinking water and in the treatment of industrial effluent in general.',
       sectores: [
         'Drinking water clarification',
         'Industrial effluent in general',

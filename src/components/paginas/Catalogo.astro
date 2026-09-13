@@ -73,7 +73,7 @@ const schemaMigas = {
 
   <section class="bg-hueso py-14 sm:py-20" aria-labelledby="catalogo-titulo">
     <div class="contenedor">
-      <nav aria-label="Ruta de navegación" class="mb-6 text-sm text-grafito/80">
+      <nav aria-label={contenido.ficha.rutaNavegacion} class="mb-6 text-sm text-grafito/80">
         <ol class="flex flex-wrap items-center gap-2">
           <li><a href={rutaLocal('/', locale)} class="hover:text-verde-oscuro">{contenido.ficha.migaInicio}</a></li>
           <li aria-hidden="true">/</li>
