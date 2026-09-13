@@ -285,6 +285,9 @@ export interface Contenido {
     readonly saltarAlContenido: string;
     readonly activarModoOscuro: string;
     readonly activarModoClaro: string;
+    readonly irAlInicio: string;
+    readonly navegacionPrincipal: string;
+    readonly navegacionMovil: string;
   };
 
   readonly hero: {
@@ -474,6 +477,7 @@ export interface Contenido {
     readonly usoProfesional: string;
     readonly conRegistro: string;
     readonly fuente: string;
+    readonly rutaNavegacion: string;
   };
 
   readonly familias: readonly FamiliaCatalogo[];

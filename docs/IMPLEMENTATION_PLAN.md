@@ -104,3 +104,11 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - El selector del formulario se agrupa por las tres familias y conserva el orden canónico de los 19 productos. Las fichas muestran su familia, enlazan sus etapas y recomiendan productos de la misma familia.
 - `ItemList`, grillas, selectores y relacionados parten del mismo arreglo ordenado de productos. No se cambian slugs ni rutas publicadas.
 - Validación: 67 páginas; Astro check con 0 errores, 0 warnings y 0 hints; filtros combinados, URL, estado vacío, limpieza, selector y fichas comprobados en navegador; vista móvil a 390 × 844 sin desbordamiento ni errores de consola.
+
+## Etapa 5 preparada — 2026-09-12
+
+- Los textos institucionales reemplazan “Fabricamos” y sus equivalentes por la fórmula “Elaboramos una gama de productos…” o una adaptación natural según el contexto.
+- El catálogo, los beneficios y los metadatos reflejan los 19 productos actuales en español, portugués e inglés.
+- La redacción conserva las afirmaciones técnicas del catálogo: en la ficha del Sulfato de Aluminio solo se reemplazó la descripción del proceso de fabricación por “elaborado” o “formulado”, sin agregar prestaciones.
+- El encabezado, las migas de navegación y la acción accesible para cotizar una presentación anuncian sus controles en el idioma activo.
+- Validación: 70 páginas; Astro check con 0 errores, 0 warnings y 0 hints; sin referencias visibles antiguas a 18 productos ni variantes institucionales de “Fabricamos”.
