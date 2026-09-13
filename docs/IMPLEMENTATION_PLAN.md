@@ -112,3 +112,12 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - La redacción conserva las afirmaciones técnicas del catálogo: en la ficha del Sulfato de Aluminio solo se reemplazó la descripción del proceso de fabricación por “elaborado” o “formulado”, sin agregar prestaciones.
 - El encabezado, las migas de navegación y la acción accesible para cotizar una presentación anuncian sus controles en el idioma activo.
 - Validación: 70 páginas; Astro check con 0 errores, 0 warnings y 0 hints; sin referencias visibles antiguas a 18 productos ni variantes institucionales de “Fabricamos”.
+
+## Etapa 6 preparada — 2026-09-12
+
+- Un Worker mínimo se ejecuta primero únicamente en `/`; el resto de las páginas y recursos sigue servido directamente por Cloudflare Static Assets.
+- La entrada interpreta `Accept-Language`, incluidas regiones y prioridades `q`, y usa español cuando el header falta, es inválido o no coincide con `es`, `pt` o `en`.
+- El selector del encabezado guarda `3s_locale` durante un año. Esa elección manual tiene prioridad sobre el header y evita que quien vuelve a español sea reenviado por la preferencia del navegador.
+- Las redirecciones conservan parámetros, son temporales, declaran `Cache-Control: private, no-store` y varían por `Accept-Language` y `Cookie`. Las rutas explícitas no cambian de idioma ni agregan una redirección de barra.
+- Validación: pruebas unitarias y solicitudes HTTP contra los runtimes local y remoto temporal de Wrangler; `npm run build` genera 70 páginas sin errores, warnings ni hints; `wrangler deploy --dry-run` empaqueta el Worker y el binding de assets.
+- La cuenta tiene registrado `marcobacchetta95.workers.dev` y usa el patrón temporal `*-grupo3s.marcobacchetta95.workers.dev` para previews. La sesión remota confirmó en Cloudflare las redirecciones por idioma, el fallback, la preferencia manual, la conservación de parámetros y las rutas explícitas. No se ejecutó un despliegue persistente ni se modificó producción.

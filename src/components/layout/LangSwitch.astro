@@ -54,6 +54,7 @@ const base = rutaBase(Astro.url.pathname);
                 href={rutaLocal(base, disponible)}
                 hreflang={disponible}
                 lang={disponible}
+                data-locale-preferido={disponible}
                 aria-current={activo ? 'true' : undefined}
                 class:list={[
                   'idioma inline-flex min-w-9 items-center justify-center rounded-chip px-1.5 py-1.5 text-[0.78rem] font-semibold transition-colors',
@@ -70,6 +71,19 @@ const base = rutaBase(Astro.url.pathname);
     </nav>
   )
 }
+
+<script>
+  const UN_ANIO = 60 * 60 * 24 * 365;
+
+  document.querySelectorAll<HTMLElement>('[data-locale-preferido]').forEach((enlace) => {
+    enlace.addEventListener('click', () => {
+      const locale = enlace.dataset.localePreferido;
+      if (locale === undefined) return;
+
+      document.cookie = `3s_locale=${encodeURIComponent(locale)}; Path=/; Max-Age=${UN_ANIO}; SameSite=Lax; Secure`;
+    });
+  });
+</script>
 
 <style>
   /*
