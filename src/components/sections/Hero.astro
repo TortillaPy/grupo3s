@@ -62,7 +62,7 @@ const { hero } = obtenerContenido(locale);
         Asunción para quien busca "3S" en Paraguay. Verde claro fijo
         porque el panel del hero es siempre oscuro.
       */}
-      <p class="volanta mb-3 justify-center text-[0.68rem] text-[#8fd18f] sm:mb-4 sm:text-xs">
+      <p class="volanta mb-3 justify-center text-[0.68rem] tracking-[0.06em] text-[#8fd18f] before:hidden sm:mb-4 sm:text-xs sm:tracking-[0.16em] sm:before:block">
         {hero.volanta}
       </p>
       <h1
@@ -153,12 +153,18 @@ const { hero } = obtenerContenido(locale);
       padding-bottom: 1.25rem;
     }
 
+    /* La línea de identidad suma un renglón: el logo cede un poco de
+       ancho para que ambos CTA sigan dentro de 375 × 667. */
     .marca-portada {
-      max-width: 16.5rem;
+      max-width: 14.5rem;
     }
 
     .hero-mensaje {
-      margin-top: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .hero-mensaje .volanta {
+      margin-bottom: 0.375rem;
     }
   }
 
