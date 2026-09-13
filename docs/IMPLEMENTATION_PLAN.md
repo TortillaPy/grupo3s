@@ -16,7 +16,8 @@ Una rama por etapa desde development actualizado, PR a development, aprobación 
 | 5 | codex/05-contenido-institucional | Reescribir Fabricamos y equivalentes; metadatos y accesibilidad; tres idiomas | PO valida redacción; sin nuevas afirmaciones técnicas |
 | 6 | codex/06-deteccion-idioma | Worker mínimo para Accept-Language; entrada /; preferencia manual; q y regiones; fallback es; rutas explícitas; cache y SEO | Pruebas reales de Workers sin bucles ni contaminación de cache |
 | 7 | ramas codex/07-* si hay ajustes | Build, pruebas integrales, navegación, formulario sin envíos reales no autorizados, idiomas y recursos | Aprobación integral del preview por el PO |
-| 8 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
+| 8 | codex/08-seo-google | Auditoría SEO: indexación, metadatos, datos estructurados, SEO local, rendimiento y accesibilidad; guía de Google | Sin duplicados ni rutas rotas; schema alineado con lo visible; tres idiomas; diseño intacto |
+| 9 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
 
 Familias: Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales.
 
@@ -131,3 +132,33 @@ Revisar detergentes, lavandería e higiene de manos sin asignarles desengrase po
 - En la página 404, el selector de idioma ahora lleva a la portada correspondiente y no construye rutas inexistentes como `/pt/404` o `/en/404`.
 - Se verificaron los 19 productos, el orden del recorrido, “Coagulante en solución”, Desinox, el correo `3sgrupoindustrial@gmail.com`, los logos de header y footer en ambos temas y la acción del CTA hacia `#presupuesto`.
 - Validación: 70 páginas; Astro check con 0 errores, 0 warnings y 0 hints; 3 pruebas del Worker aprobadas; 3.598 referencias internas, anclas y recursos estáticos revisados sin faltantes; sin errores ni warnings de consola en las rutas inspeccionadas.
+
+## Etapa 7 integrada — 2026-09-12
+
+- Con autorización explícita del responsable, `codex/07-revision-integral` se integró en `development` (`a3aff87`, merge `--no-ff`) tras un build de 70 páginas sin errores y 3 pruebas del Worker aprobadas. La rama se eliminó local y remotamente.
+
+## Etapa 8 preparada — 2026-09-12
+
+Objetivo: que quien busque “3s grupo industrial” o “3S” desde Paraguay encuentre la empresa en la primera página.
+
+- **Indexación.** `robots.txt` ya no bloquea `/gracias`: antes, Google no podía leer su `noindex`, y `/pt/gracias` y `/en/gracias` no estaban bloqueadas. El sitemap excluye las confirmaciones y la 404 y pasa de 69 a 66 URLs. Las páginas `noindex` ya no emiten canonical ni hreflang; la 404 apuntaba a `/pt/404` y `/en/404`, que no existen.
+- **Marca y metadatos.** El title de inicio empieza con “3S Grupo Industrial” en los tres idiomas. Las fichas suman su familia traducida, así que ya no repiten el mismo título en ES, PT y EN. Se agregó `og:locale:alternate`. Sobre el titular del hero hay una línea visible “3S Grupo Industrial S.R.L. · Asunción, Paraguay”; el eslogan no cambió.
+- **Datos estructurados.** Se agregaron `WebSite` (`alternateName` “3S” y la razón social) y `WebPage` por página indexable, enlazado a las migas. `Organization` suma `contactPoint`, `areaServed` y `knowsAbout` con las familias y etapas visibles. `LocalBusiness` pierde `priceRange`, que era inventado, y conserva el horario confirmado, ahora visible en el footer. No se agregaron precios, certificaciones ni coordenadas.
+- **SEO local y contenido.** El footer muestra horario, cobertura nacional y accesos a las 3 familias y las 4 etapas en orden canónico. Las volantas y el nombre accesible del selector de idioma, que estaban fijos en español, ahora se traducen. La sección de testimonios de ejemplo no se renderiza mientras tenga placeholders. La tabla de especificaciones de la portada se agrupa por familia: antes empezaba por efluentes.
+- **Rendimiento.** El logo y el mensaje del hero ya no dependen del revelado por JS, y la animación del logo usa solo movimiento. La variante oculta del logo del header carga en diferido. Las anclas localizadas usan `/en#x` en lugar de `/en/#x`, así que se evita una redirección por barra final.
+- **Acciones externas.** Business Profile, Search Console, redes, reseñas y directorios quedan documentados en [guia-google.md](guia-google.md).
+- **Validación.**
+  - `npm run build`: 70 páginas; astro check con 0 errores, 0 warnings y 0 hints.
+  - `npm run test:locale`: 3/3 pruebas aprobadas.
+  - `git diff --check`: sin problemas.
+  - Auditoría de `dist/`: 0 errores. Titles y descriptions únicos, un h1 por página, canonical y hreflang recíprocos en las 66 páginas indexables, sitemap idéntico a esas páginas, JSON-LD válido con los tipos esperados y 7.922 referencias internas, anclas y recursos sin faltantes.
+- **Revisión en navegador (Playwright sobre `astro preview`, sin red externa).**
+  - 1440 × 900, 390 × 844 y 375 × 667, en claro y oscuro: sin desbordamiento horizontal y con ambos CTA dentro del primer viewport.
+  - Menú móvil y salto de teclado funcionan.
+  - El formulario valida los campos sin enviar nada: no hubo POST.
+  - El catálogo muestra 19 productos, con familias y etapas en orden y canonical sin parámetros.
+  - PAC muestra “Coagulante en solución” y la ficha de Desinox está correcta.
+  - La consola solo muestra el 404 intencional de una ruta inexistente.
+  - LCP local (logo central): 64–80 ms; CLS ≤ 0,004.
+- **Pendientes y recomendaciones.** Muchas descripciones de ficha superan los 160 caracteres y los títulos con la familia de efluentes son largos: Google los recorta. Acortarlos requiere validar la redacción con el PO. Las páginas propias por familia o etapa quedan como decisión de arquitectura del PO.
+- No se ejecutó deploy ni se modificaron `main`, Cloudflare, Vercel ni DNS.

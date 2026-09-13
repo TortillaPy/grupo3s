@@ -61,6 +61,7 @@ export default defineConfig({
           'wind',
           'workflow',
           'info',
+          'clock',
         ],
         'simple-icons': ['whatsapp'],
       },
@@ -69,6 +70,9 @@ export default defineConfig({
     // lo que le dice a Google que /pt/productos y /en/productos son la
     // misma página en otro idioma y no contenido duplicado.
     sitemap({
+      // Las páginas `noindex` (confirmación del formulario y 404) no se
+      // anuncian: un sitemap solo debe listar URLs que se quieren indexar.
+      filter: (pagina) => !/\/(gracias|404)\/?$/.test(new URL(pagina).pathname),
       i18n: {
         defaultLocale: 'es',
         locales: {

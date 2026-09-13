@@ -9,17 +9,18 @@ interface Props {
 
 const { locale = config.localePorDefecto } = Astro.props;
 const contenido = obtenerContenido(locale);
-const { especificaciones, categorias } = contenido;
+const { especificaciones, familias } = contenido;
 
 /**
- * La tabla se agrupa por categoría, en el mismo orden en que están
- * declaradas las categorías en el contenido. Así el lector recorre la
- * línea por familia de producto y no por orden alfabético.
+ * La tabla se agrupa por familia institucional, en el orden canónico
+ * Limpieza industrial → Desinfección industrial → Tratamiento de
+ * efluentes. Antes usaba las categorías heredadas, que empezaban por
+ * efluentes y contradecían el orden del catálogo y del recorrido.
  */
-const porCategoria = categorias
-  .map((categoria) => ({
-    categoria,
-    items: productos.filter((producto) => producto.categoria === categoria.id),
+const porFamilia = familias
+  .map((familia) => ({
+    familia,
+    items: productos.filter((producto) => producto.familia === familia.id),
   }))
   .filter((grupo) => grupo.items.length > 0);
 
@@ -32,7 +33,7 @@ function tipoDe(slug: string): string {
 
 <Section
   id="especificaciones"
-  volanta="Catálogo"
+  volanta={especificaciones.volanta}
   titulo={especificaciones.titulo}
   bajada={especificaciones.bajada}
   fondo="hueso"
@@ -68,7 +69,7 @@ function tipoDe(slug: string): string {
       </thead>
 
       {
-        porCategoria.map((grupo) => (
+        porFamilia.map((grupo) => (
           <tbody>
             <tr>
               <th
@@ -76,7 +77,7 @@ function tipoDe(slug: string): string {
                 colspan="4"
                 class="border-y border-gris-claro bg-verde-suave px-4 py-2.5 text-xs font-semibold tracking-[0.12em] text-verde-profundo uppercase"
               >
-                {grupo.categoria.nombre}
+                {grupo.familia.nombre}
               </th>
             </tr>
             {grupo.items.map((producto) => (

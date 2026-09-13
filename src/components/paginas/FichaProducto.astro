@@ -45,10 +45,12 @@ const presentaciones = producto.presentaciones
   .map((presentacion) => presentacion.etiqueta)
   .join(' · ');
 
-const titulo = contenido.meta.ficha.tituloPlantilla.replace(
-  '{producto}',
-  producto.nombre,
-);
+// La familia va en el título: suma la categoría que se busca y hace que
+// cada idioma tenga un título propio aunque el nombre del producto no se
+// traduzca.
+const titulo = contenido.meta.ficha.tituloPlantilla
+  .replace('{producto}', producto.nombre)
+  .replace('{familia}', familia?.nombre ?? '');
 const descripcion = contenido.meta.ficha.descripcionPlantilla
   .replace('{resumen}', copy?.resumen ?? '')
   .replace('{presentaciones}', presentaciones);
@@ -113,6 +115,7 @@ const schemaProducto = {
 
 const schemaMigas = {
   '@type': 'BreadcrumbList',
+  '@id': `${urlFicha}#migas`,
   itemListElement: [
     {
       '@type': 'ListItem',

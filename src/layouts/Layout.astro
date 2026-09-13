@@ -49,24 +49,53 @@ const codigosHreflang: Readonly<Record<Locale, string>> = {
   en: 'en-US',
 };
 
+const idOrganizacion = `${config.site.url}/#organizacion`;
+const idSitio = `${config.site.url}/#sitio`;
+
+/**
+ * Todo lo que declaran estos nodos está visible en el sitio: nombre y
+ * razón social, dirección, teléfono, correo y horario en el footer, y
+ * familias y etapas en la portada y el catálogo. No agregar datos que
+ * no se muestren (precios, certificaciones, coordenadas).
+ */
+const direccionPostal = {
+  '@type': 'PostalAddress',
+  streetAddress: config.contacto.direccion.calle,
+  addressLocality: config.contacto.direccion.ciudad,
+  addressRegion: config.contacto.direccion.departamento,
+  addressCountry: config.contacto.direccion.codigoPais,
+};
+
+const paisAtendido = {
+  '@type': 'Country',
+  name: config.contacto.direccion.pais,
+};
+
 /** Datos de la empresa. Se emiten en todas las páginas. */
 const schemaOrganizacion = {
   '@type': 'Organization',
-  '@id': `${config.site.url}/#organizacion`,
+  '@id': idOrganizacion,
   name: config.site.nombre,
+  alternateName: ['3S', config.site.razonSocial],
   legalName: config.site.razonSocial,
-  url: config.site.url,
+  url: `${config.site.url}/`,
   logo: new URL(config.site.logo, config.site.url).href,
   foundingDate: String(config.site.fundacion),
   email: config.contacto.email,
   telephone: `+${config.contacto.whatsapp.e164}`,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: config.contacto.direccion.calle,
-    addressLocality: config.contacto.direccion.ciudad,
-    addressRegion: config.contacto.direccion.departamento,
-    addressCountry: config.contacto.direccion.codigoPais,
+  address: direccionPostal,
+  areaServed: paisAtendido,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: `+${config.contacto.whatsapp.e164}`,
+    email: config.contacto.email,
+    areaServed: config.contacto.direccion.codigoPais,
   },
+  knowsAbout: [
+    ...contenido.familias.map((familia) => familia.nombre),
+    ...contenido.recorrido.items.map((etapa) => etapa.titulo),
+  ],
   sameAs: config.contacto.redes
     .filter((red) => red.url !== '')
     .map((red) => red.url),
@@ -76,29 +105,58 @@ const schemaNegocioLocal = {
   '@type': 'LocalBusiness',
   '@id': `${config.site.url}/#negocio`,
   name: config.site.nombre,
+  alternateName: ['3S', config.site.razonSocial],
   image: urlImagenOg,
-  url: config.site.url,
+  logo: new URL(config.site.logo, config.site.url).href,
+  url: `${config.site.url}/`,
   telephone: `+${config.contacto.whatsapp.e164}`,
   email: config.contacto.email,
-  priceRange: '$$',
   openingHours: config.contacto.horarioSchema,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: config.contacto.direccion.calle,
-    addressLocality: config.contacto.direccion.ciudad,
-    addressRegion: config.contacto.direccion.departamento,
-    addressCountry: config.contacto.direccion.codigoPais,
-  },
-  areaServed: {
-    '@type': 'Country',
-    name: config.contacto.direccion.pais,
-  },
-  parentOrganization: { '@id': `${config.site.url}/#organizacion` },
+  address: direccionPostal,
+  areaServed: paisAtendido,
+  parentOrganization: { '@id': idOrganizacion },
+};
+
+/**
+ * WebSite con `alternateName` es lo que Google usa para elegir el nombre
+ * del sitio en los resultados: así "3S" y la razón social quedan
+ * asociados al dominio. Sin SearchAction: el sitio no tiene buscador.
+ */
+const schemaSitio = {
+  '@type': 'WebSite',
+  '@id': idSitio,
+  url: `${config.site.url}/`,
+  name: config.site.nombre,
+  alternateName: ['3S', config.site.razonSocial],
+  inLanguage: localesDisponibles.map((disponible) => codigosHreflang[disponible]),
+  publisher: { '@id': idOrganizacion },
+};
+
+/** Migas que haya declarado la página, para enlazarlas desde WebPage. */
+const migas = schemas.find((schema) => schema['@type'] === 'BreadcrumbList');
+
+const schemaPagina = {
+  '@type': 'WebPage',
+  '@id': `${canonica}#pagina`,
+  url: canonica,
+  name: titulo,
+  description: descripcion,
+  inLanguage: contenido.htmlLang,
+  isPartOf: { '@id': idSitio },
+  about: { '@id': idOrganizacion },
+  ...(typeof migas?.['@id'] === 'string' ? { breadcrumb: { '@id': migas['@id'] } } : {}),
 };
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [schemaOrganizacion, schemaNegocioLocal, ...schemas],
+  '@graph': [
+    schemaOrganizacion,
+    schemaNegocioLocal,
+    schemaSitio,
+    // Las páginas `noindex` no se describen como WebPage.
+    ...(noIndexar ? [] : [schemaPagina]),
+    ...schemas,
+  ],
 };
 ---
 
@@ -133,27 +191,44 @@ const jsonLd = {
 
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
-    <link rel="canonical" href={canonica} />
+    {/*
+      Una página `noindex` no declara canónica ni alternativas: la 404
+      apuntaba a /pt/404 y /en/404, que no existen, y las confirmaciones
+      no tienen versiones que convenga relacionar para buscadores.
+    */}
     {noIndexar && <meta name="robots" content="noindex, follow" />}
+    {!noIndexar && <link rel="canonical" href={canonica} />}
 
     {
-      localesDisponibles.map((disponible) => (
+      !noIndexar &&
+        localesDisponibles.map((disponible) => (
+          <link
+            rel="alternate"
+            hreflang={codigosHreflang[disponible]}
+            href={new URL(rutaLocal(ruta, disponible), config.site.url).href}
+          />
+        ))
+    }
+    {
+      !noIndexar && (
         <link
           rel="alternate"
-          hreflang={codigosHreflang[disponible]}
-          href={new URL(rutaLocal(ruta, disponible), config.site.url).href}
+          hreflang="x-default"
+          href={new URL(rutaLocal(ruta, config.localePorDefecto), config.site.url).href}
         />
-      ))
+      )
     }
-    <link
-      rel="alternate"
-      hreflang="x-default"
-      href={new URL(rutaLocal(ruta, config.localePorDefecto), config.site.url).href}
-    />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={config.site.nombre} />
     <meta property="og:locale" content={contenido.htmlLang.replace('-', '_')} />
+    {
+      localesDisponibles
+        .filter((disponible) => disponible !== locale)
+        .map((disponible) => (
+          <meta property="og:locale:alternate" content={codigosHreflang[disponible].replace('-', '_')} />
+        ))
+    }
     <meta property="og:title" content={titulo} />
     <meta property="og:description" content={descripcion} />
     <meta property="og:url" content={canonica} />

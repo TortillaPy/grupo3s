@@ -1,5 +1,5 @@
 ---
-import { config, localesDisponibles, rutaLocal } from '@data/site';
+import { config, localesDisponibles, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
 
 interface Props {
@@ -42,7 +42,7 @@ const base = rutaBase(Astro.url.pathname);
 
 {
   localesDisponibles.length > 1 && (
-    <nav aria-label="Idioma / Language" class={claseExtra}>
+    <nav aria-label={obtenerContenido(locale).nav.idioma} class={claseExtra}>
       <ul class="flex items-center gap-1">
         {localesDisponibles.map((disponible) => {
           const activo = disponible === locale;

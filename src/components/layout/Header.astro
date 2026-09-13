@@ -62,12 +62,16 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
         de tema, y mantiene el alto reservado: cero desplazamiento de
         layout.
       */}
+      {/*
+        Solo la variante visible al cargar va `eager`; la otra se pide
+        en diferido. Ninguna es LCP: en la portada lo es el logo central.
+      */}
       <Image
         src={logoClaro}
         alt=""
         widths={[140, 280]}
         sizes="88px"
-        loading="eager"
+        loading={sobreOscuro ? 'lazy' : 'eager'}
         format="webp"
         quality={90}
         class:list={['h-13 w-auto', sobreOscuro && 'hidden']}
@@ -78,7 +82,7 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
         alt=""
         widths={[140, 280]}
         sizes="88px"
-        loading="eager"
+        loading={sobreOscuro ? 'eager' : 'lazy'}
         format="webp"
         quality={90}
         class:list={['h-13 w-auto', !sobreOscuro && 'hidden']}

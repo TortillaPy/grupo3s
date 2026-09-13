@@ -9,8 +9,12 @@ import { DEFAULT_LOCALE } from './types';
  *
  *   rutaLocal('/productos', 'es')      → '/productos'
  *   rutaLocal('/productos', 'pt')      → '/pt/productos'
- *   rutaLocal('/#beneficios', 'en')    → '/en/#beneficios'
+ *   rutaLocal('/#beneficios', 'en')    → '/en#beneficios'
  *   rutaLocal('/', 'pt')               → '/pt'
+ *
+ * La portada traducida nunca lleva barra final: el sitio usa
+ * `trailingSlash: 'never'` y Cloudflare redirige `/en/` a `/en`, así que
+ * `/en/#beneficios` costaba un salto extra en cada clic.
  *
  * Los enlaces externos y los anclajes sueltos se devuelven sin tocar.
  */
@@ -18,5 +22,6 @@ export function rutaLocal(href: string, locale: Locale): string {
   if (locale === DEFAULT_LOCALE) return href;
   if (!href.startsWith('/')) return href;
   if (href === '/') return `/${locale}`;
+  if (href.startsWith('/#') || href.startsWith('/?')) return `/${locale}${href.slice(1)}`;
   return `/${locale}${href}`;
 }

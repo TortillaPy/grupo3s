@@ -266,10 +266,10 @@ export interface Contenido {
     readonly privacidad: MetaPagina;
     readonly noEncontrado: MetaPagina;
     /**
-     * Plantillas para las fichas de producto. Usan los marcadores
-     * {producto} y {resumen}, que se reemplazan con los datos de cada
-     * uno: así cada ficha tiene título y descripción propios sin
-     * escribir diecinueve pares a mano.
+     * Plantillas para las fichas de producto. El título usa {producto}
+     * y {familia}; la descripción, {resumen} y {presentaciones}. Se
+     * reemplazan con los datos de cada uno: así cada ficha tiene título y
+     * descripción propios sin escribir diecinueve pares a mano.
      */
     readonly ficha: {
       readonly tituloPlantilla: string;
@@ -288,9 +288,13 @@ export interface Contenido {
     readonly irAlInicio: string;
     readonly navegacionPrincipal: string;
     readonly navegacionMovil: string;
+    /** Nombre accesible del selector de idioma. */
+    readonly idioma: string;
   };
 
   readonly hero: {
+    /** Identidad legal y ubicación sobre el titular: refuerza la marca. */
+    readonly volanta: string;
     readonly titular: string;
     readonly subtitulo: string;
     readonly ctaPrimario: string;
@@ -320,12 +324,14 @@ export interface Contenido {
   };
 
   readonly beneficios: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly items: readonly Beneficio[];
   };
 
   readonly galeria: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly cerrar: string;
@@ -336,12 +342,14 @@ export interface Contenido {
   };
 
   readonly comoComprar: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly pasos: readonly Paso[];
   };
 
   readonly especificaciones: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly columnas: {
@@ -355,6 +363,7 @@ export interface Contenido {
   };
 
   readonly precio: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly bajada: string;
     readonly etiquetaPresentaciones: string;
@@ -395,6 +404,7 @@ export interface Contenido {
   };
 
   readonly testimonios: {
+    readonly volanta: string;
     readonly titulo: string;
     readonly avisoPlaceholder: string;
     readonly items: readonly Testimonio[];
@@ -414,6 +424,11 @@ export interface Contenido {
   };
 
   readonly footer: {
+    /** Horario visible; debe coincidir con `config.contacto.horarioSchema`. */
+    readonly horario: string;
+    readonly cobertura: string;
+    readonly tituloFamilias: string;
+    readonly tituloEtapas: string;
     readonly descripcion: string;
     readonly tituloContacto: string;
     readonly tituloEnlaces: string;

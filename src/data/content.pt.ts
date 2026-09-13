@@ -19,9 +19,9 @@ export const contenidoPt: Contenido = {
   meta: {
     inicio: {
       titulo:
-        'Tratamento de efluentes industriais no Paraguai | 3S Grupo Industrial',
+        '3S Grupo Industrial | Químicos e tratamento de efluentes no Paraguai',
       descripcion:
-        'Produtos para desengraxe, desinfecção, coagulação e floculação, e controle de odor, elaborados em Assunção para frigoríficos, curtumes e plantas de alimentos.',
+        'Elaboramos uma gama de produtos em Assunção para desengraxe, desinfecção, coagulação e floculação, e controle de odor em frigoríficos, curtumes e plantas de alimentos.',
     },
     productos: {
       titulo: 'Catálogo de produtos químicos industriais | 3S Grupo Industrial',
@@ -43,7 +43,7 @@ export const contenidoPt: Contenido = {
       descripcion: 'A página que você procurava não existe ou mudou de endereço.',
     },
     ficha: {
-      tituloPlantilla: '{producto} | 3S Grupo Industrial',
+      tituloPlantilla: '{producto} · {familia} | 3S Grupo Industrial',
       descripcionPlantilla:
         '{resumen} Embalagens de {presentaciones}. Faz parte da gama de produtos que elaboramos em Assunção, com entrega em todo o Paraguai.',
     },
@@ -66,9 +66,11 @@ export const contenidoPt: Contenido = {
     irAlInicio: 'Ir para o início',
     navegacionPrincipal: 'Navegação principal',
     navegacionMovil: 'Navegação principal no celular',
+    idioma: 'Idioma',
   },
 
   hero: {
+    volanta: '3S Grupo Industrial S.R.L. · Assunção, Paraguai',
     titular: 'Seu processo limpo. Seu efluente dentro da norma. Sua planta em operação.',
     subtitulo:
       'Elaboramos uma gama de produtos em Assunção para cada etapa: desengraxe, desinfecção, coagulação e floculação, e controle de odor. Para frigoríficos, curtumes e plantas de alimentos, em embalagens de 5 a 1000 litros e com produtos que contam com registro sanitário.',
@@ -149,6 +151,7 @@ export const contenidoPt: Contenido = {
   },
 
   beneficios: {
+    volanta: 'Por que a 3S',
     titulo: 'Por que as plantas nos escolhem',
     bajada:
       'Dezenove produtos que cobrem o circuito inteiro: do desengraxe da linha até a descarga do efluente.',
@@ -193,6 +196,7 @@ export const contenidoPt: Contenido = {
   },
 
   galeria: {
+    volanta: 'Na planta',
     titulo: 'Os produtos, trabalhando',
     bajada:
       'Nossos produtos aplicados em planta, em frigoríficos, plantas de alimentos e estações de tratamento. Toque em uma imagem para vê-la ampliada.',
@@ -241,6 +245,7 @@ export const contenidoPt: Contenido = {
   },
 
   comoComprar: {
+    volanta: 'Como trabalhamos',
     titulo: 'Como trabalhamos',
     bajada:
       'Três passos da sua consulta até o produto trabalhando na sua planta.',
@@ -264,6 +269,7 @@ export const contenidoPt: Contenido = {
   },
 
   especificaciones: {
+    volanta: 'Catálogo',
     titulo: 'A linha completa',
     bajada:
       'Os dezenove produtos do catálogo com o seu tipo, as suas embalagens e o seu registro. Os dados que a sua área de qualidade precisa antes de aprovar um fornecedor.',
@@ -278,6 +284,7 @@ export const contenidoPt: Contenido = {
   },
 
   precio: {
+    volanta: 'Preço e embalagens',
     titulo: 'Orçamento por embalagem',
     bajada:
       'Não publicamos tabela de preços porque o custo por litro muda conforme o volume e o destino do frete. Escolha a embalagem que serve e enviamos o número pelo WhatsApp no mesmo dia.',
@@ -322,6 +329,7 @@ export const contenidoPt: Contenido = {
   },
 
   testimonios: {
+    volanta: 'Prova social',
     titulo: 'O que dizem nossos clientes',
     avisoPlaceholder:
       'Conteúdo de exemplo. Esta seção será preenchida com avaliações reais e autorizadas antes da publicação do site.',
@@ -409,6 +417,10 @@ export const contenidoPt: Contenido = {
   },
 
   footer: {
+    horario: 'Segunda a sexta, das 07:30 às 17:00',
+    cobertura: 'Entrega em todo o Paraguai',
+    tituloFamilias: 'Famílias de produtos',
+    tituloEtapas: 'Etapas do processo',
     descripcion:
       'Laboratório paraguaio de produtos químicos para o tratamento de águas residuais industriais, a higiene sanitária e a limpeza profissional.',
     tituloContacto: 'Contato',

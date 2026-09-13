@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { locale = config.localePorDefecto } = Astro.props;
-const { footer } = obtenerContenido(locale);
+const { footer, familias, recorrido } = obtenerContenido(locale);
 
 /*
   Dos versiones, como en el header: el pie es bg-hueso, que en modo
@@ -27,6 +27,13 @@ const anio = new Date().getFullYear();
 
 /** Las redes sin URL cargada todavía no se muestran. */
 const redes = config.contacto.redes.filter((red) => red.url !== '');
+
+/*
+  Accesos al catálogo filtrado, en el orden canónico de familias y del
+  recorrido. Enlazan desde todas las páginas las dos formas de recorrer
+  la línea, que es lo que le muestra a Google cómo se organiza el sitio.
+*/
+const rutaCatalogo = rutaLocal('/productos', locale);
 ---
 
 <footer class="border-t border-gris-claro bg-hueso py-12 sm:py-16">
@@ -105,6 +112,15 @@ const redes = config.contacto.redes.filter((red) => red.url !== '');
               {config.contacto.email}
             </a>
           </li>
+          {/* El horario es el mismo que declara `openingHours` en el JSON-LD. */}
+          <li class="flex items-center gap-2">
+            <Icon name="lucide:clock" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <span>{footer.horario}</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="lucide:truck" class="size-4 shrink-0 text-verde-oscuro" aria-hidden="true" />
+            <span>{footer.cobertura}</span>
+          </li>
         </ul>
       </div>
 
@@ -126,6 +142,49 @@ const redes = config.contacto.redes.filter((red) => red.url !== '');
             ))
           }
         </ul>
+      </nav>
+    </div>
+
+    <div class="mt-10 grid gap-10 border-t border-gris-claro pt-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      <nav class="lg:col-span-5" aria-labelledby="footer-familias">
+        <h2
+          id="footer-familias"
+          class="font-display text-sm font-bold tracking-[0.1em] text-negro uppercase"
+        >
+          {footer.tituloFamilias}
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2.5 text-[0.92rem]">
+          {
+            familias.map((familia) => (
+              <li>
+                <a href={`${rutaCatalogo}?familia=${familia.id}`} class="text-grafito hover:text-verde-oscuro">
+                  {familia.nombre}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav class="lg:col-span-7" aria-labelledby="footer-etapas">
+        <h2
+          id="footer-etapas"
+          class="font-display text-sm font-bold tracking-[0.1em] text-negro uppercase"
+        >
+          {footer.tituloEtapas}
+        </h2>
+        <ol class="mt-4 flex flex-col gap-2.5 text-[0.92rem]">
+          {
+            recorrido.items.map((etapa, indice) => (
+              <li>
+                <a href={`${rutaCatalogo}?etapa=${etapa.id}`} class="text-grafito hover:text-verde-oscuro">
+                  <span class="tabular-nums text-gris">{String(indice + 1).padStart(2, '0')}</span>
+                  {' '}{etapa.titulo}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
       </nav>
     </div>
 
