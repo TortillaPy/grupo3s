@@ -36,7 +36,12 @@ const { hero } = obtenerContenido(locale);
   </div>
 
   <div class="hero-primer-plano contenedor relative flex min-h-[100svh] flex-col items-center justify-center pt-20 pb-6 text-center sm:pt-24 sm:pb-8">
-    <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]" data-revelar>
+    {/*
+      Sin `data-revelar` en el logo ni en el mensaje: son el primer
+      plano y el LCP de la portada. El revelado por JS los ocultaba hasta
+      que corría el IntersectionObserver y retrasaba la métrica.
+    */}
+    <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]">
       <Image
         src={logoMarca}
         alt="3S Grupo Industrial S.R.L."
@@ -50,7 +55,7 @@ const { hero } = obtenerContenido(locale);
       />
     </div>
 
-    <div class="hero-mensaje mt-4 max-w-[54rem] sm:mt-6" data-revelar data-revelar-retraso="100">
+    <div class="hero-mensaje mt-4 max-w-[54rem] sm:mt-6">
       {/*
         Identidad legal y ubicación visibles junto al titular: el eslogan
         no nombra la empresa, y esta línea es la que conecta la marca con
@@ -124,9 +129,10 @@ const { hero } = obtenerContenido(locale);
     animation: entrada-marca 720ms var(--ease-salida) both;
   }
 
+  /* Solo movimiento, sin partir de opacidad 0: un elemento invisible no
+     cuenta como LCP hasta aparecer, y el logo es el LCP de la portada. */
   @keyframes entrada-marca {
     from {
-      opacity: 0;
       transform: translateY(16px) scale(0.975);
     }
     to {
