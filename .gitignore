@@ -1,8 +1,33 @@
+# Dependencias
 node_modules/
+
+# Build y caché de Astro
 dist/
 .astro/
+
+# Variables de entorno: nunca se versionan. `.env.example` es la
+# plantilla pública y sí se mantiene en el repositorio.
 .env
-.env.production
-.DS_Store
-*.log
+.env.*
+!.env.example
+
+# Cloudflare Workers / Wrangler (caché local y secretos de desarrollo)
 .wrangler/
+.dev.vars
+.dev.vars.*
+
+# Vercel CLI (vínculo local del proyecto)
+.vercel/
+
+# Entregables y archivos de trabajo locales (PDF para clientes,
+# informes, capturas y borradores). No forman parte del sitio.
+output/
+tmp/
+
+# Logs
+*.log
+
+# Sistema operativo y editores
+.DS_Store
+.idea/
+*.swp
