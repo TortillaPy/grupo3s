@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "test:locale": "node --test scripts/locale-worker.test.ts",
+    "audit:seo": "node scripts/seo-audit.mjs",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy"
   },

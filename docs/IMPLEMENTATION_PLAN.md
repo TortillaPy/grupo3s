@@ -21,6 +21,8 @@ Una rama por etapa desde development actualizado, PR a development, aprobación 
 
 **Pendiente para la etapa 9 — historial de `main`.** `main` contiene el merge del PR #3 (`1c61572`), su revert (`bf77829`) y el hotfix #5 (`04e633d`). Su contenido coincide con `production-2026-09-12`. Por ese revert, cualquier merge hacia `main` entra en conflicto (`IMPLEMENTATION_PLAN.md`, `site.ts`, `types.ts`), y `products.ts` se combina sin marcar conflicto, con riesgo de perder cambios de la etapa 01 en silencio. Antes del release, y con aprobación explícita, preparar desde `main` una rama que revierta `bf77829`, verificar que `development` → `main` quede limpio y comparar el árbol resultante con `development`. Nunca traer `main` hacia `development` ni hacia ramas de etapa.
 
+**Preparación de la etapa 9 — rama `codex/09-release`.** Incorpora los scripts de validación usados en la etapa 8: `npm run audit:seo` (`scripts/seo-audit.mjs`, auditoría de `dist/` sin dependencias) y `scripts/browser-review.cjs` (revisión en navegador con Playwright, sin red externa ni envíos). Por indicación del responsable, el PR de esta rama se abre recién al culminar la etapa 9.
+
 Familias: Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales.
 
 Recorrido: Desengrasa → Desinfecta → Coagulación y Floculación → Control de olor.
