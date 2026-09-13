@@ -34,23 +34,13 @@ const { comoComprar, hero, presupuesto } = obtenerContenido(locale);
           data-revelar
           data-revelar-retraso={String(indice * 110)}
         >
-          {/*
-            El número va en un disco verde sobre la línea. Es el ancla
-            visual del paso: se ve de un vistazo cuántos pasos hay y en
-            cuál se está.
-          */}
+          {/* El número identifica visualmente cada paso del proceso. */}
           <span
             class="relative z-10 inline-flex size-12 items-center justify-center rounded-full bg-verde-oscuro font-display text-[1.05rem] font-bold tabular-nums text-white shadow-[0_8px_20px_-10px_rgb(30_90_34/0.8)] dark:bg-[#2c7d31]"
             aria-hidden="true"
           >
             {String(indice + 1).padStart(2, '0')}
           </span>
-          {indice < comoComprar.pasos.length - 1 && (
-            <span
-              class="absolute top-6 -right-6 left-12 hidden h-px bg-gris-claro sm:block lg:-right-10"
-              aria-hidden="true"
-            />
-          )}
           <h3 class="mt-5 font-display text-[1.15rem] font-bold text-negro">
             {paso.titulo}
           </h3>
