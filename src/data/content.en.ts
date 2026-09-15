@@ -70,7 +70,8 @@ export const contenidoEn: Contenido = {
   },
 
   hero: {
-    volanta: '3S Grupo Industrial S.R.L. · Asunción, Paraguay',
+    descriptorMarca: 'Chemical products laboratory',
+    ubicacion: 'Asunción, Paraguay',
     titular: 'Clean operations. Compliant effluent. Production keeps moving.',
     subtitulo:
       'We formulate a range of products for every stage in Asunción: degreasing, disinfection, coagulation and flocculation, and odor control. For meat plants, tanneries and food processors, in sizes from 5 to 1,000 liters, including products with sanitary registration.',

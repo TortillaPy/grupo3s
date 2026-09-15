@@ -70,7 +70,8 @@ export const contenidoPt: Contenido = {
   },
 
   hero: {
-    volanta: '3S Grupo Industrial S.R.L. · Assunção, Paraguai',
+    descriptorMarca: 'Laboratório de produtos químicos',
+    ubicacion: 'Assunção, Paraguai',
     titular: 'Seu processo limpo. Seu efluente dentro da norma. Sua planta em operação.',
     subtitulo:
       'Elaboramos uma gama de produtos em Assunção para cada etapa: desengraxe, desinfecção, coagulação e floculação, e controle de odor. Para frigoríficos, curtumes e plantas de alimentos, em embalagens de 5 a 1000 litros e com produtos que contam com registro sanitário.',

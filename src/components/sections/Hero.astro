@@ -55,16 +55,36 @@ const { hero } = obtenerContenido(locale);
       />
     </div>
 
-    <div class="hero-mensaje mt-4 max-w-[54rem] sm:mt-6">
-      {/*
-        Identidad legal y ubicación visibles junto al titular: el eslogan
-        no nombra la empresa, y esta línea es la que conecta la marca con
-        Asunción para quien busca "3S" en Paraguay. Verde claro fijo
-        porque el panel del hero es siempre oscuro.
-      */}
-      <p class="volanta mb-3 justify-center text-[0.68rem] tracking-[0.06em] text-[#8fd18f] before:hidden sm:mb-4 sm:text-xs sm:tracking-[0.16em] sm:before:block">
-        {hero.volanta}
-      </p>
+    {/*
+      Bajada del lockup institucional. El logo metálico de la portada
+      llega hasta la razón social, pero el isologo completo sigue con
+      "Laboratorio de productos químicos": sin esa línea, la marca se
+      presenta antes de decir a qué se dedica, y el rubro recién aparece
+      en el subtítulo. Va con el mismo tratamiento de versalita espaciada
+      del original y en blanco atenuado —no en verde— para que se lea
+      como parte de la firma y no como una segunda volanta.
+    */}
+    <p
+      class="marca-descriptor mt-3 max-w-[20rem] text-[0.62rem] font-semibold tracking-[0.2em] text-white/55 uppercase sm:mt-4 sm:max-w-none sm:text-[0.72rem] sm:tracking-[0.28em]"
+    >
+      {hero.descriptorMarca}
+    </p>
+
+    {/*
+      Pie del lockup. Antes esta línea repetía la razón social que el
+      propio logo ya dice —"3S Grupo Industrial S.R.L. · Asunción"— y
+      encabezaba el titular como una volanta más. Queda sólo la ciudad,
+      pegada al bloque de marca: es el dato que el logo no trae y el que
+      ancla la empresa a Asunción para quien busca "3S" en Paraguay.
+      Verde claro fijo, porque el panel del hero es siempre oscuro.
+    */}
+    <p
+      class="marca-ubicacion mt-2 text-[0.6rem] font-semibold tracking-[0.2em] text-[#8fd18f] uppercase sm:mt-2.5 sm:text-[0.68rem] sm:tracking-[0.28em]"
+    >
+      {hero.ubicacion}
+    </p>
+
+    <div class="hero-mensaje mt-6 max-w-[54rem] sm:mt-8">
       <h1
         id="hero-titulo"
         class="text-[clamp(1.75rem,1.25rem+2vw,3rem)] leading-[1.06] font-black tracking-[-0.025em] text-white"
@@ -125,8 +145,18 @@ const { hero } = obtenerContenido(locale);
 </section>
 
 <style>
-  .marca-portada {
+  .marca-portada,
+  .marca-descriptor,
+  .marca-ubicacion {
     animation: entrada-marca 720ms var(--ease-salida) both;
+  }
+
+  .marca-descriptor {
+    animation-delay: 90ms;
+  }
+
+  .marca-ubicacion {
+    animation-delay: 150ms;
   }
 
   /* Solo movimiento, sin partir de opacidad 0: un elemento invisible no
@@ -142,7 +172,9 @@ const { hero } = obtenerContenido(locale);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .marca-portada {
+    .marca-portada,
+    .marca-descriptor,
+    .marca-ubicacion {
       animation: none;
     }
   }
@@ -153,18 +185,24 @@ const { hero } = obtenerContenido(locale);
       padding-bottom: 1.25rem;
     }
 
-    /* La línea de identidad suma un renglón: el logo cede un poco de
-       ancho para que ambos CTA sigan dentro de 375 × 667. */
+    /* La línea de identidad y la bajada de marca suman dos renglones: el
+       logo cede ancho para que ambos CTA sigan dentro de 375 × 667. */
     .marca-portada {
-      max-width: 14.5rem;
+      max-width: 13rem;
+    }
+
+    .marca-descriptor {
+      margin-top: 0.5rem;
+      letter-spacing: 0.14em;
+    }
+
+    .marca-ubicacion {
+      margin-top: 0.375rem;
+      letter-spacing: 0.14em;
     }
 
     .hero-mensaje {
-      margin-top: 0.5rem;
-    }
-
-    .hero-mensaje .volanta {
-      margin-bottom: 0.375rem;
+      margin-top: 1rem;
     }
   }
 

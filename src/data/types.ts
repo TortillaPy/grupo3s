@@ -293,8 +293,10 @@ export interface Contenido {
   };
 
   readonly hero: {
-    /** Identidad legal y ubicación sobre el titular: refuerza la marca. */
-    readonly volanta: string;
+    /** Bajada del lockup de marca, debajo del logo: qué es la empresa. */
+    readonly descriptorMarca: string;
+    /** Ciudad y país al pie del lockup: ancla la marca a Asunción. */
+    readonly ubicacion: string;
     readonly titular: string;
     readonly subtitulo: string;
     readonly ctaPrimario: string;
