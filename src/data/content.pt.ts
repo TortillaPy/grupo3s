@@ -61,8 +61,6 @@ export const contenidoPt: Contenido = {
     abrirMenu: 'Abrir o menu de navegação',
     cerrarMenu: 'Fechar o menu de navegação',
     saltarAlContenido: 'Ir para o conteúdo principal',
-    activarModoOscuro: 'Ativar modo escuro',
-    activarModoClaro: 'Ativar modo claro',
     irAlInicio: 'Ir para o início',
     navegacionPrincipal: 'Navegação principal',
     navegacionMovil: 'Navegação principal no celular',

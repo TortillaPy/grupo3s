@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 
 import Button from '../ui/Button.astro';
-import AlternadorTema from '../ui/AlternadorTema.astro';
 import LangSwitch from './LangSwitch.astro';
 import { config, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
@@ -56,11 +55,9 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
     >
       {/*
         Las dos versiones se emiten siempre y se alternan por CSS con
-        una clase en el <header> (y, en modo oscuro, con la clase
-        `dark` de <html>). Hacerlo así —en vez de cambiar el src por
-        JS— evita que el logotipo parpadee al scrollear o al cambiar
-        de tema, y mantiene el alto reservado: cero desplazamiento de
-        layout.
+        una clase en el <header>. Hacerlo así —en vez de cambiar el src
+        por JS— evita que el logotipo parpadee al scrollear y mantiene
+        el alto reservado: cero desplazamiento de layout.
       */}
       {/*
         Solo la variante visible al cargar va `eager`; la otra se pide
@@ -115,11 +112,6 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
 
     <div class="flex items-center gap-2">
       <LangSwitch locale={locale} class="hidden md:block" />
-      <AlternadorTema
-        etiquetaOscuro={nav.activarModoOscuro}
-        etiquetaClaro={nav.activarModoClaro}
-        class="hidden sm:inline-flex"
-      />
 
       <div class="hidden sm:block">
         {/* Lleva al formulario de "Solicitá tu presupuesto" en la
@@ -169,11 +161,6 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
         }
       </ul>
       <LangSwitch locale={locale} class="mt-4 md:hidden" />
-      <AlternadorTema
-        etiquetaOscuro={nav.activarModoOscuro}
-        etiquetaClaro={nav.activarModoClaro}
-        class="mt-4 inline-flex sm:hidden"
-      />
 
       <div class="mt-4 sm:hidden">
         {/* Lleva al formulario de "Solicitá tu presupuesto" en la
@@ -305,10 +292,9 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
 
   /*
     ── Estado “sobre el hero oscuro”, antes de scrollear ─────────────
-    El hero es carbón fijo en los dos temas (ver Hero.astro), así que
-    acá se usa blanco literal y no el token --color-blanco: ese token
-    se oscurece en modo oscuro para servir de fondo de tarjeta, y un
-    "blanco" oscuro dejaría el texto invisible sobre el hero.
+    El hero es carbón (ver Hero.astro), así que acá se usa blanco
+    literal: sobre ese panel el texto tiene que ser blanco sin depender
+    del token de superficie.
   */
 
   .cabecera-sobre-oscuro:not(.cabecera-solida) {
@@ -331,30 +317,15 @@ const logoOscuro = resolverImagen('/src/assets/images/marca/logo-3s-blanco.png')
   }
 
   /*
-    Al volverse sólido el header, el logotipo claro reemplaza al
-    blanco. Se alternan por display para que no haya reflow. Solo en
-    modo claro: ahí el header sólido es hueso claro. En modo oscuro
-    `bg-hueso/92` es oscuro incluso "sólido", así que el logotipo
-    blanco queda fijo sin importar el scroll (regla siguiente).
+    Al volverse sólido el header, el logotipo de tinta oscura reemplaza
+    al blanco: el fondo pasa de carbón a hueso. Se alternan por display
+    para que no haya reflow.
   */
-  :global(html:not(.dark)) .cabecera-sobre-oscuro.cabecera-solida [data-logo-oscuro] {
+  .cabecera-sobre-oscuro.cabecera-solida [data-logo-oscuro] {
     display: none;
   }
 
-  :global(html:not(.dark)) .cabecera-sobre-oscuro.cabecera-solida [data-logo-claro] {
-    display: block;
-  }
-
-  /*
-    Modo oscuro: la página entera es oscura, así que el header nunca
-    vuelve a ser una superficie clara. El logotipo blanco queda fijo
-    sin importar si la página arranca sobre el hero o no.
-  */
-  :global(.dark) [data-logo-claro] {
-    display: none;
-  }
-
-  :global(.dark) [data-logo-oscuro] {
+  .cabecera-sobre-oscuro.cabecera-solida [data-logo-claro] {
     display: block;
   }
 </style>

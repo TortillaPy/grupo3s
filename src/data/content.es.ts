@@ -75,8 +75,6 @@ export const contenidoEs: Contenido = {
     abrirMenu: 'Abrir el menú de navegación',
     cerrarMenu: 'Cerrar el menú de navegación',
     saltarAlContenido: 'Saltar al contenido principal',
-    activarModoOscuro: 'Activar modo oscuro',
-    activarModoClaro: 'Activar modo claro',
     irAlInicio: 'Ir al inicio',
     navegacionPrincipal: 'Navegación principal',
     navegacionMovil: 'Navegación principal en móvil',

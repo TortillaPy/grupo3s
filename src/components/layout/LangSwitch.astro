@@ -111,9 +111,8 @@ const base = rutaBase(Astro.url.pathname);
 
   /*
     Sobre el panel oscuro del hero, mientras el header sigue flotando.
-    Blanco literal y no --color-blanco: el hero es carbón fijo en los
-    dos temas, pero ese token se oscurece en modo oscuro para servir de
-    fondo de tarjeta.
+    Blanco literal y no --color-blanco: ese token es el fondo de las
+    tarjetas, no un color de texto.
   */
   :global(.cabecera-sobre-oscuro:not(.cabecera-solida)) .idioma {
     color: color-mix(in oklab, #ffffff 70%, transparent);

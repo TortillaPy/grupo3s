@@ -283,8 +283,6 @@ export interface Contenido {
     readonly abrirMenu: string;
     readonly cerrarMenu: string;
     readonly saltarAlContenido: string;
-    readonly activarModoOscuro: string;
-    readonly activarModoClaro: string;
     readonly irAlInicio: string;
     readonly navegacionPrincipal: string;
     readonly navegacionMovil: string;
