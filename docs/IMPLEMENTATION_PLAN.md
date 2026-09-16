@@ -18,8 +18,9 @@ Una rama por etapa desde development actualizado, PR a development, aprobación 
 | 7 | ramas codex/07-* si hay ajustes | Build, pruebas integrales, navegación, formulario sin envíos reales no autorizados, idiomas y recursos | Aprobación integral del preview por el PO |
 | 8 | codex/08-seo-google | Auditoría SEO: indexación, metadatos, datos estructurados, SEO local, rendimiento y accesibilidad; guía de Google | Sin duplicados ni rutas rotas; schema alineado con lo visible; tres idiomas; diseño intacto |
 | 9 | PR development → main | Release aprobado, deploy y smoke check, registro de versión y sincronización | Producción verificada y respaldo disponible |
+| 10 | ramas codex/10-* | Correcciones posteriores al release: portada con foto, cierre del lockup, retiro del modo oscuro, encuadre en celulares | Revisión del PO en 1440 × 900, 390 × 844 y 375 × 667; sin regresión de build ni de pruebas |
 
-**Pendiente para la etapa 9 — historial de `main`.** `main` contiene el merge del PR #3 (`1c61572`), su revert (`bf77829`) y el hotfix #5 (`04e633d`). Su contenido coincide con `production-2026-09-12`. Por ese revert, cualquier merge hacia `main` entra en conflicto (`IMPLEMENTATION_PLAN.md`, `site.ts`, `types.ts`), y `products.ts` se combina sin marcar conflicto, con riesgo de perder cambios de la etapa 01 en silencio. Antes del release, y con aprobación explícita, preparar desde `main` una rama que revierta `bf77829`, verificar que `development` → `main` quede limpio y comparar el árbol resultante con `development`. Nunca traer `main` hacia `development` ni hacia ramas de etapa.
+**Historial de `main` — resuelto en la etapa 9.** `main` contenía el merge del PR #3 (`1c61572`), su revert (`bf77829`) y el hotfix #5 (`04e633d`). Ese revert hacía que cualquier merge hacia `main` entrara en conflicto (`IMPLEMENTATION_PLAN.md`, `site.ts`, `types.ts`) y que `products.ts` se combinara sin marcar conflicto, con riesgo de perder en silencio los cambios de la etapa 01. Se resolvió en el release con un merge `-s ours` (`8ab1982`), que conserva el historial del hotfix sin traer su contenido. La regla de no traer `main` hacia `development` ni hacia ramas de etapa sigue vigente.
 
 Familias: Limpieza industrial → Desinfección industrial → Tratamiento de efluentes y aguas residuales.
 
@@ -164,3 +165,29 @@ Objetivo: que quien busque “3s grupo industrial” o “3S” desde Paraguay e
   - LCP local (logo central): 64–80 ms; CLS ≤ 0,004.
 - **Pendientes y recomendaciones.** Muchas descripciones de ficha superan los 160 caracteres y los títulos con la familia de efluentes son largos: Google los recorta. Acortarlos requiere validar la redacción con el PO. Las páginas propias por familia o etapa quedan como decisión de arquitectura del PO.
 - No se ejecutó deploy ni se modificaron `main`, Cloudflare, Vercel ni DNS.
+
+## Etapa 9 — release a producción — 2026-09-15
+
+- `development` se integró en `main` con `git merge -s ours` (`8ab1982`). La estrategia se eligió porque un merge normal resolvía a favor del revert `bf77829`: borraba `docs/CATALOG_CLASSIFICATION.md` y dejaba `site.ts` sin los exports de familias y etapas que usa `Catalogo.astro`, con el sitio sin compilar. El merge conserva el historial del hotfix en `main` y descarta su contenido, ya superado por treinta commits posteriores.
+- `origin/main` y `origin/development` quedan en `8ab1982`. El tag anotado `production-2026-09-15` registra ese estado como respaldo de producción.
+- Verificación posterior al deploy: el HTML publicado es idéntico al build local de `8ab1982`, salvo la clave pública del formulario, que se inyecta en tiempo de build.
+- El release incluye la etapa 8 (SEO) y el rediseño de portada descrito abajo.
+
+## Rediseño de portada — posterior a la etapa 8 — 2026-09-15
+
+Tres cambios de diseño entraron en `development` antes del release. Se registran aquí porque no corresponden a ninguna etapa del plan original.
+
+- **Lockup de marca completo (`0d89acb`).** Bajo el logo se agregó la bajada institucional “Laboratorio de productos químicos”: el logo metálico llega hasta la razón social, pero sin esa línea la marca se presentaba antes de decir a qué se dedica. La línea verde dejó de repetir la razón social y quedó sólo con “Asunción, Paraguay”, el dato que el logo no trae. El campo `hero.volanta` pasó a llamarse `hero.ubicacion` porque ya no carga identidad legal.
+- **Retiro del modo oscuro (`880feeb`).** El sitio queda claro y sólo claro. Se eliminaron el alternador del header, los dos scripts inline del `Layout` que decidían el tema antes del primer paint, el bloque de tokens oscuros de `global.css` con su `@custom-variant dark`, y las utilidades `dark:` que quedaban como código muerto. `color-scheme: light` se mantiene. Los paneles oscuros de diseño —hero, CTA final, lightbox— no se tocaron, ni el doble logotipo del header, que alterna por scroll y no por tema. **Esto deja sin efecto el criterio de aceptación “claro/oscuro” de las etapas anteriores:** la validación visual pasa a ser sólo en claro.
+- **Foto de fondo en el hero (`11cc490`).** La portada deja de ser un panel de carbón liso y apoya el titular en una foto del control de una elaboración. Como la foto es clara y fría y el lockup es blanco, el contraste se resuelve con cuatro capas: velo de carbón al 68 %, radial que oscurece el centro donde cae el texto, y degradados superior e inferior. La imagen va desaturada al 72 % porque los azules de la sala peleaban con el verde de marca. La foto pasa a ser el LCP y se lleva el `fetchpriority` alto.
+
+## Etapa 10 — portada en celulares — en curso
+
+Rama `codex/10-hero-responsive`, abierta desde `development` después del release.
+
+- **Encuadre vertical (`8fa7a48`).** El hero es una caja de alto completo, así que `object-cover` escala la foto por el alto, mientras `sizes` sólo describe el ancho: un celular de 390 px bajaba una variante de 390 × 219 y la estiraba hasta 390 × 1194. Se sirve un recorte vertical de 560 × 941 de la misma toma mediante `<picture>` con `media`, y desde 640 px el encuadre apaisado completo. Se usa `<picture>` y no dos `<Image>` con clases porque un `<img>` oculto por CSS igual se descarga.
+- Pendiente: revisión y ajuste del primer viewport en celulares, y PR hacia `development`.
+
+## Trabajo no integrado
+
+- La rama `codex/09-release` quedó detenida en `efd6a3a`, anterior al rediseño de portada. Contiene dos herramientas que nunca llegaron a `development`: `scripts/seo-audit.mjs` y `scripts/browser-review.cjs`, con su script en `package.json`. Son las que el registro de la etapa 8 cita como auditoría de `dist/` y revisión en navegador. Decidir explícitamente si se rescatan en una rama nueva desde `development` o si se descarta la rama.

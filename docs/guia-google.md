@@ -16,7 +16,7 @@ Usá **exactamente** estos datos en todos lados: Google, redes, directorios. Las
 | Dirección | Pilar N° 1717 c/ Nazareth, Asunción, Paraguay |
 | Teléfono y WhatsApp | (0972) 572 007 · +595 972 572 007 |
 | Correo | 3sgrupoindustrial@gmail.com |
-| Horario | Lunes a viernes, de 07:30 a 17:00 |
+| Horario | Lunes a viernes, de 07:30 a 19:00 |
 | Sitio web | https://3sgrupoindustrial.com.py |
 
 Si alguno de estos datos cambia, se actualiza primero en `src/data/config.ts` (y el horario visible en `footer.horario` de `src/data/content.*.ts`) y después en cada servicio externo.
@@ -85,7 +85,7 @@ Para el cliente hay una guía paso a paso lista para enviar, en PDF, fuera del r
 5. Ubicación: **Pilar N° 1717 c/ Nazareth, Asunción**. Confirmá el pin en el mapa.
    - Si no se atiende público en ese lugar, marcá que es una **empresa de servicio a domicilio** y ocultá la dirección. Como área de servicio, indicá Paraguay o los departamentos atendidos.
 6. Teléfono: **0972 572 007**. Sitio web: **https://3sgrupoindustrial.com.py**.
-7. Horario: lunes a viernes, de 07:30 a 17:00.
+7. Horario: lunes a viernes, de 07:30 a 19:00.
 8. Verificación: Google ofrecerá postal, teléfono, correo o video según el caso. Completala; sin verificación la ficha no se muestra bien.
 9. Completá la ficha:
    - **Descripción:** en la redacción institucional (“Elaboramos una gama de productos…”), mencionando Asunción, limpieza industrial, desinfección industrial y tratamiento de efluentes. Sin promesas que no figuren en el sitio.

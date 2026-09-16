@@ -431,7 +431,7 @@ export const contenidoEs: Contenido = {
   },
 
   footer: {
-    horario: 'Lunes a viernes, de 07:30 a 17:00',
+    horario: 'Lunes a viernes, de 07:30 a 19:00',
     cobertura: 'Envío a todo el Paraguay',
     tituloFamilias: 'Familias de productos',
     tituloEtapas: 'Etapas del proceso',
