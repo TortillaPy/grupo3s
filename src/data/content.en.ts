@@ -416,7 +416,7 @@ export const contenidoEn: Contenido = {
   },
 
   footer: {
-    horario: 'Monday to Friday, 7:30 a.m. to 5:00 p.m.',
+    horario: 'Monday to Friday, 7:30 a.m. to 7:00 p.m.',
     cobertura: 'Delivery across Paraguay',
     tituloFamilias: 'Product families',
     tituloEtapas: 'Process stages',

@@ -41,7 +41,7 @@ export interface Contacto {
   readonly email: string;
   readonly direccion: Direccion;
   readonly redes: readonly RedSocial[];
-  /** Horario en formato schema.org, p. ej. "Mo-Fr 07:30-17:00". */
+  /** Horario en formato schema.org, p. ej. "Mo-Fr 07:30-19:00". */
   readonly horarioSchema: string;
 }
 
