@@ -20,12 +20,12 @@ const { hero } = obtenerContenido(locale);
 /*
   DOS ENCUADRES, NO UNO ESCALADO
   ───────────────────────────────
-  El hero es una caja de alto completo (100svh). Con `object-cover`, el
-  navegador escala la foto por el ALTO cuando la caja es más alta que la
-  relación de la imagen, pero `sizes` solo describe el ANCHO. En un
-  celular de 390 px eso hacía que bajara una variante de 390 × 219 y la
-  estirara hasta 390 × 1194: más de cinco veces, borrosa, y recortada
-  justo donde la foto no dice nada.
+  El hero es una caja de alto completo. Con `object-cover`, el navegador
+  escala la foto por el ALTO cuando la caja es más alta que la relación
+  de la imagen, pero `sizes` solo describe el ANCHO. En un celular de
+  390 px eso hacía que bajara una variante de 390 × 219 y la estirara
+  hasta 390 × 1194: más de cinco veces, borrosa, y recortada justo donde
+  la foto no dice nada.
 
   La solución es servir una foto por forma de pantalla, con un solo ancho
   candidato cada una para que la elección no dependa de `sizes`:
@@ -36,6 +36,12 @@ const { hero } = obtenerContenido(locale);
 
   Se usa `<picture>` con `media` y no dos `<Image>` con clases: un `<img>`
   oculto por CSS igual se descarga, y así cada pantalla baja un archivo.
+
+  El recorte vertical se sirve a su tamaño nativo y no admite una variante
+  2×: la toma original mide 941 px de alto, así que 560 × 941 ya es todo
+  lo que hay. Una pantalla de alta densidad la estira; la forma de que
+  eso no se note es que la caja pinte lo menos posible, y de eso se ocupa
+  `.hero-plano` (ver abajo).
 */
 const fotoAncha = await getImage({
   src: fotoLaboratorio,
@@ -51,160 +57,180 @@ const fotoVertical = await getImage({
 });
 ---
 
-<section
-  class="hero-marca relative isolate overflow-hidden bg-carbon text-white"
-  aria-labelledby="hero-titulo"
->
+<section class="hero-marca relative isolate bg-carbon text-white" aria-labelledby="hero-titulo">
   {/*
-    Foto de fondo: control de una elaboración en el laboratorio. Es
-    decorativa —lo que hay que leer es el lockup que va encima—, así que
-    `alt` vacío.
+    EL FONDO CUBRE EL PRIMER PLANO, NO LA SECCIÓN ENTERA
+    ─────────────────────────────────────────────────────
+    Las capas de fondo iban en `absolute inset-0` de la sección, y la
+    sección incluye el zócalo de señales. En un celular de 390 × 844 eso
+    daba una caja de fondo de 390 × 1194: `object-cover` tenía que
+    agrandar el recorte vertical 1,27× en lugar de achicarlo 0,9×, y los
+    350 px de foto que quedaban bajo el zócalo se pintaban para nada,
+    porque el zócalo es `bg-carbon` opaco.
 
-    La foto es clara y fría; el lockup es blanco. Sin velo no se lee
-    nada, y con un velo parejo la foto se vuelve una mancha gris. Por eso
-    van dos capas: un velo de carbón parejo que baja el brillo general, y
-    encima un degradado que oscurece más el centro y el pie —donde cae el
-    texto— y suelta la esquina derecha, que es donde están los bidones.
+    Peor que el desperdicio era el encuadre: `object-center` centraba la
+    foto en esos 1194 px, así que el centro caía detrás del zócalo y el
+    primer viewport se quedaba con el borde superior de la toma —pared y
+    cofia— mientras la operaria y la muestra, que son el motivo, quedaban
+    abajo, tapadas.
 
-    Los dos encuadres van centrados: cada recorte ya encuadra lo suyo.
+    Este contenedor envuelve sólo el primer plano, así que toma su altura
+    exacta. El fondo vuelve a encuadrarse sobre lo que de verdad se ve, y
+    el degradado inferior cierra contra el zócalo en vez de esconderse
+    detrás.
   */}
-  <picture>
-    <source media="(min-width: 640px)" srcset={fotoAncha.src} width="1672" height="941" />
-    <img
-      src={fotoVertical.src}
-      alt=""
-      width="560"
-      height="941"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-      class="pointer-events-none absolute inset-0 z-0 size-full object-cover object-center saturate-[0.72]"
-      aria-hidden="true"
-    />
-  </picture>
-  <div
-    class="pointer-events-none absolute inset-0 z-0 bg-carbon/68"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_42%,rgba(18,14,13,0.62)_0%,rgba(18,14,13,0.34)_50%,rgba(18,14,13,0.05)_100%)]"
-    aria-hidden="true"
-  >
-  </div>
-  {/*
-    El header flota sobre el hero con el logotipo blanco y los enlaces en
-    blanco. Sin este degradado quedan sobre la pared clara de la foto y
-    pierden contraste; con él, la franja superior vuelve a ser carbón.
-  */}
-  <div
-    class="pointer-events-none absolute inset-x-0 top-0 z-0 h-44 bg-linear-to-b from-carbon via-carbon/70 to-transparent"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-64 bg-linear-to-t from-carbon to-transparent"
-    aria-hidden="true"
-  >
-  </div>
-
-  <div
-    class="trama-carbon pointer-events-none absolute inset-0 z-0 opacity-10 lg:opacity-15"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute -top-48 left-1/2 z-0 aspect-square w-[46rem] -translate-x-1/2 rounded-full bg-verde/8 blur-[110px]"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute top-28 left-1/2 z-0 hidden size-[42rem] -translate-x-1/2 rotate-45 border border-verde/12 lg:block"
-    aria-hidden="true"
-  >
-  </div>
-
-  <div class="hero-primer-plano contenedor relative flex min-h-[100svh] flex-col items-center justify-center pt-20 pb-6 text-center sm:pt-24 sm:pb-8">
+  <div class="hero-plano relative isolate overflow-hidden">
     {/*
-      Sin `data-revelar` en el logo ni en el mensaje: son el primer
-      plano de la portada, y el revelado por JS los ocultaba hasta que
-      corría el IntersectionObserver. La prioridad de descarga ahora la
-      tiene la foto de fondo, que es el elemento más grande y por lo
-      tanto el LCP.
+      Foto de fondo: control de una elaboración en el laboratorio. Es
+      decorativa —lo que hay que leer es el lockup que va encima—, así que
+      `alt` vacío.
+
+      La foto es clara y fría; el lockup es blanco. Sin velo no se lee
+      nada, y con un velo parejo la foto se vuelve una mancha gris. Por eso
+      van dos capas: un velo de carbón parejo que baja el brillo general, y
+      encima un degradado que oscurece más el centro y el pie —donde cae el
+      texto— y suelta la esquina derecha, que es donde están los bidones.
+
+      Los dos encuadres van centrados: cada recorte ya encuadra lo suyo.
     */}
-    <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]">
-      <Image
-        src={logoMarca}
-        alt="3S Grupo Industrial S.R.L."
-        widths={[480, 960, 1565]}
-        sizes="(min-width: 1024px) 38rem, (min-width: 640px) 28rem, 19rem"
+    <picture>
+      <source media="(min-width: 640px)" srcset={fotoAncha.src} width="1672" height="941" />
+      <img
+        src={fotoVertical.src}
+        alt=""
+        width="560"
+        height="941"
         loading="eager"
-        format="webp"
-        quality={96}
-        class="mx-auto w-full drop-shadow-[0_24px_32px_rgb(0_0_0/0.5)]"
+        fetchpriority="high"
+        decoding="async"
+        class="pointer-events-none absolute inset-0 z-0 size-full object-cover object-center saturate-[0.72]"
+        aria-hidden="true"
       />
+    </picture>
+    <div
+      class="pointer-events-none absolute inset-0 z-0 bg-carbon/68"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_42%,rgba(18,14,13,0.62)_0%,rgba(18,14,13,0.34)_50%,rgba(18,14,13,0.05)_100%)]"
+      aria-hidden="true"
+    >
+    </div>
+    {/*
+      El header flota sobre el hero con el logotipo blanco y los enlaces en
+      blanco. Sin este degradado quedan sobre la pared clara de la foto y
+      pierden contraste; con él, la franja superior vuelve a ser carbón.
+    */}
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 z-0 h-44 bg-linear-to-b from-carbon via-carbon/70 to-transparent"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-36 bg-linear-to-t from-carbon to-transparent sm:h-64"
+      aria-hidden="true"
+    >
     </div>
 
-    {/*
-      Bajada del lockup institucional. El logo metálico de la portada
-      llega hasta la razón social, pero el isologo completo sigue con
-      "Laboratorio de productos químicos": sin esa línea, la marca se
-      presenta antes de decir a qué se dedica, y el rubro recién aparece
-      en el subtítulo. Va con el mismo tratamiento de versalita espaciada
-      del original y en blanco atenuado —no en verde— para que se lea
-      como parte de la firma y no como una segunda volanta.
-    */}
-    <p
-      class="marca-descriptor mt-3 max-w-[20rem] text-[0.62rem] font-semibold tracking-[0.2em] text-white/72 uppercase sm:mt-4 sm:max-w-none sm:text-[0.72rem] sm:tracking-[0.28em]"
+    <div
+      class="trama-carbon pointer-events-none absolute inset-0 z-0 opacity-10 lg:opacity-15"
+      aria-hidden="true"
     >
-      {hero.descriptorMarca}
-    </p>
-
-    {/*
-      Pie del lockup. Antes esta línea repetía la razón social que el
-      propio logo ya dice —"3S Grupo Industrial S.R.L. · Asunción"— y
-      encabezaba el titular como una volanta más. Queda sólo la ciudad,
-      pegada al bloque de marca: es el dato que el logo no trae y el que
-      ancla la empresa a Asunción para quien busca "3S" en Paraguay.
-      Verde claro fijo, porque el panel del hero es siempre oscuro.
-    */}
-    <p
-      class="marca-ubicacion mt-2 text-[0.6rem] font-semibold tracking-[0.2em] text-[#8fd18f] uppercase sm:mt-2.5 sm:text-[0.68rem] sm:tracking-[0.28em]"
+    </div>
+    <div
+      class="pointer-events-none absolute -top-48 left-1/2 z-0 aspect-square w-[46rem] -translate-x-1/2 rounded-full bg-verde/8 blur-[110px]"
+      aria-hidden="true"
     >
-      {hero.ubicacion}
-    </p>
+    </div>
+    <div
+      class="pointer-events-none absolute top-28 left-1/2 z-0 hidden size-[42rem] -translate-x-1/2 rotate-45 border border-verde/12 lg:block"
+      aria-hidden="true"
+    >
+    </div>
 
-    <div class="hero-mensaje mt-6 max-w-[54rem] sm:mt-8">
-      <h1
-        id="hero-titulo"
-        class="text-[clamp(1.75rem,1.25rem+2vw,3rem)] leading-[1.06] font-black tracking-[-0.025em] text-white"
+    <div class="hero-primer-plano contenedor relative flex min-h-[100svh] flex-col items-center justify-center pt-20 pb-6 text-center sm:pt-24 sm:pb-8">
+      {/*
+        Sin `data-revelar` en el logo ni en el mensaje: son el primer
+        plano de la portada, y el revelado por JS los ocultaba hasta que
+        corría el IntersectionObserver. La prioridad de descarga ahora la
+        tiene la foto de fondo, que es el elemento más grande y por lo
+        tanto el LCP.
+      */}
+      <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]">
+        <Image
+          src={logoMarca}
+          alt="3S Grupo Industrial S.R.L."
+          widths={[480, 960, 1565]}
+          sizes="(min-width: 1024px) 38rem, (min-width: 640px) 28rem, 19rem"
+          loading="eager"
+          format="webp"
+          quality={96}
+          class="mx-auto w-full drop-shadow-[0_24px_32px_rgb(0_0_0/0.5)]"
+        />
+      </div>
+
+      {/*
+        Bajada del lockup institucional. El logo metálico de la portada
+        llega hasta la razón social, pero el isologo completo sigue con
+        "Laboratorio de productos químicos": sin esa línea, la marca se
+        presenta antes de decir a qué se dedica, y el rubro recién aparece
+        en el subtítulo. Va con el mismo tratamiento de versalita espaciada
+        del original y en blanco atenuado —no en verde— para que se lea
+        como parte de la firma y no como una segunda volanta.
+      */}
+      <p
+        class="marca-descriptor mt-3 max-w-[20rem] text-[0.62rem] font-semibold tracking-[0.2em] text-white/72 uppercase sm:mt-4 sm:max-w-none sm:text-[0.72rem] sm:tracking-[0.28em]"
       >
-        {hero.titular}
-      </h1>
-
-      <p class="mx-auto mt-3 max-w-[46rem] text-[0.9rem] leading-[1.5] text-white/72 sm:mt-4 sm:text-[1.05rem]">
-        {hero.subtitulo}
+        {hero.descriptorMarca}
       </p>
 
-      <div class="mt-5 flex flex-col justify-center gap-3 sm:mt-6 sm:flex-row sm:items-center">
-        <Button
-          href={rutaLocal('/#presupuesto', locale)}
-          tamano="grande"
-          class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
-        >
-          {hero.ctaPrimario}
-          <Icon name="lucide:mail" class="size-5" aria-hidden="true" />
-        </Button>
+      {/*
+        Pie del lockup. Antes esta línea repetía la razón social que el
+        propio logo ya dice —"3S Grupo Industrial S.R.L. · Asunción"— y
+        encabezaba el titular como una volanta más. Queda sólo la ciudad,
+        pegada al bloque de marca: es el dato que el logo no trae y el que
+        ancla la empresa a Asunción para quien busca "3S" en Paraguay.
+        Verde claro fijo, porque el panel del hero es siempre oscuro.
+      */}
+      <p
+        class="marca-ubicacion mt-2 text-[0.6rem] font-semibold tracking-[0.2em] text-[#8fd18f] uppercase sm:mt-2.5 sm:text-[0.68rem] sm:tracking-[0.28em]"
+      >
+        {hero.ubicacion}
+      </p>
 
-        <Button
-          href={rutaLocal('/productos', locale)}
-          variante="fantasma"
-          tamano="grande"
-          class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
+      <div class="hero-mensaje mt-6 max-w-[54rem] sm:mt-8">
+        <h1
+          id="hero-titulo"
+          class="text-[clamp(1.75rem,1.25rem+2vw,3rem)] leading-[1.06] font-black tracking-[-0.025em] text-white"
         >
-          {hero.ctaSecundario}
-          <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
-        </Button>
+          {hero.titular}
+        </h1>
+
+        <p class="mx-auto mt-3 max-w-[46rem] text-[0.9rem] leading-[1.5] text-white/72 sm:mt-4 sm:text-[1.05rem]">
+          {hero.subtitulo}
+        </p>
+
+        <div class="mt-5 flex flex-col justify-center gap-3 sm:mt-6 sm:flex-row sm:items-center">
+          <Button
+            href={rutaLocal('/#presupuesto', locale)}
+            tamano="grande"
+            class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
+          >
+            {hero.ctaPrimario}
+            <Icon name="lucide:mail" class="size-5" aria-hidden="true" />
+          </Button>
+
+          <Button
+            href={rutaLocal('/productos', locale)}
+            variante="fantasma"
+            tamano="grande"
+            class="w-full py-3 text-[0.95rem] sm:w-auto sm:py-4 sm:text-base"
+          >
+            {hero.ctaSecundario}
+            <Icon name="lucide:arrow-right" class="size-4" aria-hidden="true" />
+          </Button>
+        </div>
       </div>
     </div>
   </div>
@@ -293,6 +319,50 @@ const fotoVertical = await getImage({
 
     .hero-mensaje {
       margin-top: 1rem;
+    }
+  }
+
+  /* Pantallas bajas de verdad (360 × 640 y parecidas). Con los valores de
+     arriba el primer plano medía 685 px contra 640 de viewport: el segundo
+     CTA quedaba 25 px por debajo del borde y el zócalo de señales le pisaba
+     el borde superior. A 375 × 667 entraba por 2 px, que es no entrar.
+
+     Se recortan 60 px sin tocar el texto —que es contenido traducido y no
+     se edita desde una hoja de estilos—: el logo cede otro poco de ancho,
+     el titular baja de cuerpo sin cambiar de cantidad de renglones, y los
+     respiros entre bloques se ajustan al espacio que hay. */
+  @media (width < 40rem) and (height < 43rem) {
+    .hero-primer-plano {
+      padding-top: 4.5rem;
+      padding-bottom: 0.875rem;
+    }
+
+    .marca-portada {
+      max-width: 10.5rem;
+    }
+
+    .marca-descriptor {
+      margin-top: 0.4375rem;
+      font-size: 0.58rem;
+    }
+
+    .marca-ubicacion {
+      margin-top: 0.3125rem;
+      font-size: 0.56rem;
+    }
+
+    .hero-mensaje {
+      margin-top: 0.75rem;
+    }
+
+    .hero-primer-plano :global(h1) {
+      font-size: 1.5rem;
+    }
+
+    .hero-primer-plano :global(h1 + p) {
+      margin-top: 0.625rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
     }
   }
 
