@@ -5,6 +5,8 @@ import { Icon } from 'astro-icon/components';
 import Button from '../ui/Button.astro';
 import logoMarca from '../../assets/images/marca/logo-3s-metalico-transparente.png';
 import fotoLaboratorio from '../../assets/images/planta/laboratorio-control-3s.png';
+import fotoLaboratorioVertical from '../../assets/images/planta/laboratorio-control-3s-vertical.png';
+import { getImage } from 'astro:assets';
 import { config, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
 
@@ -14,6 +16,39 @@ interface Props {
 
 const { locale = config.localePorDefecto } = Astro.props;
 const { hero } = obtenerContenido(locale);
+
+/*
+  DOS ENCUADRES, NO UNO ESCALADO
+  ───────────────────────────────
+  El hero es una caja de alto completo (100svh). Con `object-cover`, el
+  navegador escala la foto por el ALTO cuando la caja es más alta que la
+  relación de la imagen, pero `sizes` solo describe el ANCHO. En un
+  celular de 390 px eso hacía que bajara una variante de 390 × 219 y la
+  estirara hasta 390 × 1194: más de cinco veces, borrosa, y recortada
+  justo donde la foto no dice nada.
+
+  La solución es servir una foto por forma de pantalla, con un solo ancho
+  candidato cada una para que la elección no dependa de `sizes`:
+
+   · vertical (560 × 941), recortada de la misma toma sobre la operaria,
+     su mano con la muestra y el borde del equipo → hasta 639 px.
+   · apaisada (1672 × 941), la toma completa → desde 640 px.
+
+  Se usa `<picture>` con `media` y no dos `<Image>` con clases: un `<img>`
+  oculto por CSS igual se descarga, y así cada pantalla baja un archivo.
+*/
+const fotoAncha = await getImage({
+  src: fotoLaboratorio,
+  width: 1672,
+  format: 'webp',
+  quality: 70,
+});
+const fotoVertical = await getImage({
+  src: fotoLaboratorioVertical,
+  width: 560,
+  format: 'webp',
+  quality: 72,
+});
 ---
 
 <section
@@ -31,21 +66,22 @@ const { hero } = obtenerContenido(locale);
     encima un degradado que oscurece más el centro y el pie —donde cae el
     texto— y suelta la esquina derecha, que es donde están los bidones.
 
-    `object-right` en móvil: en vertical, un encuadre centrado parte el
-    reactor y deja fuera a la operaria, que es lo que da escala humana.
+    Los dos encuadres van centrados: cada recorte ya encuadra lo suyo.
   */}
-  <Image
-    src={fotoLaboratorio}
-    alt=""
-    widths={[640, 1024, 1672]}
-    sizes="100vw"
-    loading="eager"
-    fetchpriority="high"
-    format="webp"
-    quality={70}
-    class="pointer-events-none absolute inset-0 z-0 size-full object-cover object-right saturate-[0.72] sm:object-center"
-    aria-hidden="true"
-  />
+  <picture>
+    <source media="(min-width: 640px)" srcset={fotoAncha.src} width="1672" height="941" />
+    <img
+      src={fotoVertical.src}
+      alt=""
+      width="560"
+      height="941"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="pointer-events-none absolute inset-0 z-0 size-full object-cover object-center saturate-[0.72]"
+      aria-hidden="true"
+    />
+  </picture>
   <div
     class="pointer-events-none absolute inset-0 z-0 bg-carbon/68"
     aria-hidden="true"
