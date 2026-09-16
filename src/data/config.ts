@@ -52,7 +52,7 @@ export const config: Config = {
       { nombre: 'Instagram', url: '', icono: 'instagram' },
       { nombre: 'LinkedIn', url: '', icono: 'linkedin' },
     ],
-    horarioSchema: 'Mo-Fr 07:30-17:00',
+    horarioSchema: 'Mo-Fr 07:30-19:00',
   },
 
   /**

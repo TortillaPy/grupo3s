@@ -416,7 +416,7 @@ export const contenidoPt: Contenido = {
   },
 
   footer: {
-    horario: 'Segunda a sexta, das 07:30 às 17:00',
+    horario: 'Segunda a sexta, das 07:30 às 19:00',
     cobertura: 'Entrega em todo o Paraguai',
     tituloFamilias: 'Famílias de produtos',
     tituloEtapas: 'Etapas do processo',
