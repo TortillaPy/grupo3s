@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 import Button from '../ui/Button.astro';
 import logoMarca from '../../assets/images/marca/logo-3s-metalico-transparente.png';
+import fotoLaboratorio from '../../assets/images/planta/laboratorio-control-3s.png';
 import { config, obtenerContenido, rutaLocal } from '@data/site';
 import type { Locale } from '@data/site';
 
@@ -19,18 +20,70 @@ const { hero } = obtenerContenido(locale);
   class="hero-marca relative isolate overflow-hidden bg-carbon text-white"
   aria-labelledby="hero-titulo"
 >
+  {/*
+    Foto de fondo: control de una elaboración en el laboratorio. Es
+    decorativa —lo que hay que leer es el lockup que va encima—, así que
+    `alt` vacío.
+
+    La foto es clara y fría; el lockup es blanco. Sin velo no se lee
+    nada, y con un velo parejo la foto se vuelve una mancha gris. Por eso
+    van dos capas: un velo de carbón parejo que baja el brillo general, y
+    encima un degradado que oscurece más el centro y el pie —donde cae el
+    texto— y suelta la esquina derecha, que es donde están los bidones.
+
+    `object-right` en móvil: en vertical, un encuadre centrado parte el
+    reactor y deja fuera a la operaria, que es lo que da escala humana.
+  */}
+  <Image
+    src={fotoLaboratorio}
+    alt=""
+    widths={[640, 1024, 1672]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    format="webp"
+    quality={70}
+    class="pointer-events-none absolute inset-0 z-0 size-full object-cover object-right saturate-[0.72] sm:object-center"
+    aria-hidden="true"
+  />
   <div
-    class="trama-carbon pointer-events-none absolute inset-0 opacity-40 lg:opacity-100"
+    class="pointer-events-none absolute inset-0 z-0 bg-carbon/68"
     aria-hidden="true"
   >
   </div>
   <div
-    class="pointer-events-none absolute -top-48 left-1/2 aspect-square w-[46rem] -translate-x-1/2 rounded-full bg-verde/14 blur-[110px]"
+    class="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_42%,rgba(18,14,13,0.62)_0%,rgba(18,14,13,0.34)_50%,rgba(18,14,13,0.05)_100%)]"
+    aria-hidden="true"
+  >
+  </div>
+  {/*
+    El header flota sobre el hero con el logotipo blanco y los enlaces en
+    blanco. Sin este degradado quedan sobre la pared clara de la foto y
+    pierden contraste; con él, la franja superior vuelve a ser carbón.
+  */}
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 z-0 h-44 bg-linear-to-b from-carbon via-carbon/70 to-transparent"
     aria-hidden="true"
   >
   </div>
   <div
-    class="pointer-events-none absolute top-28 left-1/2 hidden size-[42rem] -translate-x-1/2 rotate-45 border border-verde/12 lg:block"
+    class="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-64 bg-linear-to-t from-carbon to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div
+    class="trama-carbon pointer-events-none absolute inset-0 z-0 opacity-10 lg:opacity-15"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -top-48 left-1/2 z-0 aspect-square w-[46rem] -translate-x-1/2 rounded-full bg-verde/8 blur-[110px]"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute top-28 left-1/2 z-0 hidden size-[42rem] -translate-x-1/2 rotate-45 border border-verde/12 lg:block"
     aria-hidden="true"
   >
   </div>
@@ -38,8 +91,10 @@ const { hero } = obtenerContenido(locale);
   <div class="hero-primer-plano contenedor relative flex min-h-[100svh] flex-col items-center justify-center pt-20 pb-6 text-center sm:pt-24 sm:pb-8">
     {/*
       Sin `data-revelar` en el logo ni en el mensaje: son el primer
-      plano y el LCP de la portada. El revelado por JS los ocultaba hasta
-      que corría el IntersectionObserver y retrasaba la métrica.
+      plano de la portada, y el revelado por JS los ocultaba hasta que
+      corría el IntersectionObserver. La prioridad de descarga ahora la
+      tiene la foto de fondo, que es el elemento más grande y por lo
+      tanto el LCP.
     */}
     <div class="marca-portada w-full max-w-[19rem] sm:max-w-[28rem] lg:max-w-[30rem]">
       <Image
@@ -48,7 +103,6 @@ const { hero } = obtenerContenido(locale);
         widths={[480, 960, 1565]}
         sizes="(min-width: 1024px) 38rem, (min-width: 640px) 28rem, 19rem"
         loading="eager"
-        fetchpriority="high"
         format="webp"
         quality={96}
         class="mx-auto w-full drop-shadow-[0_24px_32px_rgb(0_0_0/0.5)]"
@@ -65,7 +119,7 @@ const { hero } = obtenerContenido(locale);
       como parte de la firma y no como una segunda volanta.
     */}
     <p
-      class="marca-descriptor mt-3 max-w-[20rem] text-[0.62rem] font-semibold tracking-[0.2em] text-white/55 uppercase sm:mt-4 sm:max-w-none sm:text-[0.72rem] sm:tracking-[0.28em]"
+      class="marca-descriptor mt-3 max-w-[20rem] text-[0.62rem] font-semibold tracking-[0.2em] text-white/72 uppercase sm:mt-4 sm:max-w-none sm:text-[0.72rem] sm:tracking-[0.28em]"
     >
       {hero.descriptorMarca}
     </p>
@@ -119,7 +173,7 @@ const { hero } = obtenerContenido(locale);
     </div>
   </div>
 
-  <div class="relative border-t border-white/10 bg-white/[0.03]">
+  <div class="relative border-t border-white/10 bg-carbon">
     <ul
       class="contenedor grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0"
       data-revelar
