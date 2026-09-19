@@ -76,7 +76,7 @@ export const contenidoPt: Contenido = {
     ctaPrimario: 'Solicitar orçamento',
     ctaSecundario: 'Ver os produtos',
     imagen: {
-      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
+      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.jpeg',
       alt: 'Tanques de uma estação de tratamento de efluentes industriais em operação, com produtos 3S sendo dosados.',
       epigrafe: 'Tratamento de efluentes em planta — dosagem de Policloruro de Aluminio 3S.',
     },
@@ -205,37 +205,37 @@ export const contenidoPt: Contenido = {
     de: 'de',
     items: [
       {
-        src: '/src/assets/images/aplicaciones/stronger.png',
+        src: '/src/assets/images/aplicaciones/stronger.jpeg',
         alt: 'Operador lavando com espuma desengraxante uma sala de abate.',
         epigrafe:
           'Stronger em uma sala de abate: espuma desengraxante enzimática sobre equipamentos e pisos.',
       },
       {
-        src: '/src/assets/images/aplicaciones/desinal.png',
+        src: '/src/assets/images/aplicaciones/desinal.jpeg',
         alt: 'Aplicação de espuma sobre uma linha de produção de carnes.',
         epigrafe:
           'Desinal sobre linha de carnes: desengraxe e ação bactericida na mesma aplicação.',
       },
       {
-        src: '/src/assets/images/aplicaciones/decuat.png',
+        src: '/src/assets/images/aplicaciones/decuat.jpeg',
         alt: 'Desinfecção de uma esteira transportadora em uma planta de alimentos.',
         epigrafe:
           'Decuat em uma esteira transportadora: desinfecção com amônio quaternário de quinta geração.',
       },
       {
-        src: '/src/assets/images/aplicaciones/purson-plus.png',
+        src: '/src/assets/images/aplicaciones/purson-plus.jpeg',
         alt: 'Túnel de lavagem de caixas plásticas em uma planta de alimentos.',
         epigrafe:
           'Purson Plus no túnel de lavagem de caixas: desengraxante alcalino sem espuma.',
       },
       {
-        src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.png',
+        src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.jpeg',
         alt: 'Tanques de clarificação de água em uma estação de tratamento.',
         epigrafe:
           'Sulfato de Alumínio 3S na clarificação: coagulação em tanques de tratamento.',
       },
       {
-        src: '/src/assets/images/aplicaciones/sanitol.png',
+        src: '/src/assets/images/aplicaciones/sanitol.jpeg',
         alt: 'Operador lavando as mãos na entrada de um setor produtivo.',
         epigrafe:
           'Sanitol na entrada da planta: sabonete antibacteriano de pH neutro para uso frequente.',
