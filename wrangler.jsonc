@@ -3,6 +3,15 @@
   "name": "grupo3s",
   "main": "src/worker.ts",
   "compatibility_date": "2026-09-11",
+
+  // El sitio se sirve solo desde el dominio propio. Sin estas dos
+  // claves, Cloudflare habilita por defecto `grupo3s.<cuenta>.workers.dev`
+  // y una URL de vista previa por despliegue: hosts que devuelven el
+  // sitio completo con HTTP 200 y sin `X-Robots-Tag`, o sea rastreables.
+  // Eso es contenido duplicado compitiendo contra el dominio que se
+  // quiere posicionar. Desactivarlas no afecta a 3sgrupoindustrial.com.py.
+  "workers_dev": false,
+  "preview_urls": false,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
