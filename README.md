@@ -74,7 +74,7 @@ sets of 19, one per product, named by the product's `slug`:
 | --- | --- |
 | `productos/` | Packaging cut out on a white background |
 | `marcas/` | Banner with the product's name and descriptor |
-| `aplicaciones/` | Real-use photo on site |
+| `aplicaciones/` | Real-use photo on site (high-resolution `.jpeg`) |
 | `marca/` | 3S logo |
 | `public/og/` | 1200 × 630 preview image for WhatsApp and social |
 
@@ -87,19 +87,21 @@ photos from the same source:
 
 - The `aplicaciones/` ones carried a few pixels of white frame left
   over from the catalog crop. Against a dark panel that border read as
-  a light line stuck to the edge, so it was trimmed off.
+  a light line stuck to the edge, so it was trimmed off. The current
+  set are high-resolution `.jpeg` originals normalized to 1600px wide,
+  not the 400px catalog crops. The 1600px cap is deliberate: it's the
+  widest step the site serves, so keeping the 2000–2800px originals
+  only added repository weight without improving anything on screen.
 - The `productos/` and `marcas/` ones sat on an opaque white rectangle.
   The background was removed — only the background: labels and white
   jugs stay intact — so they rest on the plinth instead of showing a
   white box inside the card.
 
-What's still worth replacing with better original photography: the six
-gallery shots and the hero image. None exceeds 500px wide, and it
-already shows in one specific spot: **the large gallery image**, which
-is twice as wide as the others and the only one the browser has to
-upscale. That's the first photo worth replacing, at 1200 × 900 or
-larger. Any new plant or lab photo at 1600 × 1200 noticeably improves
-the overall result.
+The `aplicaciones/` photos have been replaced with the high-resolution
+originals, so the large gallery image is no longer an upscale. What's
+still worth improving is the hero lab photo in `planta/`. New photos
+should be at least 1600px wide: the gallery's `widths` ladder tops out
+at 1200 and the product page's at 1280.
 
 ## Confirmed content
 

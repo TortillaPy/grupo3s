@@ -75,7 +75,7 @@ uno por producto, nombrados por el `slug` del producto:
 | --- | --- |
 | `productos/` | Envases recortados sobre fondo blanco |
 | `marcas/` | Banner con el nombre y el descriptor de cada producto |
-| `aplicaciones/` | Foto de uso real en planta |
+| `aplicaciones/` | Foto de uso real en planta (`.jpeg` de alta resolución) |
 | `marca/` | Logotipo de 3S |
 | `public/og/` | Imagen de previsualización 1200 × 630 para WhatsApp y redes |
 
@@ -88,19 +88,23 @@ repetir si se cargan fotos nuevas del mismo origen:
 
 - Las de `aplicaciones/` traían un marco blanco de unos píxeles heredado
   del recorte del catálogo. Dentro de un marco oscuro ese borde se veía
-  como una línea clara pegada al canto, así que se recortó.
+  como una línea clara pegada al canto, así que se recortó. El lote
+  actual son originales de alta resolución en `.jpeg`, normalizados a
+  1600 px de ancho, no los recortes de catálogo de 400 px. Se
+  recomprimieron a 1600 px a propósito: es el escalón más alto que
+  sirve el sitio, así que guardar los originales de 2000–2800 px solo
+  agregaba peso al repositorio sin mejorar nada en pantalla.
 - Las de `productos/` y `marcas/` venían sobre un rectángulo blanco
   opaco. Se les quitó el fondo —solo el fondo: las etiquetas y los
   bidones blancos siguen intactos— para que apoyen sobre el plinto en
   vez de mostrar una caja blanca adentro de la tarjeta.
 
-Lo que todavía conviene reemplazar por fotos propias de mejor calidad:
-las seis de la galería y la del hero. Ninguna supera los 500 px de
-ancho, y eso ya se nota en un lugar concreto: **la imagen grande de la
-galería**, que ocupa el doble de ancho que las demás y es la única que
-el navegador tiene que agrandar. Esa es la primera foto que conviene
-reemplazar, en 1200 × 900 o más. Cualquier foto nueva de planta o
-laboratorio en 1600 × 1200 mejora bastante el resultado general.
+Las fotos de `aplicaciones/` ya se reemplazaron por los originales de
+alta resolución, así que la imagen grande de la galería dejó de ser un
+agrandado. Lo que todavía conviene mejorar es la foto de laboratorio del
+hero, en `planta/`. Si se cargan fotos nuevas, conviene que no bajen de
+1600 px de ancho: los escalones de `widths` de la galería llegan a 1200
+y los de la ficha a 1280.
 
 ## Contenido confirmado
 

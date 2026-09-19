@@ -76,7 +76,7 @@ export const contenidoEn: Contenido = {
     ctaPrimario: 'Request a quote',
     ctaSecundario: 'See the products',
     imagen: {
-      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
+      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.jpeg',
       alt: 'Clarifier tanks at an industrial wastewater treatment plant in operation, dosing 3S products.',
       epigrafe: 'On-site effluent treatment — dosing Policloruro de Aluminio 3S.',
     },
@@ -205,37 +205,37 @@ export const contenidoEn: Contenido = {
     de: 'of',
     items: [
       {
-        src: '/src/assets/images/aplicaciones/stronger.png',
+        src: '/src/assets/images/aplicaciones/stronger.jpeg',
         alt: 'Worker foam-washing a slaughter room.',
         epigrafe:
           'Stronger in a slaughter room: enzymatic degreasing foam on equipment and floors.',
       },
       {
-        src: '/src/assets/images/aplicaciones/desinal.png',
+        src: '/src/assets/images/aplicaciones/desinal.jpeg',
         alt: 'Foam being applied over a meat production line.',
         epigrafe:
           'Desinal on a meat line: degreasing and bactericidal action in a single application.',
       },
       {
-        src: '/src/assets/images/aplicaciones/decuat.png',
+        src: '/src/assets/images/aplicaciones/decuat.jpeg',
         alt: 'Disinfection of a conveyor belt at a food processing plant.',
         epigrafe:
           'Decuat on a conveyor belt: disinfection with fifth-generation quaternary ammonium.',
       },
       {
-        src: '/src/assets/images/aplicaciones/purson-plus.png',
+        src: '/src/assets/images/aplicaciones/purson-plus.jpeg',
         alt: 'Plastic crate washing tunnel at a food processing plant.',
         epigrafe:
           'Purson Plus in the crate washing tunnel: non-foaming alkaline degreaser.',
       },
       {
-        src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.png',
+        src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.jpeg',
         alt: 'Water clarification tanks at a treatment plant.',
         epigrafe:
           'Sulfato de Aluminio 3S in clarification: coagulation in treatment tanks.',
       },
       {
-        src: '/src/assets/images/aplicaciones/sanitol.png',
+        src: '/src/assets/images/aplicaciones/sanitol.jpeg',
         alt: 'Worker washing hands at the entrance to a production area.',
         epigrafe:
           'Sanitol at the plant entrance: pH-neutral antibacterial soap for frequent use.',

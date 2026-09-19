@@ -450,19 +450,21 @@ const schemaMigas = {
         </h2>
 
         <!--
-          El ancho está topeado a 34rem a propósito. Las fotos de
-          aplicación del catálogo no pasan de 500 px de ancho: mostradas
-          a 48rem el navegador las agrandaba y se veían blandas. A este
-          tamaño quedan nítidas, y el marco las presenta como una placa
-          técnica en lugar de como una foto que quedó chica.
+          Las fotos de aplicación ahora son originales de alta resolución
+          normalizados a 1600 px de ancho, así que el tope de 34rem que
+          las protegía del agrandado ya no hace falta: a 44rem siguen
+          nítidas y el marco las presenta como una placa técnica. El
+          escalón más alto del `widths` queda en 1280 porque la más
+          chica del catálogo (white-clean) mide 1311 px de ancho, y
+          pedir más que el original solo agranda.
         -->
-        <figure class="mt-6 max-w-[34rem]" data-revelar>
+        <figure class="mt-6 max-w-[44rem]" data-revelar>
           <div class="tarjeta overflow-hidden p-2.5">
             <Image
               src={imagenAplicacion}
               alt={producto.aplicacion.alt}
-              widths={[400, 800]}
-              sizes="(min-width: 640px) 34rem, 92vw"
+              widths={[480, 960, 1280]}
+              sizes="(min-width: 640px) 44rem, 92vw"
               loading="lazy"
               format="webp"
               quality={82}

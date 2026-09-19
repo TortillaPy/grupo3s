@@ -56,7 +56,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Policloruro de Aluminio 3S, para tratamiento de efluentes.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.png',
+      src: '/src/assets/images/aplicaciones/policloruro-de-aluminio-3s.jpeg',
       alt: 'Piletas de tratamiento de efluentes industriales en operación.',
     },
     especificaciones: [
@@ -93,7 +93,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Sulfato de Aluminio 3S, para tratamiento de efluentes.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.png',
+      src: '/src/assets/images/aplicaciones/sulfato-de-aluminio-3s.jpeg',
       alt: 'Tanques de clarificación de agua en una planta de tratamiento.',
     },
     especificaciones: [
@@ -127,7 +127,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Polímero 3S Aniónico, floculante aniónico.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/polimero-3s-anionico.png',
+      src: '/src/assets/images/aplicaciones/polimero-3s-anionico.jpeg',
       alt: 'Canal de efluente industrial con lodo floculado en superficie.',
     },
     especificaciones: [
@@ -162,7 +162,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Polímero 3S Catiónico, floculante catiónico.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/polimero-3s-cationico.png',
+      src: '/src/assets/images/aplicaciones/polimero-3s-cationico.jpeg',
       alt: 'Efluente industrial en canal con lodo separado por floculación.',
     },
     especificaciones: [
@@ -201,7 +201,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Odor Free, neutralizador de olores concentrado.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/odor-free.png',
+      src: '/src/assets/images/aplicaciones/odor-free.jpeg',
       alt: 'Aspersión de neutralizador de olores en instalaciones pecuarias.',
     },
     especificaciones: [
@@ -240,7 +240,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Decuat, desinfectante industrial concentrado de amonio cuaternario de quinta generación.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/decuat.png',
+      src: '/src/assets/images/aplicaciones/decuat.jpeg',
       alt: 'Desinfección de una cinta transportadora en una planta de alimentos.',
     },
     especificaciones: [
@@ -282,7 +282,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Bioperacid, desinfectante bactericida, fungicida y virucida a base de ácido peracético al 15 por ciento.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/bioperacid.png',
+      src: '/src/assets/images/aplicaciones/bioperacid.jpeg',
       alt: 'Línea de despiece en un frigorífico durante la desinfección.',
     },
     especificaciones: [
@@ -319,7 +319,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Ardiox, desinfectante químico selectivo bactericida, fungicida y virucida.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/ardiox.png',
+      src: '/src/assets/images/aplicaciones/ardiox.jpeg',
       alt: 'Personal aplicando desinfectante en pasillos de una planta industrial.',
     },
     especificaciones: [
@@ -367,7 +367,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Desinper, desinfectante industrial concentrado bactericida y fungicida.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/desinper.png',
+      src: '/src/assets/images/aplicaciones/desinper.jpeg',
       alt: 'Desinfección de superficies y transporte en distintos sectores industriales.',
     },
     especificaciones: [
@@ -409,7 +409,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'King Klor, desengrasante desinfectante industrial.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/king-klor.png',
+      src: '/src/assets/images/aplicaciones/king-klor.jpeg',
       alt: 'Aplicación de espuma desengrasante con equipo espumador sobre equipos de proceso.',
     },
     especificaciones: [
@@ -456,7 +456,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Stronger, desengrasante de uso industrial.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/stronger.png',
+      src: '/src/assets/images/aplicaciones/stronger.jpeg',
       alt: 'Operario lavando con espuma una sala de faena en un frigorífico.',
     },
     especificaciones: [
@@ -496,7 +496,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Desinal, desengrasante de uso industrial bactericida de gran versatilidad.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/desinal.png',
+      src: '/src/assets/images/aplicaciones/desinal.jpeg',
       alt: 'Aplicación de espuma desengrasante sobre una línea de producción cárnica.',
     },
     especificaciones: [
@@ -543,7 +543,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Enzurpon, desengrasante de uso industrial tensioactivo solvente hidrosoluble.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/enzurpon.png',
+      src: '/src/assets/images/aplicaciones/enzurpon.jpeg',
       alt: 'Limpieza a presión de maquinaria industrial con desengrasante.',
     },
     especificaciones: [
@@ -584,7 +584,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Purson Plus, desengrasante de uso industrial tensioactivo solvente hidrosoluble.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/purson-plus.png',
+      src: '/src/assets/images/aplicaciones/purson-plus.jpeg',
       alt: 'Túnel de lavado de cajones plásticos en una planta de alimentos.',
     },
     especificaciones: [
@@ -623,7 +623,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Desinox, desincrustante, desoxidante y fosfatante.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/desinox.png',
+      src: '/src/assets/images/aplicaciones/desinox.jpeg',
       alt: 'Limpieza y acondicionamiento de equipos metálicos industriales.',
     },
     especificaciones: [
@@ -672,7 +672,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Madox, detergente líquido neutro.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/madox.png',
+      src: '/src/assets/images/aplicaciones/madox.jpeg',
       alt: 'Limpieza de utensilios y superficies en una cocina industrial.',
     },
     especificaciones: [
@@ -718,7 +718,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Fine White, blanqueador desinfectante de uso industrial.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/fine-white.png',
+      src: '/src/assets/images/aplicaciones/fine-white.jpeg',
       alt: 'Lavandería industrial clasificando ropa blanca.',
     },
     especificaciones: [
@@ -757,7 +757,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'White Clean, detergente en polvo multiusos.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/white-clean.png',
+      src: '/src/assets/images/aplicaciones/white-clean.jpeg',
       alt: 'Lavandería hospitalaria con lavarropas industriales en operación.',
     },
     especificaciones: [
@@ -798,7 +798,7 @@ const productosSinOrdenar: readonly Producto[] = [
       alt: 'Sanitol, jabón líquido antibacterial para manos.',
     },
     aplicacion: {
-      src: '/src/assets/images/aplicaciones/sanitol.png',
+      src: '/src/assets/images/aplicaciones/sanitol.jpeg',
       alt: 'Operario lavándose las manos en el ingreso a un sector productivo.',
     },
     especificaciones: [
