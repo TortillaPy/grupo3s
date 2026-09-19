@@ -59,7 +59,7 @@ export const contenidoEs: Contenido = {
     ficha: {
       tituloPlantilla: '{producto} · {familia} | 3S Grupo Industrial',
       descripcionPlantilla:
-        '{resumen} Presentaciones de {presentaciones}. Forma parte de la gama de productos que elaboramos en Asunción, con envío a todo el Paraguay.',
+        '{resumen} Presentaciones de {presentaciones}. Envío a todo el Paraguay.',
     },
   },
 
