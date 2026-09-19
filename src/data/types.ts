@@ -92,6 +92,14 @@ export type FamiliaCatalogoId = (typeof FAMILIAS_CATALOGO)[number];
 export interface FamiliaCatalogo {
   readonly id: FamiliaCatalogoId;
   readonly nombre: string;
+  /**
+   * Nombre abreviado que se usa **solo** en el `<title>` de la ficha,
+   * donde Google corta cerca de los 60 caracteres. El nombre visible
+   * de la familia sigue siendo `nombre`, que es el que manda en la
+   * página, el catálogo y los filtros. Si no se define, el título usa
+   * `nombre`.
+   */
+  readonly nombreCorto?: string;
 }
 
 /** Momentos del recorrido de trabajo, independientes de la familia. */
