@@ -57,7 +57,7 @@ export const contenidoEs: Contenido = {
       descripcion: 'La página que buscabas no existe o cambió de dirección.',
     },
     ficha: {
-      tituloPlantilla: '{producto} · {familia} | 3S Grupo Industrial',
+      tituloPlantilla: '{producto} · {familia} | 3S',
       descripcionPlantilla:
         '{resumen} Presentaciones de {presentaciones}. Envío a todo el Paraguay.',
     },
@@ -549,6 +549,7 @@ export const contenidoEs: Contenido = {
     {
       id: 'efluentes-aguas-residuales',
       nombre: 'Tratamiento de efluentes y aguas residuales',
+      nombreCorto: 'Tratamiento de efluentes',
     },
   ],
 
