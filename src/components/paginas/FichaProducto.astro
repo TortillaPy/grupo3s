@@ -50,7 +50,7 @@ const presentaciones = producto.presentaciones
 // traduzca.
 const titulo = contenido.meta.ficha.tituloPlantilla
   .replace('{producto}', producto.nombre)
-  .replace('{familia}', familia?.nombre ?? '');
+  .replace('{familia}', familia?.nombreCorto ?? familia?.nombre ?? '');
 const descripcion = contenido.meta.ficha.descripcionPlantilla
   .replace('{resumen}', copy?.resumen ?? '')
   .replace('{presentaciones}', presentaciones);
